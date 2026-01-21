@@ -32,7 +32,7 @@ const CSRSection = () => {
                                     loop
                                     playsInline
                                 >
-                                    <source src="https://gesit.co.id/wp-content/uploads/2021/08/csr-video.mp4" type="video/mp4" />
+                                    <source src="https://dev.gesit.co.id/wp-content/uploads/2021/08/csr-video.mp4" type="video/mp4" />
                                     Your browser does not support the video tag.
                                 </video>
                             )}
