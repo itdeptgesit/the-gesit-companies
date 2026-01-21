@@ -51,51 +51,62 @@ const BusinessSection = () => {
                     </motion.h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="flex overflow-x-auto gap-6 sm:gap-8 pb-8 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-4 snap-x snap-mandatory scroll-smooth no-scrollbar">
                     {businesses.map((biz, index) => (
-                        <Link to={biz.href} key={biz.title} className="block h-full">
-                            <motion.div
-                                initial={{ opacity: 0, y: 50 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: index * 0.1 }}
-                                className="group flex flex-col items-center h-full"
-                            >
-                                {/* Top Image Section */}
-                                <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl mb-4 shrink-0">
-                                    <img
-                                        src={biz.image}
-                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
-                                        alt={biz.title}
-                                    />
-                                    <div className="absolute inset-0 bg-navy-deep/10"></div>
-                                </div>
-
-                                {/* Connecting Line */}
+                        <div key={biz.title} className="min-w-[85vw] md:min-w-0 snap-center">
+                            <Link to={biz.href} className="block h-full">
                                 <motion.div
-                                    initial={{ height: 0 }}
-                                    whileInView={{ height: 40 }}
-                                    transition={{ duration: 0.8, delay: 0.5 + (index * 0.1) }}
-                                    className="w-[1.5px] bg-slate-200 shrink-0"
-                                ></motion.div>
-
-                                {/* Bottom Info Box */}
-                                <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
-                                    <h3 className="text-white text-3xl font-display leading-tight mb-4">{biz.title}</h3>
-                                    <div className="w-10 h-[1px] bg-white/30 mx-auto mb-6 shrink-0"></div>
-                                    <p className="text-white/90 text-[15px] font-normal leading-relaxed px-2">
-                                        {biz.description}
-                                    </p>
-
-                                    <div className="mt-8 flex items-center justify-center gap-2 text-white font-bold text-[10px] uppercase tracking-[0.3em] group-hover:gap-4 transition-all duration-300">
-                                        <span>Explore</span>
-                                        <ArrowRight size={14} />
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: index * 0.1 }}
+                                    className="group flex flex-col items-center h-full"
+                                >
+                                    {/* Top Image Section */}
+                                    <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl mb-4 shrink-0">
+                                        <img
+                                            src={biz.image}
+                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
+                                            alt={biz.title}
+                                        />
+                                        <div className="absolute inset-0 bg-navy-deep/10"></div>
                                     </div>
-                                </div>
-                            </motion.div>
-                        </Link>
+
+                                    {/* Connecting Line */}
+                                    <motion.div
+                                        initial={{ height: 0 }}
+                                        whileInView={{ height: 40 }}
+                                        transition={{ duration: 0.8, delay: 0.5 + (index * 0.1) }}
+                                        className="w-[1.5px] bg-slate-200 shrink-0"
+                                    ></motion.div>
+
+                                    {/* Bottom Info Box */}
+                                    <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
+                                        <h3 className="text-white text-3xl font-display leading-tight mb-4">{biz.title}</h3>
+                                        <div className="w-10 h-[1px] bg-white/30 mx-auto mb-6 shrink-0"></div>
+                                        <p className="text-white/90 text-[15px] font-normal leading-relaxed px-2">
+                                            {biz.description}
+                                        </p>
+
+                                        <div className="mt-8 flex items-center justify-center gap-2 text-white font-bold text-[10px] uppercase tracking-[0.3em] group-hover:gap-4 transition-all duration-300">
+                                            <span>Explore</span>
+                                            <ArrowRight size={14} />
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </Link>
+                        </div>
                     ))}
                 </div>
             </div>
+            <style>{`
+                .no-scrollbar::-webkit-scrollbar {
+                    display: none;
+                }
+                .no-scrollbar {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
+                }
+            `}</style>
         </section>
     );
 };
