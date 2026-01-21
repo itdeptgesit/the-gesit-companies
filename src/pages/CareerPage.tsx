@@ -102,35 +102,65 @@ const CareerPage = () => {
 
 
     return (
-        <div className="bg-white min-h-screen text-navy-deep font-body">
+        <div className="bg-slate-50 min-h-screen text-navy-deep font-body overflow-hidden relative">
+            {/* Background Decorative Elements */}
+            <div className="absolute top-0 left-0 w-1/2 h-full opacity-[0.03] pointer-events-none z-0">
+                <svg width="100%" height="100%" viewBox="0 0 400 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="0" cy="200" r="300" stroke="currentColor" strokeWidth="1" />
+                    <circle cx="0" cy="200" r="250" stroke="#BA9B32" strokeWidth="0.5" />
+                    <circle cx="0" cy="600" r="200" stroke="currentColor" strokeWidth="1" />
+                </svg>
+            </div>
+
             {/* Hero Section */}
-            <section className="relative h-[60vh] md:h-screen flex items-center justify-center overflow-hidden">
+            <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
-                    <img src="career/cover.png" alt="Join Gesit" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-navy-deep/60 backdrop-blur-[2px]"></div>
+                    <motion.img
+                        initial={{ scale: 1.05 }}
+                        animate={{ scale: 1.2 }}
+                        transition={{ duration: 10, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
+                        src="career/cover.png"
+                        alt="Join Gesit"
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-navy-deep/75 backdrop-blur-[1px]"></div>
                 </div>
                 <div className="container mx-auto px-6 relative z-10 text-center">
-                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-                        <span className="text-[#BC9C33] font-bold uppercase tracking-[.6em] text-xs mb-6 block">Join Our Legacy</span>
-                        <h1 className="text-white text-5xl md:text-8xl font-display leading-tight mb-8">
-                            Empowering <br /> <span className="text-[#BC9C33]">Growth.</span>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1 }}
+                    >
+                        <span className="text-[#BA9B32] font-bold uppercase tracking-[0.5em] text-[10px] mb-6 block">Join Our Legacy</span>
+                        <h1 className="text-white text-5xl md:text-7xl font-display leading-[1.2] mb-8 drop-shadow-lg">
+                            Empowering <br /> <span className="text-[#BA9B32]">Growth.</span>
                         </h1>
+                        <div className="w-12 h-[1px] bg-white/30 mx-auto"></div>
                     </motion.div>
                 </div>
             </section>
 
             {/* Intro Section */}
-            <section className="py-24 bg-white">
-                <div className="container mx-auto px-6 max-w-6xl">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-start">
+            <section className="py-32 relative z-10 bg-navy-deep overflow-hidden">
+                {/* Subtle Brand Background */}
+                <div className="absolute inset-0 opacity-10 pointer-events-none">
+                    <svg width="100%" height="100%" viewBox="0 0 800 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="800" cy="0" r="300" stroke="white" strokeWidth="1" />
+                        <circle cx="800" cy="0" r="250" stroke="#BA9B32" strokeWidth="0.5" />
+                    </svg>
+                </div>
+
+                <div className="container mx-auto px-6 max-w-6xl relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
                         <motion.div {...fadeIn}>
-                            <h2 className="text-4xl md:text-5xl font-display leading-[1.2] mb-8">
-                                Exceptional people <br /> make an exceptional <br /> <span className="text-[#BC9C33]">company.</span>
+                            <h2 className="text-4xl md:text-5xl font-display leading-[1.1] mb-8 text-white">
+                                Exceptional people <br /> make an exceptional <br /> <span className="text-[#BA9B32]">company.</span>
                             </h2>
-                            <div className="w-16 h-1 bg-[#BC9C33]"></div>
+                            <div className="w-20 h-1 bg-[#BA9B32]"></div>
                         </motion.div>
-                        <motion.div {...fadeIn} transition={{ delay: 0.2 }} className="space-y-8">
-                            <p className="text-slate-500 text-xl font-light leading-relaxed">
+                        <motion.div {...fadeIn} transition={{ delay: 0.2 }} className="relative">
+                            <div className="absolute -left-10 top-0 w-1 h-24 bg-[#BA9B32]/30 hidden md:block"></div>
+                            <p className="text-white/80 text-xl font-light leading-relaxed">
                                 At The Gesit Companies, we believe that the strength of our organization lies in the collective talent, passion, and integrity of our team members.
                             </p>
                         </motion.div>
@@ -142,8 +172,9 @@ const CareerPage = () => {
             <section className="py-24 bg-slate-50">
                 <div className="container mx-auto px-6 max-w-6xl">
                     <div className="text-center mb-16">
-                        <span className="text-[#BC9C33] font-bold uppercase tracking-[.4em] text-xs mb-3 block">Career Opportunities</span>
+                        <span className="text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] mb-3 block">Career Opportunities</span>
                         <h2 className="text-4xl font-display text-navy-deep">Current Openings</h2>
+                        <div className="w-12 h-[1px] bg-[#BA9B32]/20 mx-auto mt-6"></div>
                     </div>
 
                     <div className="grid gap-6">
@@ -162,14 +193,14 @@ const CareerPage = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    className="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 hover:shadow-xl hover:border-[#BC9C33]/30 transition-all group flex flex-col md:flex-row md:items-center justify-between gap-6"
+                                    className="bg-white/40 backdrop-blur-xl p-8 rounded-[2rem] shadow-xl shadow-slate-200/30 border border-white/50 hover:border-[#BA9B32]/30 hover:bg-white/80 transition-all duration-500 group flex flex-col md:flex-row md:items-center justify-between gap-6"
                                 >
-                                    <div>
-                                        <h3 className="text-2xl font-display text-navy-deep mb-2">{job.title}</h3>
-                                        <div className="flex flex-wrap gap-4 text-xs font-bold uppercase tracking-widest text-slate-400">
-                                            <span className="flex items-center gap-1"><Building2 size={14} className="text-[#BC9C33]" /> {job.department}</span>
-                                            <span className="flex items-center gap-1"><MapPin size={14} className="text-[#BC9C33]" /> {job.location}</span>
-                                            <span className="px-3 py-1 bg-slate-100 rounded-full text-slate-500">{job.type}</span>
+                                    <div className="flex-grow">
+                                        <h3 className="text-2xl font-display text-navy-deep mb-3 group-hover:text-[#BA9B32] transition-colors">{job.title}</h3>
+                                        <div className="flex flex-wrap gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
+                                            <span className="flex items-center gap-2 bg-white/50 px-3 py-1 rounded-full border border-white/50 shadow-sm"><Building2 size={12} className="text-[#BA9B32]" /> {job.department}</span>
+                                            <span className="flex items-center gap-2 bg-white/50 px-3 py-1 rounded-full border border-white/50 shadow-sm"><MapPin size={12} className="text-[#BA9B32]" /> {job.location}</span>
+                                            <span className="bg-[#BA9B32]/10 text-[#BA9B32] px-3 py-1 rounded-full border border-[#BA9B32]/10 shadow-sm">{job.type}</span>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-4 shrink-0">
@@ -185,7 +216,7 @@ const CareerPage = () => {
                                         ) : (
                                             <button
                                                 onClick={() => handleApplyClick(job)}
-                                                className="px-6 py-3 bg-[#BC9C33] text-white rounded-full font-bold text-[10px] uppercase tracking-widest hover:bg-navy-deep transition-all"
+                                                className="px-8 py-4 bg-[#BA9B32] text-white rounded-2xl font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-navy-deep transition-all duration-500 shadow-lg shadow-[#BA9B32]/20"
                                             >
                                                 Apply Now
                                             </button>
@@ -197,7 +228,6 @@ const CareerPage = () => {
                     </div>
                 </div>
             </section>
-
 
             {/* Application Modal */}
             <AnimatePresence>
@@ -227,53 +257,54 @@ const CareerPage = () => {
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="mb-8">
-                                            <span className="text-[#BC9C33] font-bold uppercase tracking-[.2em] text-[10px] mb-2 block">Application Form</span>
+                                        <div className="mb-10 relative">
+                                            <div className="absolute -left-10 top-0 w-1 h-20 bg-[#BA9B32]/10 hidden md:block"></div>
+                                            <span className="text-[#BA9B32] font-bold uppercase tracking-[.3em] text-[10px] mb-2 block">Application Form</span>
                                             <h3 className="text-3xl font-display text-navy-deep">
                                                 {selectedJob ? `Apply for ${selectedJob.title}` : "General Application"}
                                             </h3>
                                         </div>
 
-                                        <form onSubmit={handleSubmit} className="space-y-6">
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                <div className="space-y-2">
-                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Full Name *</label>
-                                                    <input required type="text" value={form.full_name} onChange={e => setForm({ ...form, full_name: e.target.value })} className="w-full border-b border-slate-200 py-2 focus:border-[#BC9C33] outline-none text-sm transition-colors" placeholder="John Doe" />
+                                        <form onSubmit={handleSubmit} className="space-y-8">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                <div className="space-y-2 group">
+                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-colors group-focus-within:text-[#BA9B32]">Full Name *</label>
+                                                    <input required type="text" value={form.full_name} onChange={e => setForm({ ...form, full_name: e.target.value })} className="w-full border-b border-slate-200 py-3 focus:border-[#BA9B32] outline-none text-sm transition-all focus:pl-1" placeholder="John Doe" />
                                                 </div>
-                                                <div className="space-y-2">
-                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Email Address *</label>
-                                                    <input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} className="w-full border-b border-slate-200 py-2 focus:border-[#BC9C33] outline-none text-sm transition-colors" placeholder="email@example.com" />
-                                                </div>
-                                            </div>
-
-                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                                <div className="space-y-2">
-                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">WhatsApp / Phone *</label>
-                                                    <input required type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} className="w-full border-b border-slate-200 py-2 focus:border-[#BC9C33] outline-none text-sm transition-colors" placeholder="+62..." />
-                                                </div>
-                                                <div className="space-y-2">
-                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Position</label>
-                                                    <input required type="text" value={form.position} onChange={e => setForm({ ...form, position: e.target.value })} className="w-full border-b border-slate-200 py-2 focus:border-[#BC9C33] outline-none text-sm transition-colors" placeholder={selectedJob ? selectedJob.title : "Desired Position"} readOnly={!!selectedJob} />
+                                                <div className="space-y-2 group">
+                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-colors group-focus-within:text-[#BA9B32]">Email Address *</label>
+                                                    <input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} className="w-full border-b border-slate-200 py-3 focus:border-[#BA9B32] outline-none text-sm transition-all focus:pl-1" placeholder="email@example.com" />
                                                 </div>
                                             </div>
 
-                                            <div className="space-y-3">
-                                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">CV / Resume (PDF, Max 1MB) *</label>
-                                                <div className="relative group">
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                                <div className="space-y-2 group">
+                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-colors group-focus-within:text-[#BA9B32]">WhatsApp / Phone *</label>
+                                                    <input required type="tel" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} className="w-full border-b border-slate-200 py-3 focus:border-[#BA9B32] outline-none text-sm transition-all focus:pl-1" placeholder="+62..." />
+                                                </div>
+                                                <div className="space-y-2 group">
+                                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-colors group-focus-within:text-[#BA9B32]">Position</label>
+                                                    <input required type="text" value={form.position} onChange={e => setForm({ ...form, position: e.target.value })} className="w-full border-b border-slate-200 py-3 focus:border-[#BA9B32] outline-none text-sm transition-all focus:pl-1 bg-transparent" placeholder={selectedJob ? selectedJob.title : "Desired Position"} readOnly={!!selectedJob} />
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-3 group">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-colors group-focus-within:text-[#BA9B32]">CV / Resume (PDF, Max 1MB) *</label>
+                                                <div className="relative group/file">
                                                     <input required type="file" accept=".pdf" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                                                    <div className={`w-full border-2 border-dashed rounded-xl py-6 text-center transition-all flex flex-col items-center justify-center gap-2 ${form.resume ? 'border-[#BC9C33] bg-[#BC9C33]/5' : 'border-slate-200 group-hover:border-[#BC9C33]'}`}>
-                                                        <FileText size={24} className={form.resume ? 'text-[#BC9C33]' : 'text-slate-300'} />
-                                                        <p className="text-xs text-slate-500 font-medium">
+                                                    <div className={`w-full border-2 border-dashed rounded-[1.5rem] py-10 text-center transition-all flex flex-col items-center justify-center gap-3 ${form.resume ? 'border-[#BA9B32] bg-[#BA9B32]/5' : 'border-slate-100 bg-slate-50 group-hover/file:border-[#BA9B32] group-hover/file:bg-white'}`}>
+                                                        <FileText size={32} className={form.resume ? 'text-[#BA9B32]' : 'text-slate-300'} />
+                                                        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
                                                             {form.resume ? form.resume.name : "Click or Drag to Upload PDF"}
                                                         </p>
-                                                        <p className="text-[9px] text-slate-300 uppercase tracking-widest">Max File Size: 1 MB</p>
+                                                        <p className="text-[9px] text-[#BA9B32]/40 uppercase tracking-[0.2em] font-bold">Max File Size: 1 MB</p>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="space-y-2">
-                                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Message (Optional)</label>
-                                                <textarea rows={2} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} className="w-full border-b border-slate-200 py-2 focus:border-[#BC9C33] outline-none text-sm transition-colors resize-none" placeholder="Briefly tell us about yourself..."></textarea>
+                                            <div className="space-y-2 group">
+                                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-colors group-focus-within:text-[#BA9B32]">Message (Optional)</label>
+                                                <textarea rows={2} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} className="w-full border-b border-slate-200 py-3 focus:border-[#BA9B32] outline-none text-sm transition-all focus:pl-1 resize-none bg-transparent" placeholder="Briefly tell us about yourself..."></textarea>
                                             </div>
 
                                             {submitStatus === 'error' && (
@@ -285,9 +316,10 @@ const CareerPage = () => {
                                             <button
                                                 type="submit"
                                                 disabled={submitStatus === 'uploading'}
-                                                className={`w-full py-4 rounded-xl font-bold uppercase tracking-[.4em] text-[10px] shadow-xl transition-all ${submitStatus === 'uploading' ? 'bg-slate-300 cursor-not-allowed' : 'bg-navy-deep text-white hover:bg-[#BC9C33]'}`}
+                                                className={`w-full py-5 rounded-2xl font-bold uppercase tracking-[.4em] text-[10px] shadow-2xl transition-all duration-500 relative overflow-hidden group ${submitStatus === 'uploading' ? 'bg-slate-300 cursor-not-allowed' : 'bg-navy-deep text-white hover:bg-[#BA9B32] shadow-navy-deep/20'}`}
                                             >
-                                                {submitStatus === 'uploading' ? 'Uploading...' : 'Submit Application'}
+                                                <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                                                <span className="relative z-10">{submitStatus === 'uploading' ? 'Uploading Application...' : 'Submit Application'}</span>
                                             </button>
                                         </form>
                                     </>

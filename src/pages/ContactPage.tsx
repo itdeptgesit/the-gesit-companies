@@ -111,7 +111,7 @@ const ContactPage = () => {
         },
         {
             icon: <Phone size={24} />,
-            title: "Phone & Fax",
+            title: "Phone",
             content: "+62 21 3101601",
             sub: "Mon - Fri, 08:30 - 17:30",
             link: "tel:+62213101601"
@@ -126,40 +126,53 @@ const ContactPage = () => {
     ];
 
     return (
-        <div className="bg-slate-50 min-h-screen font-body text-navy-deep">
+        <div className="bg-slate-50 min-h-screen font-body text-navy-deep overflow-hidden relative">
+            {/* Background Decorative Elements */}
+            <div className="absolute top-0 right-0 w-1/2 h-full opacity-[0.03] pointer-events-none z-0">
+                <svg width="100%" height="100%" viewBox="0 0 400 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="400" cy="200" r="300" stroke="currentColor" strokeWidth="1" />
+                    <circle cx="400" cy="200" r="250" stroke="#BA9B32" strokeWidth="0.5" />
+                    <circle cx="400" cy="600" r="200" stroke="currentColor" strokeWidth="1" />
+                </svg>
+            </div>
+
             {/* 1. Consistent Hero Section */}
-            <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+            <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0">
                     <img
                         src="/contact/cover.png"
                         alt="Contact Gesit"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover animate-slow-zoom"
                     />
-                    <div className="absolute inset-0 bg-navy-deep/50 backdrop-blur-[2px]"></div>
+                    <div className="absolute inset-0 bg-navy-deep/75"></div>
                 </div>
                 <div className="container mx-auto px-6 relative z-10 text-center">
                     <motion.span
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="text-[#BA9B32] font-bold uppercase tracking-[.4em] text-sm mb-6 block"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1, delay: 0.2 }}
+                        className="text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] md:text-sm mb-6 block"
                     >
                         Get In Touch
                     </motion.span>
-                    <motion.h1
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="text-white text-5xl md:text-8xl font-display"
-                    >
-                        Contact Us
-                    </motion.h1>
+                    <h1 className="text-white text-5xl md:text-6xl font-display leading-[1.2] mb-0 overflow-hidden drop-shadow-lg pb-4">
+                        <motion.span
+                            initial={{ opacity: 0, y: 100 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                            className="inline-block"
+                        >
+                            Contact Us
+                        </motion.span>
+                    </h1>
                 </div>
             </section>
 
             <div className="container mx-auto px-6 max-w-7xl -mt-20 relative z-20 pb-24">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-stretch">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
                     <motion.div
                         {...fadeIn}
-                        className="lg:col-span-7 bg-white rounded-[3rem] p-10 md:p-20 shadow-2xl shadow-slate-200/50"
+                        className="lg:col-span-7 bg-white rounded-[3rem] p-8 md:p-16 shadow-2xl shadow-slate-200/50"
                     >
                         {status === 'success' ? (
                             <motion.div
@@ -197,18 +210,28 @@ const ContactPage = () => {
                             </motion.div>
                         ) : (
                             <>
-                                <div className="mb-16">
-                                    <span className="text-[#BA9B32] font-bold uppercase tracking-widest text-xs mb-4 block">Enquiry Form</span>
-                                    <h2 className="text-4xl md:text-5xl font-display leading-tight mb-8">
-                                        Let's start a <br /><span className="text-[#BA9B32]">conversation.</span>
+                                <div className="mb-12 relative">
+                                    <div className="absolute -left-10 top-0 w-1 h-32 bg-[#BA9B32]/10 hidden md:block"></div>
+                                    <span className="text-[#BA9B32] font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">Enquiry Form</span>
+                                    <h2 className="text-4xl md:text-5xl font-display leading-[1.1] mb-6">
+                                        Let's start a <br />
+                                        <span className="relative inline-block">
+                                            conversation.
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: '100%' }}
+                                                transition={{ duration: 1, delay: 1 }}
+                                                className="absolute bottom-1 left-0 h-[2px] bg-[#BA9B32]/30"
+                                            ></motion.div>
+                                        </span>
                                     </h2>
-                                    <p className="text-slate-400 font-light text-lg">
+                                    <p className="text-slate-500 font-light text-lg max-w-lg leading-relaxed">
                                         Have dynamic requirements or corporate inquiries? Send us a message and our team will get back to you shortly.
                                     </p>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className="space-y-10">
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <form onSubmit={handleSubmit} className="space-y-8">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div className="space-y-3">
                                             <label className="text-xs font-bold uppercase tracking-widest text-slate-400">First Name</label>
                                             <input
@@ -218,7 +241,7 @@ const ContactPage = () => {
                                                 onChange={handleInputChange}
                                                 type="text"
                                                 placeholder="First name"
-                                                className="w-full bg-slate-50 border-none px-6 py-4 rounded-2xl outline-none focus:ring-2 focus:ring-[#BA9B32]/20 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-100 px-6 py-4 rounded-2xl outline-none focus:ring-4 focus:ring-[#BA9B32]/10 focus:bg-white focus:border-[#BA9B32]/50 transition-all placeholder:text-slate-300"
                                             />
                                         </div>
                                         <div className="space-y-3">
@@ -230,7 +253,7 @@ const ContactPage = () => {
                                                 onChange={handleInputChange}
                                                 type="text"
                                                 placeholder="Last name"
-                                                className="w-full bg-slate-50 border-none px-6 py-4 rounded-2xl outline-none focus:ring-2 focus:ring-[#BA9B32]/20 transition-all placeholder:text-slate-300"
+                                                className="w-full bg-slate-50 border border-slate-100 px-6 py-4 rounded-2xl outline-none focus:ring-4 focus:ring-[#BA9B32]/10 focus:bg-white focus:border-[#BA9B32]/50 transition-all placeholder:text-slate-300"
                                             />
                                         </div>
                                     </div>
@@ -244,7 +267,7 @@ const ContactPage = () => {
                                             onChange={handleInputChange}
                                             type="email"
                                             placeholder="email@example.com"
-                                            className="w-full bg-slate-50 border-none px-6 py-4 rounded-2xl outline-none focus:ring-2 focus:ring-[#BA9B32]/20 transition-all placeholder:text-slate-300"
+                                            className="w-full bg-slate-50 border border-slate-100 px-6 py-4 rounded-2xl outline-none focus:ring-4 focus:ring-[#BA9B32]/10 focus:bg-white focus:border-[#BA9B32]/50 transition-all placeholder:text-slate-300"
                                         />
                                     </div>
 
@@ -257,75 +280,70 @@ const ContactPage = () => {
                                             onChange={handleInputChange}
                                             rows={5}
                                             placeholder="How can we help you?"
-                                            className="w-full bg-slate-50 border-none px-6 py-4 rounded-2xl outline-none focus:ring-2 focus:ring-[#BA9B32]/20 transition-all placeholder:text-slate-300 resize-none"
+                                            className="w-full bg-slate-50 border border-slate-100 px-6 py-4 rounded-2xl outline-none focus:ring-4 focus:ring-[#BA9B32]/10 focus:bg-white focus:border-[#BA9B32]/50 transition-all placeholder:text-slate-300 resize-none"
                                         ></textarea>
                                     </div>
 
                                     <button
                                         type="submit"
                                         disabled={status === 'sending'}
-                                        className="w-full bg-navy-deep text-white py-6 rounded-2xl font-bold uppercase tracking-[.3em] text-xs hover:bg-[#BA9B32] disabled:bg-slate-200 transition-colors shadow-2xl shadow-navy-deep/20 flex items-center justify-center gap-4 group"
+                                        className="w-full bg-navy-deep text-white py-6 rounded-2xl font-bold uppercase tracking-[.4em] text-[10px] hover:bg-[#BA9B32] disabled:bg-slate-200 transition-all duration-500 shadow-2xl shadow-navy-deep/20 flex items-center justify-center gap-4 group relative overflow-hidden"
                                     >
-                                        {status === 'sending' ? 'Processing...' : 'Send enquiry'}
-                                        <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                                        <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+                                        <span className="relative z-10">{status === 'sending' ? 'Processing...' : 'Send enquiry'}</span>
+                                        <Send size={14} className="relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                                     </button>
                                 </form>
                             </>
                         )}
                     </motion.div>
 
-                    {/* RIGHT: Frameless Image & Detail Cards */}
-                    <div className="lg:col-span-5 flex flex-col gap-12">
-
-                        {/* Frameless Featured Image */}
+                    {/* RIGHT: Unified Info Pillar */}
+                    <div className="lg:col-span-5">
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            className="relative flex-grow min-h-[400px] flex items-center justify-center overflow-hidden rounded-[3rem]"
+                            initial={{ opacity: 0, x: 30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 1 }}
+                            className="bg-white/40 backdrop-blur-2xl rounded-[3rem] p-8 md:p-12 border border-white/50 shadow-2xl shadow-slate-200/30 h-full flex flex-col gap-10"
                         >
-                            {/* Decorative Arcs Background */}
-                            <div className="absolute inset-0 z-0 opacity-10 flex items-center justify-center">
-                                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                    <circle cx="50" cy="50" r="40" stroke="#0B1E40" strokeWidth="0.5" fill="none" />
-                                    <circle cx="50" cy="50" r="30" stroke="#0B1E40" strokeWidth="0.5" fill="none" />
-                                    <circle cx="50" cy="50" r="20" stroke="#BA9B32" strokeWidth="1" fill="none" />
-                                </svg>
+                            {/* Featured Image - Integrated into the pillar */}
+                            <div className="relative overflow-hidden rounded-[2.5rem] shadow-xl group aspect-square lg:aspect-auto lg:h-80 shrink-0">
+                                <img
+                                    src="/contact/contact.png"
+                                    alt="Gesit Professional"
+                                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                                />
+                                <div className="absolute inset-0 bg-navy-deep/20 group-hover:bg-navy-deep/10 transition-colors"></div>
                             </div>
 
-                            <img
-                                src="/contact/contact.png"
-                                alt="Gesit Professional"
-                                className="relative z-10 w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
-                            />
+                            {/* Detailed Contact Cards */}
+                            <div className="space-y-4 flex-grow">
+                                {contactCards.map((card, idx) => (
+                                    <motion.a
+                                        key={idx}
+                                        href={card.link}
+                                        target={card.title === "Head Office" ? "_blank" : undefined}
+                                        rel={card.title === "Head Office" ? "noopener noreferrer" : undefined}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: idx * 0.15 }}
+                                        className="bg-white/60 p-6 rounded-[2rem] border border-white hover:border-[#BA9B32]/30 hover:bg-white transition-all duration-500 group flex items-start gap-5"
+                                    >
+                                        <div className="w-12 h-12 bg-white text-[#BA9B32] rounded-xl flex items-center justify-center group-hover:bg-[#BA9B32] group-hover:text-white transition-all duration-500 shrink-0 shadow-sm border border-slate-100">
+                                            {card.icon}
+                                        </div>
+                                        <div className="flex-grow">
+                                            <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-1">{card.title}</h4>
+                                            <p className="text-base font-display leading-tight mb-0.5 text-navy-deep">{card.content}</p>
+                                            <p className="text-[10px] uppercase tracking-widest font-bold text-[#BA9B32]/60">{card.sub}</p>
+                                        </div>
+                                        <div className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 pt-3">
+                                            <ChevronRight size={16} className="text-[#BA9B32]" />
+                                        </div>
+                                    </motion.a>
+                                ))}
+                            </div>
                         </motion.div>
-
-                        {/* Detailed Contact Cards */}
-                        <div className="space-y-6">
-                            {contactCards.map((card, idx) => (
-                                <motion.a
-                                    key={idx}
-                                    href={card.link}
-                                    target={card.title === "Head Office" ? "_blank" : undefined}
-                                    rel={card.title === "Head Office" ? "noopener noreferrer" : undefined}
-                                    {...fadeIn}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className="bg-white p-8 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-transparent hover:border-[#BA9B32]/30 transition-all group flex items-start gap-6"
-                                >
-                                    <div className="w-14 h-14 bg-slate-50 text-[#BA9B32] rounded-2xl flex items-center justify-center group-hover:bg-[#BA9B32] group-hover:text-white transition-all shrink-0 shadow-sm">
-                                        {card.icon}
-                                    </div>
-                                    <div className="flex-grow">
-                                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">{card.title}</h4>
-                                        <p className="text-lg font-display leading-snug mb-1">{card.content}</p>
-                                        <p className="text-xs font-light text-slate-400 italic">{card.sub}</p>
-                                    </div>
-                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity pt-4">
-                                        <ChevronRight size={20} className="text-[#BA9B32]" />
-                                    </div>
-                                </motion.a>
-                            ))}
-                        </div>
                     </div>
                 </div>
             </div>
