@@ -133,7 +133,7 @@ const PropertyPage = () => {
                                     <Sparkles size={16} /> <span>Business Segment</span>
                                 </motion.div>
 
-                                <h1 className="text-white text-5xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg">
+                                <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg px-1">
                                     <motion.span
                                         initial={{ opacity: 0, y: 100 }}
                                         animate={{ opacity: 1, y: 0 }}

@@ -130,7 +130,7 @@ const NaturalResourcesPage = () => {
                                         <Sparkles size={16} /> <span>Business Segment</span>
                                     </motion.div>
 
-                                    <h1 className="text-white text-5xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg">
+                                    <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg px-1">
                                         <motion.span
                                             initial={{ opacity: 0, y: 100 }}
                                             animate={{ opacity: 1, y: 0 }}
@@ -171,12 +171,12 @@ const NaturalResourcesPage = () => {
 
             </section>
 
-            {/* 2. High-Impact Gold Introduction Section */}
-            <section className="bg-[#BA9B32] py-24 md:py-32 relative overflow-hidden">
+            {/* 2. High-Impact Navy Introduction Section */}
+            <section className="bg-navy-deep py-24 md:py-32 relative overflow-hidden">
                 <div className="container mx-auto px-6 max-w-6xl relative z-10">
                     <motion.div {...fadeIn} className="text-white text-center">
                         <h2 className="text-2xl md:text-5xl font-display leading-[1.3] mb-0 max-w-5xl mx-auto font-light">
-                            Developing Indonesia's vast <span className="font-bold">natural resources</span> and continually expanding to other types of minerals and resources.
+                            Developing Indonesia's vast <span className="text-[#BA9B32] font-bold">natural resources</span> and continually expanding to other types of minerals and resources.
                         </h2>
                     </motion.div>
                 </div>
@@ -209,7 +209,7 @@ const NaturalResourcesPage = () => {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 1 }}
-                                className="relative rounded-[3rem] overflow-hidden shadow-2xl aspect-[4/5] bg-slate-50"
+                                className="relative rounded-[3.5rem] overflow-hidden shadow-2xl aspect-[4/5] bg-slate-50"
                             >
                                 <ImageSlideshow images={[
                                     "/natural/bauxite_mining.jpg",
@@ -230,25 +230,32 @@ const NaturalResourcesPage = () => {
                         <div className="w-24 h-1 bg-[#BA9B32] mx-auto mt-8"></div>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
                         {newBusinesses.map((biz, idx) => (
                             <motion.div
                                 key={idx}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: idx * 0.1 }}
-                                className="group cursor-pointer"
+                                className="group flex flex-col items-center"
                             >
-                                <div className="relative aspect-[16/10] overflow-hidden rounded-2xl shadow-xl mb-6">
+                                {/* Image Container - CSR Style */}
+                                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2.5rem] shadow-xl mb-0">
                                     <img
                                         src={biz.image}
                                         alt={biz.title}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                     />
-                                    <div className="absolute inset-0 bg-navy-deep/40 group-hover:bg-navy-deep/20 transition-colors"></div>
+                                    <div className="absolute inset-0 bg-navy-deep/20 group-hover:bg-navy-deep/10 transition-colors"></div>
                                 </div>
-                                <div className="bg-navy-deep p-6 text-center shadow-lg transform group-hover:-translate-y-2 transition-transform duration-500 min-h-[120px] flex items-center justify-center">
-                                    <h4 className="text-white text-lg font-display tracking-wide">{biz.title}</h4>
+
+                                {/* Connector Line */}
+                                <div className="w-px h-12 bg-gray-200 mx-auto"></div>
+
+                                {/* Content Box - CSR Style (Blue) */}
+                                <div className="bg-navy-deep p-8 rounded-[2.5rem] text-center shadow-xl w-full flex flex-col items-center justify-center min-h-[160px] transform group-hover:-translate-y-2 transition-transform duration-500">
+                                    <h4 className="text-white text-xl md:text-2xl font-display tracking-wide leading-snug">{biz.title}</h4>
+                                    <div className="w-12 h-0.5 bg-white/20 mt-4"></div>
                                 </div>
                             </motion.div>
                         ))}
