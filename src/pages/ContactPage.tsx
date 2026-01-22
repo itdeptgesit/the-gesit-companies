@@ -307,7 +307,7 @@ const ContactPage = () => {
                             className="bg-white/40 backdrop-blur-2xl rounded-[3rem] p-8 md:p-12 border border-white/50 shadow-2xl shadow-slate-200/30 h-full flex flex-col gap-10"
                         >
                             {/* Featured Image - Integrated into the pillar */}
-                            <div className="relative overflow-hidden rounded-[2.5rem] shadow-xl group aspect-square lg:aspect-auto lg:h-80 shrink-0">
+                            <div className="relative overflow-hidden rounded-[2.5rem] shadow-xl group aspect-[3/4] lg:aspect-auto lg:h-[30rem] shrink-0">
                                 <img
                                     src="/contact/contact.png"
                                     alt="Gesit Professional"
@@ -334,7 +334,7 @@ const ContactPage = () => {
                                         </div>
                                         <div className="flex-grow">
                                             <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-1">{card.title}</h4>
-                                            <p className="text-base font-display leading-tight mb-0.5 text-navy-deep">{card.content}</p>
+                                            <p className="text-sm font-display leading-tight mb-0.5 text-navy-deep">{card.content}</p>
                                             <p className="text-[10px] uppercase tracking-widest font-bold text-[#BA9B32]/60">{card.sub}</p>
                                         </div>
                                         <div className="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 pt-3">

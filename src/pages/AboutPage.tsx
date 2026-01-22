@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import { motion, type Variants } from "framer-motion";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 /**
  * AboutPage - Ultra-Premium Editorial Design
@@ -267,14 +268,15 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 className="group flex flex-col items-center h-full"
                             >
-                                <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-xl mb-4 shrink-0">
+                                <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl mb-4 shrink-0">
                                     <img src={value.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]" alt={value.title} />
                                     <div className="absolute inset-0 bg-navy-deep/10"></div>
                                 </div>
                                 <div className="w-[1.5px] h-10 bg-slate-200 shrink-0"></div>
-                                <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg relative group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
-                                    <h4 className="text-white text-3xl font-display mb-6">{value.title}</h4>
-                                    <p className="text-white/90 text-[13px] font-medium uppercase tracking-wide">{value.desc}</p>
+                                <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-3xl relative group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
+                                    <h4 className="text-white text-2xl font-display mb-6 tracking-wide">{value.title}</h4>
+                                    <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
+                                    <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide">{value.desc}</p>
                                 </div>
                             </motion.div>
                         ))}

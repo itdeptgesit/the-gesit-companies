@@ -51,9 +51,9 @@ const BusinessSection = () => {
                     </motion.h2>
                 </div>
 
-                <div className="flex overflow-x-auto gap-6 sm:gap-8 pb-8 md:pb-0 md:grid md:grid-cols-2 lg:grid-cols-4 snap-x snap-mandatory scroll-smooth no-scrollbar">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 lg:gap-8">
                     {businesses.map((biz, index) => (
-                        <div key={biz.title} className="min-w-[85vw] md:min-w-0 snap-center">
+                        <div key={biz.title} className="w-full">
                             <Link to={biz.href} className="block h-full">
                                 <motion.div
                                     initial={{ opacity: 0, y: 50 }}
@@ -62,7 +62,7 @@ const BusinessSection = () => {
                                     className="group flex flex-col items-center h-full"
                                 >
                                     {/* Top Image Section */}
-                                    <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden shadow-xl mb-4 shrink-0">
+                                    <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-xl mb-4 shrink-0">
                                         <img
                                             src={biz.image}
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
@@ -80,10 +80,10 @@ const BusinessSection = () => {
                                     ></motion.div>
 
                                     {/* Bottom Info Box */}
-                                    <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
-                                        <h3 className="text-white text-3xl font-display leading-tight mb-4">{biz.title}</h3>
-                                        <div className="w-10 h-[1px] bg-white/30 mx-auto mb-6 shrink-0"></div>
-                                        <p className="text-white/90 text-[15px] font-normal leading-relaxed px-2">
+                                    <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-3xl relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
+                                        <h3 className="text-white text-2xl font-display mb-4 tracking-wide">{biz.title}</h3>
+                                        <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
+                                        <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide px-2">
                                             {biz.description}
                                         </p>
 

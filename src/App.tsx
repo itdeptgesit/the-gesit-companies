@@ -45,12 +45,58 @@ const AppContent = () => {
     const path = location.pathname;
     let title = titles[path] || "The Gesit Companies";
 
+    const descriptions: { [key: string]: string } = {
+      "/": "The Gesit Companies is committed to contributing to and growing with Indonesia through strategic investments and sustainable practices.",
+      "/about": "Learn more about The Gesit Companies, our history, vision, and commitment to excellence in every business segment.",
+      "/property": "Explore our property development portfolio, delivering high-quality residential and commercial spaces across Indonesia.",
+      "/manufacturing": "Expertise in diverse manufacturing processes, delivering quality products with efficiency and sustainable methods.",
+      "/natural-resources": "Sustainable management and development of natural resources, balancing economic growth with environmental care.",
+      "/trading-service": "Comprehensive trading and services solutions, connecting markets and delivering value through excellence.",
+      "/csr": "Discover how The Gesit Companies gives back through sustainable community impact and social responsibility initiatives.",
+      "/news": "Stay updated with the latest insights, official newsroom releases, and corporate announcements from The Gesit Companies.",
+      "/career": "Join our team and build your future with The Gesit Companies. Explore career opportunities in diverse business sectors.",
+      "/contact": "Get in touch with us at The Gesit Companies headquarters. We're here to answer your inquiries and build partnerships.",
+    };
+
+    const keywords: { [key: string]: string } = {
+      "/": "Gesit, Indonesia, Investment, Sustainability",
+      "/about": "Gesit History, Corporate Vision, Timeline",
+      "/property": "Property Development, Real Estate Indonesia, Residential",
+      "/manufacturing": "Global Manufacturing, Industrial Quality, Sustainable Industry",
+      "/natural-resources": "Energy Resources, Sustainable Mining, Environment Indonesia",
+      "/trading-service": "Import Export, Market Solutions, Business Services",
+      "/csr": "Social Impact, Sustainability Indonesia, Community Empowerment",
+      "/news": "Corporate News, Press Releases, Industry Insights",
+    };
+
     // Handle dynamic news routes
     if (path.startsWith("/news/")) {
       title = "News Detail";
     }
 
     document.title = `${title} - The Gesit Companies`;
+
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', descriptions[path] || descriptions["/"]);
+    }
+
+    // Update meta keywords
+    const metaKeywords = document.querySelector('meta[name="keywords"]');
+    if (metaKeywords) {
+      metaKeywords.setAttribute('content', keywords[path] || keywords["/"]);
+    }
+
+    // Update OG tags
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', `${title} - The Gesit Companies`);
+
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', descriptions[path] || descriptions["/"]);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', `https://gesit.co.id${path}`);
   }, [location]);
 
   useEffect(() => {
