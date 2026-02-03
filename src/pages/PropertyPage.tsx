@@ -124,15 +124,6 @@ const PropertyPage = () => {
                     <div className="container mx-auto px-6">
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                             <div className="max-w-4xl">
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.8, delay: 0.3 }}
-                                    className="flex items-center gap-3 text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] mb-4"
-                                >
-                                    <Sparkles size={16} /> <span>Business Segment</span>
-                                </motion.div>
-
                                 <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg px-1">
                                     <motion.span
                                         initial={{ opacity: 0, y: 100 }}
@@ -210,7 +201,7 @@ const PropertyPage = () => {
                             >
                                 {/* Image Section */}
                                 <div className="w-full lg:w-1/2 relative group">
-                                    <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] shadow-2xl">
+                                    <div className="relative aspect-[4/3] overflow-hidden rounded-card shadow-2xl">
                                         <div className="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors duration-500 z-10"></div>
                                         <Swiper
                                             modules={[Autoplay, Pagination, EffectFade]}
@@ -234,7 +225,7 @@ const PropertyPage = () => {
                                     </div>
 
                                     {/* Decorative Element */}
-                                    <div className={`absolute -bottom-10 ${project.reverse ? '-left-10' : '-right-10'} w-2/3 h-2/3 border border-[#BA9B32]/30 rounded-[2rem] -z-10`}></div>
+                                    <div className={`absolute -bottom-10 ${project.reverse ? '-left-10' : '-right-10'} w-2/3 h-2/3 border border-[#BA9B32]/30 rounded-card -z-10`}></div>
                                 </div>
 
                                 {/* Content Section */}

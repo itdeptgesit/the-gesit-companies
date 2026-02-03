@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -76,31 +76,35 @@ const HeroSlider = () => {
 
                             <div className="absolute inset-0 flex items-center justify-center text-center px-6">
                                 <div className="max-w-6xl">
-                                    <motion.div
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        whileInView={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                                        className="mb-8"
-                                    >
-                                        <h1 className="text-white text-5xl md:text-7xl font-display leading-[1] mb-6 drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)]">
-                                            {slide.title}
-                                        </h1>
+                                    <div className="overflow-hidden py-4">
+                                        <AnimatePresence mode="wait">
+                                            <motion.div
+                                                key={activeIndex}
+                                                initial={{ opacity: 0, y: 40, filter: "blur(15px)" }}
+                                                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                                                exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
+                                                transition={{
+                                                    duration: 1.2,
+                                                    ease: [0.22, 1, 0.36, 1],
+                                                    opacity: { duration: 0.8 },
+                                                    filter: { duration: 1 }
+                                                }}
+                                            >
+                                                <h1 className="text-white text-5xl md:text-8xl font-display leading-[1.1] mb-8 drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)] tracking-tight">
+                                                    {slides[activeIndex].title}
+                                                </h1>
 
-                                        <div className="flex items-center justify-center gap-6">
-                                            <div className="h-[1px] w-12 bg-[#BA9B32]/60" />
-                                            <div className="w-2 h-2 rounded-full bg-[#BA9B32]" />
-                                            <div className="h-[1px] w-12 bg-[#BA9B32]/60" />
-                                        </div>
-                                    </motion.div>
-
-                                    <motion.p
-                                        initial={{ opacity: 0, y: 30 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-                                        className="text-white/80 text-lg md:text-2xl font-light tracking-[0.15em] max-w-3xl mx-auto leading-relaxed drop-shadow-lg"
-                                    >
-                                        {slide.subtitle}
-                                    </motion.p>
+                                                <motion.p
+                                                    initial={{ opacity: 0, y: 20 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
+                                                    className="text-white/70 text-base md:text-xl font-light tracking-[0.1em] max-w-3xl mx-auto leading-relaxed drop-shadow-lg"
+                                                >
+                                                    {slides[activeIndex].subtitle}
+                                                </motion.p>
+                                            </motion.div>
+                                        </AnimatePresence>
+                                    </div>
                                 </div>
                             </div>
                         </div>

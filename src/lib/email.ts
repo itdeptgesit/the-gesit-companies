@@ -7,10 +7,10 @@ export interface ContactFormData {
     message: string;
 }
 
-// EmailJS Configuration
-const EMAILJS_SERVICE_ID = 'service_0kqwmqd';
-const EMAILJS_TEMPLATE_ID = 'template_ruk9xmd';
-const EMAILJS_PUBLIC_KEY = 'gaZBwbeG8DSnQV5Yc';
+// EmailJS Configuration from Environment Variables
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 export const sendContactEmail = async (data: ContactFormData) => {
     try {

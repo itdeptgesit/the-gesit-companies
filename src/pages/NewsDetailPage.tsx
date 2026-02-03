@@ -205,7 +205,7 @@ const NewsDetailPage = () => {
                                     const youtubeEmbed = getYoutubeEmbedUrl(trimmedP);
                                     if (youtubeEmbed && trimmedP.length < 150) {
                                         return (
-                                            <div key={idx} className="my-12 w-full aspect-video rounded-3xl overflow-hidden shadow-2xl relative group">
+                                            <div key={idx} className="my-12 w-full aspect-video rounded-card overflow-hidden shadow-2xl relative group">
                                                 <iframe
                                                     width="100%"
                                                     height="100%"
@@ -224,7 +224,7 @@ const NewsDetailPage = () => {
                                     const videoRegex = /\.(mp4|webm|ogg)(\?.*)?$/i;
                                     if (videoRegex.test(trimmedP) && trimmedP.length < 300) {
                                         return (
-                                            <div key={idx} className="my-12 w-full aspect-video rounded-3xl overflow-hidden shadow-2xl bg-black flex items-center justify-center">
+                                            <div key={idx} className="my-12 w-full aspect-video rounded-card overflow-hidden shadow-2xl bg-black flex items-center justify-center">
                                                 <video
                                                     controls
                                                     className="w-full h-full object-contain"
@@ -242,7 +242,7 @@ const NewsDetailPage = () => {
 
                             {/* Pull Quote Mockup - Only show if quote exists */}
                             {article.quote && (
-                                <div className="my-20 p-12 bg-slate-50 rounded-[3rem] text-center relative overflow-hidden group">
+                                <div className="my-20 p-12 bg-slate-50 rounded-card text-center relative overflow-hidden group">
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#BA9B32]/5 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110"></div>
                                     <h3 className="text-xl md:text-4xl font-display leading-tight italic relative z-10">
                                         "{article.quote}"
@@ -284,7 +284,7 @@ const NewsDetailPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                         {relatedStories.map((item) => (
                             <Link key={item.id} to={`/news/${item.id}`} className="group cursor-pointer">
-                                <div className="aspect-[16/10] overflow-hidden rounded-2xl mb-6 shadow-lg">
+                                <div className="aspect-[16/10] overflow-hidden rounded-card-sm mb-6 shadow-lg">
                                     <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" />
                                 </div>
                                 <h4 className="text-xl font-display leading-snug group-hover:text-[#BA9B32] transition-colors line-clamp-2">

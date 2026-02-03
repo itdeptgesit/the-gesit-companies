@@ -7,8 +7,7 @@ import {
     ChevronRight,
     Calendar,
     Bookmark,
-    ChevronLeft,
-    Sparkles
+    ChevronLeft
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -23,6 +22,7 @@ import "swiper/css/navigation";
  */
 
 import { useNews } from "../context/NewsContext";
+import Skeleton from "../components/Skeleton";
 
 const NewsPage = () => {
     const { newsItems, loading, error } = useNews();
@@ -39,11 +39,34 @@ const NewsPage = () => {
 
     if (loading) {
         return (
-            <div className="bg-white min-h-screen pt-40 flex flex-col items-center justify-center p-6">
-                <div className="w-12 h-12 border-4 border-[#BA9B32] border-t-transparent rounded-full animate-spin mb-6"></div>
-                <p className="text-slate-400 font-bold uppercase tracking-widest animate-pulse">
-                    Retrieving Insights...
-                </p>
+            <div className="bg-white min-h-screen text-navy-deep font-body">
+                {/* Hero Skeleton */}
+                <div className="h-screen bg-slate-50 flex items-center justify-center p-6 relative">
+                    <div className="container mx-auto px-6 z-10">
+                        <Skeleton className="h-12 w-2/3 md:h-20 md:w-1/2 mb-6" />
+                        <Skeleton className="h-4 w-1/3 md:w-1/4 mb-10" />
+                    </div>
+                </div>
+
+                {/* Featured Section Skeleton */}
+                <div className="py-24 md:py-40">
+                    <div className="container mx-auto px-6 max-w-7xl">
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                            <div className="lg:col-span-7">
+                                <Skeleton className="aspect-[16/10] w-full rounded-card" />
+                            </div>
+                            <div className="lg:col-span-5 space-y-6">
+                                <Skeleton className="h-4 w-24 mb-4" />
+                                <Skeleton className="h-10 w-full" />
+                                <Skeleton className="h-10 w-3/4" />
+                                <div className="space-y-4 pt-4">
+                                    <Skeleton className="h-4 w-full" />
+                                    <Skeleton className="h-4 w-5/6" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
@@ -131,15 +154,6 @@ const NewsPage = () => {
                     <div className="container mx-auto px-6">
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                             <div className="max-w-4xl text-left">
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.8, delay: 0.3 }}
-                                    className="flex items-center gap-3 text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] mb-4"
-                                >
-                                    <Sparkles size={16} /> <span>Official Newsroom</span>
-                                </motion.div>
-
                                 <h1 className="text-white text-3xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg">
                                     <motion.span
                                         initial={{ opacity: 0, y: 100 }}
@@ -182,7 +196,7 @@ const NewsPage = () => {
                 <div className="container mx-auto px-6 max-w-7xl">
                     <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
                         <motion.div {...fadeIn} className="lg:col-span-7">
-                            <div className="relative group overflow-hidden rounded-[2.5rem] shadow-2xl">
+                            <div className="relative group overflow-hidden rounded-card shadow-2xl">
                                 <img
                                     src={featuredArticle.image}
                                     alt={featuredArticle.title}
@@ -202,11 +216,11 @@ const NewsPage = () => {
                                     <Bookmark size={14} /> {featuredArticle.category}
                                 </div>
 
-                                <h2 className="text-2xl md:text-6xl font-display leading-tight">
+                                <h2 className="text-2xl md:text-4xl font-display leading-tight">
                                     {featuredArticle.title}
                                 </h2>
 
-                                <p className="text-slate-500 text-base md:text-xl leading-relaxed">
+                                <p className="text-slate-500 text-base md:text-lg leading-relaxed">
                                     {featuredArticle.excerpt}
                                 </p>
 
@@ -257,7 +271,7 @@ const NewsPage = () => {
                                 className="group"
                             >
                                 <Link to={`/news/${item.id}`}>
-                                    <div className="relative aspect-[4/3] overflow-hidden rounded-3xl mb-10 shadow-xl">
+                                    <div className="relative aspect-[4/3] overflow-hidden rounded-card-sm mb-10 shadow-xl">
                                         <img
                                             src={item.image}
                                             alt={item.title}

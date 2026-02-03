@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 
@@ -9,7 +9,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 
 /**
- * NaturalResourcesPage - Business Segment
+ * NaturalResourcesPage
  * Features high-fidelity imagery and staggered resources showcases.
  * Focuses on global efficiency, precision, and partnership-driven growth.
  */
@@ -35,7 +35,7 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
                     exit={{ x: "-100%" }}
                     transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                     className="absolute inset-0 w-full h-full object-cover"
-                    alt="Business Segment"
+                    alt="Natural Resources"
                 />
             </AnimatePresence>
         </div>
@@ -121,14 +121,6 @@ const NaturalResourcesPage = () => {
                         <div className="container mx-auto px-6">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                                 <div className="max-w-4xl">
-                                    <motion.div
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.8, delay: 0.3 }}
-                                        className="flex items-center gap-3 text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] mb-4"
-                                    >
-                                        <Sparkles size={16} /> <span>Business Segment</span>
-                                    </motion.div>
 
                                     <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg px-1">
                                         <motion.span
@@ -209,7 +201,7 @@ const NaturalResourcesPage = () => {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 1 }}
-                                className="relative rounded-[3.5rem] overflow-hidden shadow-2xl aspect-[4/5] bg-slate-50"
+                                className="relative rounded-card overflow-hidden shadow-2xl aspect-[4/5] bg-slate-50"
                             >
                                 <ImageSlideshow images={[
                                     "/natural/bauxite_mining.jpg",
@@ -240,7 +232,7 @@ const NaturalResourcesPage = () => {
                                 className="group flex flex-col items-center"
                             >
                                 {/* Image Container - CSR Style */}
-                                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[2.5rem] shadow-xl mb-0">
+                                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-card shadow-xl mb-0">
                                     <img
                                         src={biz.image}
                                         alt={biz.title}
@@ -253,7 +245,7 @@ const NaturalResourcesPage = () => {
                                 <div className="w-px h-12 bg-gray-200 mx-auto"></div>
 
                                 {/* Content Box - CSR Style (Blue) */}
-                                <div className="bg-navy-deep p-8 rounded-[2.5rem] text-center shadow-xl w-full flex flex-col items-center justify-center min-h-[160px] transform group-hover:-translate-y-2 transition-transform duration-500">
+                                <div className="bg-navy-deep p-8 rounded-card text-center shadow-xl w-full flex flex-col items-center justify-center min-h-[160px] transform group-hover:-translate-y-2 transition-transform duration-500">
                                     <h4 className="text-white text-xl md:text-2xl font-display tracking-wide leading-snug">{biz.title}</h4>
                                     <div className="w-12 h-0.5 bg-white/20 mt-4"></div>
                                 </div>

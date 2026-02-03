@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
-import { ChevronDown, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 import "swiper/css";
 import "swiper/css/effect-fade";
@@ -168,15 +168,6 @@ const CSRPage = () => {
                     <div className="container mx-auto px-6">
                         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                             <div className="max-w-4xl">
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 0.8, delay: 0.3 }}
-                                    className="flex items-center gap-3 text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] mb-4"
-                                >
-                                    <Sparkles size={16} /> <span>Community & Impact</span>
-                                </motion.div>
-
                                 <h1 className="text-white text-5xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg">
                                     <motion.span
                                         initial={{ opacity: 0, y: 100 }}
@@ -228,7 +219,7 @@ const CSRPage = () => {
                             className="group flex flex-col items-center h-full"
                         >
                             {/* Top Image Section */}
-                            <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-xl mb-4 shrink-0">
+                            <div className="relative w-full aspect-[4/3] rounded-card-sm overflow-hidden shadow-xl mb-4 shrink-0">
                                 <img
                                     src={area.image}
                                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
@@ -246,7 +237,7 @@ const CSRPage = () => {
                             ></motion.div>
 
                             {/* Bottom Info Box */}
-                            <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-3xl relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
+                            <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-card relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
                                 <h3 className="text-white text-2xl font-display mb-4 tracking-wide">{area.title}</h3>
                                 <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
                                 <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide px-2">
@@ -267,7 +258,7 @@ const CSRPage = () => {
 
                     <div className="space-y-4">
                         {initiatives.map(initiative => (
-                            <div key={initiative.title} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100">
+                            <div key={initiative.title} className="bg-white rounded-card-sm overflow-hidden shadow-sm border border-slate-100">
                                 <button
                                     onClick={() =>
                                         setOpenInitiative(
@@ -325,17 +316,13 @@ const CSRPage = () => {
                 </div>
 
                 <div className="relative w-full">
-                    {/* Gradient Masks */}
-                    <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-                    <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-
-                    <div className="flex overflow-hidden">
+                    <div className="flex overflow-hidden relative">
                         <motion.div
-                            className="flex gap-8 px-4"
+                            className="flex gap-12 px-4 py-20 items-center"
                             animate={{ x: ["0%", "-50%"] }}
                             transition={{
                                 ease: "linear",
-                                duration: 150, // Slow continuous scroll
+                                duration: 180,
                                 repeat: Infinity,
                             }}
                             style={{ width: "fit-content" }}
@@ -343,13 +330,15 @@ const CSRPage = () => {
                             {[...csrGalleryImages, ...csrGalleryImages].map((src, index) => (
                                 <div
                                     key={index}
-                                    className="w-[400px] h-[280px] shrink-0 rounded-3xl overflow-hidden shadow-lg"
+                                    className="w-[450px] h-[300px] shrink-0 rounded-card-sm overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-[#BA9B32]/40 group relative"
                                 >
                                     <img
                                         src={src}
                                         alt={`CSR Gallery ${index}`}
-                                        className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+                                        className="w-full h-full object-cover grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-[2.5s] ease-out"
                                     />
+                                    <div className="absolute inset-0 bg-navy-deep/10 group-hover:bg-transparent transition-colors duration-700"></div>
+                                    <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-700"></div>
                                 </div>
                             ))}
                         </motion.div>

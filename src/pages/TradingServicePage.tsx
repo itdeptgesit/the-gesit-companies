@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 
@@ -9,7 +9,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 
 /**
- * TradingServicePage - Business Segment
+ * TradingServicePage
  * Features high-fidelity imagery and staggered service showcases.
  * Focuses on global efficiency, precision, and partnership-driven growth.
  */
@@ -35,7 +35,7 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
                     exit={{ x: "-100%" }}
                     transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                     className="absolute inset-0 w-full h-full object-cover"
-                    alt="Business Segment"
+                    alt="Trading & Services"
                 />
             </AnimatePresence>
         </div>
@@ -106,15 +106,6 @@ const TradingServicePage = () => {
                         <div className="container mx-auto px-6">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                                 <div className="max-w-4xl">
-                                    <motion.div
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.8, delay: 0.3 }}
-                                        className="flex items-center gap-3 text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] mb-4"
-                                    >
-                                        <Sparkles size={16} /> <span>Business Segment</span>
-                                    </motion.div>
-
                                     <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg px-1">
                                         <motion.span
                                             initial={{ opacity: 0, y: 100 }}
@@ -200,7 +191,7 @@ const TradingServicePage = () => {
                                     transition={{ duration: 1 }}
                                     className="relative"
                                 >
-                                    <div className="aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl relative z-10 bg-slate-50">
+                                    <div className="aspect-[4/3] rounded-card overflow-hidden shadow-2xl relative z-10 bg-slate-50">
                                         <ImageSlideshow images={["/trading/trading1.png", "/trading/trading2.png"]} />
                                     </div>
                                     <div className="absolute -top-10 -right-10 w-2/3 aspect-square rounded-full border border-[#BA9B32]/20 -z-10 animate-spin-slow"></div>
@@ -216,7 +207,7 @@ const TradingServicePage = () => {
                                 transition={{ duration: 1 }}
                                 className="relative"
                             >
-                                <div className="aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl relative z-10 bg-slate-50">
+                                <div className="aspect-[4/3] rounded-card overflow-hidden shadow-2xl relative z-10 bg-slate-50">
                                     <ImageSlideshow images={["/trading/agency1.jpeg", "/trading/agency2.jpeg", "/trading/agency3.jpeg"]} />
                                 </div>
                             </motion.div>

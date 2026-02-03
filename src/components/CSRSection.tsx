@@ -17,12 +17,13 @@ const CSRSection = () => {
                         transition={{ duration: 0.8 }}
                         className="w-full lg:w-1/2 relative group"
                     >
-                        <div className="aspect-video shadow-2xl overflow-hidden rounded-2xl bg-black relative">
+                        <div className="aspect-video shadow-2xl overflow-hidden rounded-card-sm bg-black relative">
                             {latestCSR ? (
                                 <img
                                     src={latestCSR.image}
                                     alt={latestCSR.title}
                                     className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                                    loading="lazy"
                                 />
                             ) : (
                                 <video

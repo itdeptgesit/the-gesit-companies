@@ -62,11 +62,12 @@ const BusinessSection = () => {
                                     className="group flex flex-col items-center h-full"
                                 >
                                     {/* Top Image Section */}
-                                    <div className="relative w-full aspect-[4/3] rounded-3xl overflow-hidden shadow-xl mb-4 shrink-0">
+                                    <div className="relative w-full aspect-[4/3] rounded-card-sm overflow-hidden shadow-xl mb-4 shrink-0">
                                         <img
                                             src={biz.image}
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
                                             alt={biz.title}
+                                            loading="lazy"
                                         />
                                         <div className="absolute inset-0 bg-navy-deep/10"></div>
                                     </div>
@@ -80,16 +81,22 @@ const BusinessSection = () => {
                                     ></motion.div>
 
                                     {/* Bottom Info Box */}
-                                    <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-3xl relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
-                                        <h3 className="text-white text-2xl font-display mb-4 tracking-wide">{biz.title}</h3>
-                                        <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
-                                        <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide px-2">
+                                    <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-card relative z-10 group-hover:-translate-y-4 group-hover:shadow-2xl transition-all duration-700 ease-[0.22,1,0.36,1] flex-1 flex flex-col justify-center overflow-hidden">
+                                        {/* Cinematic Background Glow */}
+                                        <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+                                        <h3 className="text-white text-2xl font-display mb-4 tracking-wide relative z-10">{biz.title}</h3>
+                                        <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0 relative z-10 group-hover:w-20 transition-all duration-700"></div>
+                                        <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide px-2 relative z-10">
                                             {biz.description}
                                         </p>
 
-                                        <div className="mt-8 flex items-center justify-center gap-2 text-white font-bold text-[10px] uppercase tracking-[0.3em] group-hover:gap-4 transition-all duration-300">
-                                            <span>Explore</span>
-                                            <ArrowRight size={14} />
+                                        <div className="mt-8 flex items-center justify-center gap-2 text-white font-bold text-[10px] uppercase tracking-[0.3em] group-hover:gap-4 transition-all duration-500 relative z-10">
+                                            <span className="relative">
+                                                Explore
+                                                <div className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white/50 group-hover:w-full transition-all duration-500"></div>
+                                            </span>
+                                            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                                         </div>
                                     </div>
                                 </motion.div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 
@@ -9,7 +9,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 
 /**
- * ManufacturingPage - Business Segment
+ * ManufacturingPage
  * Features industrial-premium imagery and staggered manufacturing showcases.
  * Focuses on global efficiency, precision, and partnership-driven growth.
  */
@@ -35,7 +35,7 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
                     exit={{ x: "-100%" }}
                     transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                     className="absolute inset-0 w-full h-full object-cover"
-                    alt="Business Segment"
+                    alt="Manufacturing"
                 />
             </AnimatePresence>
         </div>
@@ -106,14 +106,6 @@ const ManufacturingPage = () => {
                         <div className="container mx-auto px-6">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
                                 <div className="max-w-4xl">
-                                    <motion.div
-                                        initial={{ opacity: 0, x: -20 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ duration: 0.8, delay: 0.3 }}
-                                        className="flex items-center gap-3 text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] mb-4"
-                                    >
-                                        <Sparkles size={16} /> <span>Business Segment</span>
-                                    </motion.div>
 
                                     <h1 className="text-white text-3xl sm:text-4xl md:text-6xl font-display leading-[1.2] mb-0 pb-4 overflow-hidden drop-shadow-lg px-1">
                                         <motion.span
@@ -157,25 +149,55 @@ const ManufacturingPage = () => {
             </section>
 
             {/* 2. High-Impact Gold Introduction Section */}
-            < section className="bg-[#BA9B32] py-24 md:py-32 relative overflow-hidden" >
-                <div className="container mx-auto px-6 max-w-6xl relative z-10">
-                    <motion.div {...fadeIn} className="text-white">
-                        <h2 className="text-2xl md:text-5xl font-display leading-[1.3] mb-10 max-w-4xl font-light">
-                            Serving important industrial sectors, delivering <span className="font-bold underline decoration-white/30 underline-offset-8">high-quality products</span>, and establishing strong long-term partnership.
+            <section className="bg-[#BA9B32] py-28 md:py-40 relative overflow-hidden">
+                {/* Background Industrial Accents */}
+                <div className="absolute inset-0 opacity-[0.03] pointer-events-none select-none overflow-hidden">
+                    <div className="absolute top-10 left-10 text-[10px] font-mono tracking-widest uppercase">COORD: 6.2088° S, 106.8456° E</div>
+                    <div className="absolute bottom-10 right-10 text-[10px] font-mono tracking-widest uppercase">REF: MFG-GESIT-2026</div>
+                    <div className="absolute top-1/2 left-0 w-full h-[1px] bg-white"></div>
+                    <div className="absolute top-0 left-1/4 w-[1px] h-full bg-white"></div>
+                    <div className="absolute top-0 left-3/4 w-[1px] h-full bg-white"></div>
+                </div>
+
+                <div className="container mx-auto px-6 max-w-5xl relative z-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                        className="text-white"
+                    >
+                        <h2 className="text-2xl md:text-5xl font-display leading-[1.25] mb-12 max-w-4xl font-light">
+                            Serving <span className="italic text-white/90">important</span> industrial sectors,
+                            delivering <span className="relative inline-block mx-1">
+                                <span className="relative z-10 font-bold">high-quality products</span>
+                                <motion.span
+                                    initial={{ width: 0 }}
+                                    whileInView={{ width: "100%" }}
+                                    transition={{ duration: 1, delay: 0.8 }}
+                                    className="absolute bottom-1 left-0 h-[8px] bg-white/20 -rotate-1"
+                                ></motion.span>
+                            </span>
+                            and establishing <span className="font-bold">strong long-term partnership.</span>
                         </h2>
+
                         <div className="flex gap-8 items-start">
-                            <div className="w-1 h-24 bg-white/20"></div>
-                            <p className="text-white/80 text-lg md:text-xl font-light leading-relaxed max-w-2xl pt-2">
-                                The Gesit Companies operates aluminum fabrication and packaging company through two business lines: <span className="font-bold text-white">Alakasa Andalan Mitra Sejati</span> and <span className="font-bold text-white">Rheem Indonesia</span>.
+                            <div className="flex flex-col items-center shrink-0">
+                                <div className="w-[1.5px] h-20 bg-gradient-to-b from-white to-transparent"></div>
+                                <div className="w-1.5 h-1.5 rounded-full border border-white/50 mt-1"></div>
+                            </div>
+                            <p className="text-white/80 text-base md:text-xl font-light leading-relaxed max-w-2xl pt-2">
+                                The Gesit Companies operates aluminum fabrication and packaging company through two business lines: <a href="https://aams.co.id/" target="_blank" rel="noopener noreferrer" className="font-bold text-white border-b border-white/30 hover:border-white transition-colors">Alakasa Andalan Mitra Sejati</a> and <a href="https://rheem.co.id/" target="_blank" rel="noopener noreferrer" className="font-bold text-white border-b border-white/30 hover:border-white transition-colors">Rheem Indonesia</a>.
                             </p>
                         </div>
                     </motion.div>
                 </div>
+
                 {/* Abstract decoration */}
-                <div className="absolute -bottom-20 -right-20 text-[20vw] font-display text-white/5 select-none pointer-events-none">
-                    GESIT
+                <div className="absolute -bottom-20 -right-20 text-[25vw] font-display text-white/5 select-none pointer-events-none leading-none tracking-tighter">
+                    MFG
                 </div>
-            </section >
+            </section>
 
             {/* 3. Aluminum Fabrication Section (Editorial Staggered) */}
             < section className="py-24 md:py-40 bg-white" >
@@ -211,7 +233,7 @@ const ManufacturingPage = () => {
                                 transition={{ duration: 1 }}
                                 className="relative"
                             >
-                                <div className="aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl relative z-10 bg-slate-50">
+                                <div className="aspect-[4/3] rounded-card overflow-hidden shadow-2xl relative z-10 bg-slate-50">
                                     <ImageSlideshow images={["/manufacturing/aluminum1.jpeg", "/manufacturing/aluminum2.jpeg", "/manufacturing/aluminum3.jpeg"]} />
                                 </div>
                                 <div className="absolute -top-10 -right-10 w-2/3 aspect-square rounded-full border border-[#BA9B32]/20 -z-10 animate-spin-slow"></div>
@@ -231,7 +253,7 @@ const ManufacturingPage = () => {
                             transition={{ duration: 1 }}
                             className="relative"
                         >
-                            <div className="aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl relative z-10 bg-slate-100">
+                            <div className="aspect-[4/3] rounded-card overflow-hidden shadow-2xl relative z-10 bg-slate-100">
                                 <ImageSlideshow images={["/manufacturing/steel1.jpeg", "/manufacturing/steel2.png", "/manufacturing/steel3.png", "/manufacturing/steel4.jpeg"]} />
                             </div>
                         </motion.div>
@@ -277,7 +299,7 @@ const ManufacturingPage = () => {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 1 }}
-                                className="relative rounded-[3rem] overflow-hidden shadow-2xl aspect-[4/5]"
+                                className="relative rounded-card overflow-hidden shadow-2xl aspect-[4/5]"
                             >
                                 <img src="/manufacturing/alumina.jpeg" className="w-full h-full object-cover" alt="Smelter Development" />
                                 <div className="absolute inset-0 bg-navy-deep/20"></div>

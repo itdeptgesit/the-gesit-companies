@@ -37,11 +37,12 @@ const LatestNewsSection = () => {
                             className="group"
                         >
                             <Link to={`/news/${item.id}`} className="block">
-                                <div className="aspect-[16/10] overflow-hidden rounded-xl mb-8 shadow-lg bg-slate-200">
+                                <div className="aspect-video shadow-2xl overflow-hidden rounded-card-sm bg-black relative">
                                     <img
                                         src={item.image}
                                         alt={item.title}
                                         className="w-full h-full object-cover group-hover:scale-110 transition duration-[1s] ease-out"
+                                        loading="lazy"
                                     />
                                 </div>
                                 <div className="space-y-4">

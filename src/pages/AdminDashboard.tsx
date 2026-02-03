@@ -22,15 +22,18 @@ import {
     Underline,
     Heading,
     Link as LinkIcon,
-    Building2,
     MapPin,
     Linkedin,
     FileText,
-    CheckCircle
+    CheckCircle,
+    Mail,
+    Eye,
+    Settings,
+    Building2
 } from "lucide-react";
 import { useNews, type NewsItem } from "../context/NewsContext.tsx";
 import { useCareer, type Career } from "../context/CareerContext.tsx";
-import { useProperty, type Property } from "../context/PropertyContext.tsx";
+import { useSettings } from "../context/SettingsContext.tsx";
 import { supabase, uploadImage } from "../lib/supabase";
 
 const AdminDashboard = () => {
@@ -44,6 +47,7 @@ const AdminDashboard = () => {
     const [activeTab, setActiveTab] = useState("overview");
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isSending, setIsSending] = useState(false);
+    const [visitorCount, setVisitorCount] = useState<number>(0);
 
     // Whitelist of allowed admin emails
     const ALLOWED_EMAILS = [
@@ -54,12 +58,27 @@ const AdminDashboard = () => {
     useEffect(() => {
         // Check active session
         supabase.auth.getSession().then(({ data: { session } }) => {
-            setIsLoggedIn(!!session);
-            // On page load, we force re-verification for security (session exists != 2FA passed recently)
-            setIs2FAVerified(false);
+            const userEmail = session?.user?.email?.toLowerCase();
 
-            // OPTIONAL: If you want to bypass 2FA on refresh for UX, check localStorage here.
-            // But for high security, forcing 2FA on refresh is better.
+            // Validate if user is still in whitelist
+            if (session && userEmail && ALLOWED_EMAILS.includes(userEmail)) {
+                setIsLoggedIn(true);
+                setEmail(userEmail);
+
+                // Check if 2FA was recently verified (within 24 hours)
+                const lastVerified = localStorage.getItem('gesit_admin_2fa_verified');
+                const isRecentlyVerified = lastVerified && (Date.now() - parseInt(lastVerified) < 24 * 60 * 60 * 1000);
+
+                if (isRecentlyVerified) {
+                    setIs2FAVerified(true);
+                } else {
+                    // Force re-verification if 2FA expired
+                    setIs2FAVerified(false);
+                }
+            } else {
+                setIsLoggedIn(false);
+                setIs2FAVerified(false);
+            }
 
             setAuthLoading(false);
         });
@@ -71,11 +90,33 @@ const AdminDashboard = () => {
             setIsLoggedIn(!!session);
             if (!session) {
                 setIs2FAVerified(false);
+                localStorage.removeItem('gesit_admin_2fa_verified');
             }
         });
 
         return () => subscription.unsubscribe();
     }, []);
+
+    // Fetch Visitor Count
+    useEffect(() => {
+        const fetchVisitorStats = async () => {
+            const { data } = await supabase
+                .from('site_stats')
+                .select('value')
+                .eq('key', 'total_visitors')
+                .single();
+            if (data) setVisitorCount(parseInt(data.value));
+        };
+        if (isLoggedIn && is2FAVerified) {
+            fetchVisitorStats();
+            // Optional: Subscribe to changes
+            const channel = supabase
+                .channel('stats_changes')
+                .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'site_stats' }, fetchVisitorStats)
+                .subscribe();
+            return () => { supabase.removeChannel(channel); };
+        }
+    }, [isLoggedIn, is2FAVerified]);
 
     const handleLoginStep1 = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -139,6 +180,7 @@ const AdminDashboard = () => {
             if (error) throw error;
 
             // Success! 
+            localStorage.setItem('gesit_admin_2fa_verified', Date.now().toString());
             setIs2FAVerified(true);
         } catch (err: any) {
             console.error(err);
@@ -152,6 +194,7 @@ const AdminDashboard = () => {
         await supabase.auth.signOut();
         setIsLoggedIn(false);
         setIs2FAVerified(false);
+        localStorage.removeItem('gesit_admin_2fa_verified');
         setOtp("");
         setEmail("");
         setPassword("");
@@ -160,8 +203,9 @@ const AdminDashboard = () => {
     const tabs = [
         { id: "overview", label: "Overview", icon: <LayoutDashboard size={20} /> },
         { id: "news", label: "News & Insights", icon: <Newspaper size={20} /> },
-        { id: "property", label: "Property Portfolio", icon: <Building2 size={20} /> },
         { id: "careers", label: "Careers Vault", icon: <Briefcase size={20} /> },
+        { id: "contacts", label: "Contact Inquiries", icon: <Mail size={20} /> },
+        { id: "settings", label: "Site Settings", icon: <Settings size={20} /> },
     ];
 
     if (authLoading) {
@@ -212,7 +256,7 @@ const AdminDashboard = () => {
                                     <X size={20} />
                                 </button>
 
-                                <div className="w-16 h-16 bg-white rounded-2xl shadow-lg border border-slate-100 flex items-center justify-center mb-4 p-2">
+                                <div className="w-16 h-16 bg-white rounded-card-sm shadow-lg border border-slate-100 flex items-center justify-center mb-4 p-2">
                                     <img src="/logo gesit.png" alt="Gesit" className="w-full h-full object-contain" />
                                 </div>
                                 <h2 className="text-xl font-display font-bold text-navy-deep">Admin Portal</h2>
@@ -229,7 +273,7 @@ const AdminDashboard = () => {
                                             setActiveTab(tab.id);
                                             if (window.innerWidth < 1024) setIsSidebarOpen(false);
                                         }}
-                                        className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-300 group relative overflow-hidden ${activeTab === tab.id
+                                        className={`w-full flex items-center gap-4 px-4 py-4 rounded-card-sm transition-all duration-300 group relative overflow-hidden ${activeTab === tab.id
                                             ? "bg-navy-deep text-white shadow-lg shadow-navy-deep/20"
                                             : "text-slate-500 hover:bg-slate-50 hover:text-navy-deep"
                                             }`}
@@ -244,7 +288,7 @@ const AdminDashboard = () => {
                                             />
                                         )}
                                         {/* Icon Container */}
-                                        <div className={`relative p-2 rounded-lg transition-colors ${activeTab === tab.id ? "bg-white/10 text-[#BA9B32]" : "bg-slate-100/50 group-hover:bg-white group-hover:shadow-sm"}`}>
+                                        <div className={`relative p-2 rounded-card-sm transition-colors ${activeTab === tab.id ? "bg-white/10 text-[#BA9B32]" : "bg-slate-100/50 group-hover:bg-white group-hover:shadow-sm"}`}>
                                             {tab.icon}
                                         </div>
                                         <span className="font-medium text-xs tracking-wide">{tab.label}</span>
@@ -253,11 +297,22 @@ const AdminDashboard = () => {
                                 ))}
                             </nav>
 
+                            {/* Visitor Count in Sidebar */}
+                            <div className="px-10 py-4 border-t border-slate-50">
+                                <div className="flex items-center gap-3 text-slate-400">
+                                    <Eye size={16} className="text-[#BA9B32]" />
+                                    <div className="flex flex-col">
+                                        <span className="text-[9px] font-bold uppercase tracking-widest text-slate-300">Total Visitors</span>
+                                        <span className="text-sm font-display font-bold text-navy-deep">{visitorCount.toLocaleString()}</span>
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* Sidebar Footer */}
                             <div className="p-6 border-t border-slate-50">
                                 <button
                                     onClick={handleLogout}
-                                    className="w-full flex items-center justify-center gap-3 px-4 py-4 rounded-xl text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all font-medium text-xs tracking-widest uppercase group"
+                                    className="w-full flex items-center justify-center gap-3 px-4 py-4 rounded-card-sm text-slate-400 hover:bg-red-50 hover:text-red-500 transition-all font-medium text-xs tracking-widest uppercase group"
                                 >
                                     <LogOut size={18} className="group-hover:-translate-x-1 transition-transform" />
                                     <span>Sign Out</span>
@@ -272,14 +327,14 @@ const AdminDashboard = () => {
                     {/* Top Bar for Mobile */}
                     <div className="sticky top-0 lg:hidden z-30 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-white rounded-lg shadow-sm border border-slate-100 p-1">
+                            <div className="w-8 h-8 bg-white rounded-card-sm shadow-sm border border-slate-100 p-1">
                                 <img src="/logo gesit.png" alt="Gesit" className="w-full h-full object-contain" />
                             </div>
                             <span className="font-display font-bold text-navy-deep">Gesit Admin</span>
                         </div>
                         <button
                             onClick={() => setIsSidebarOpen(true)}
-                            className="p-2 text-navy-deep bg-slate-50 rounded-lg hover:bg-slate-100 transition-colors"
+                            className="p-2 text-navy-deep bg-slate-50 rounded-card-sm hover:bg-slate-100 transition-colors"
                         >
                             <Menu size={20} />
                         </button>
@@ -294,10 +349,11 @@ const AdminDashboard = () => {
                                 exit={{ opacity: 0, y: -10 }}
                                 transition={{ duration: 0.3 }}
                             >
-                                {activeTab === "overview" && <OverviewSection />}
+                                {activeTab === "overview" && <OverviewSection visitorCount={visitorCount} />}
                                 {activeTab === "news" && <ContentSection />}
-                                {activeTab === "property" && <PropertySection />}
                                 {activeTab === "careers" && <CareersVault />}
+                                {activeTab === "contacts" && <ContactSection />}
+                                {activeTab === "settings" && <SettingsSection />}
                             </motion.div>
                         </AnimatePresence>
                     </div>
@@ -317,7 +373,7 @@ const AdminDashboard = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 key={showOtpScreen ? 'otp' : 'login'}
-                className="w-full max-w-[480px] bg-white rounded-[3rem] shadow-2xl relative overflow-hidden flex flex-col items-center"
+                className="w-full max-w-[480px] bg-white rounded-card shadow-2xl relative overflow-hidden flex flex-col items-center"
             >
                 <div className="p-10 md:p-14 w-full">
                     <div className="mb-12 text-center">
@@ -325,7 +381,7 @@ const AdminDashboard = () => {
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ delay: 0.2 }}
-                            className="w-28 h-28 bg-white rounded-3xl mx-auto mb-8 flex items-center justify-center shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-slate-50 p-6"
+                            className="w-28 h-28 bg-white rounded-card-sm mx-auto mb-8 flex items-center justify-center shadow-[0_15px_40px_rgba(0,0,0,0.06)] border border-slate-50 p-6"
                         >
                             <img src="/logo gesit.png" alt="Gesit Logo" className="w-full h-full object-contain" />
                         </motion.div>
@@ -343,7 +399,7 @@ const AdminDashboard = () => {
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full bg-[#F8F9FD] border border-transparent rounded-[1.25rem] py-5 px-8 text-[15px] font-medium text-navy-deep placeholder:text-slate-300 outline-none focus:bg-white focus:border-slate-200 focus:shadow-sm transition-all duration-300"
+                                        className="w-full bg-[#F8F9FD] border border-transparent rounded-input py-5 px-8 text-[15px] font-medium text-navy-deep placeholder:text-slate-300 outline-none focus:bg-white focus:border-slate-200 focus:shadow-sm transition-all duration-300"
                                         placeholder="user@gesit.co.id"
                                         required
                                         disabled={isSending}
@@ -358,7 +414,7 @@ const AdminDashboard = () => {
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full bg-[#F8F9FD] border border-transparent rounded-[1.25rem] py-5 px-8 text-xl tracking-[0.3em] text-navy-deep placeholder:text-slate-300 outline-none focus:bg-white focus:border-slate-200 focus:shadow-sm transition-all duration-300 font-mono"
+                                        className="w-full bg-[#F8F9FD] border border-transparent rounded-input py-5 px-8 text-xl tracking-[0.3em] text-navy-deep placeholder:text-slate-300 outline-none focus:bg-white focus:border-slate-200 focus:shadow-sm transition-all duration-300 font-mono"
                                         placeholder="••••••••"
                                         required
                                         disabled={isSending}
@@ -370,7 +426,7 @@ const AdminDashboard = () => {
                                 <motion.div
                                     initial={{ opacity: 0, height: 0 }}
                                     animate={{ opacity: 1, height: 'auto' }}
-                                    className="bg-red-50 text-red-600 p-5 rounded-2xl text-[11px] font-bold uppercase tracking-wider text-center flex items-center justify-center gap-3 border border-red-100"
+                                    className="bg-red-50 text-red-600 p-5 rounded-card-sm text-[11px] font-bold uppercase tracking-wider text-center flex items-center justify-center gap-3 border border-red-100"
                                 >
                                     <AlertCircle size={18} /> {error}
                                 </motion.div>
@@ -379,7 +435,7 @@ const AdminDashboard = () => {
                             <button
                                 type="submit"
                                 disabled={isSending}
-                                className="w-full py-5 bg-[#0a192f] text-white rounded-[1.25rem] font-bold text-[11px] uppercase tracking-[0.3em] hover:bg-[#050d18] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-4 group disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_20px_40px_rgba(10,25,47,0.3)]"
+                                className="w-full py-5 bg-[#0a192f] text-white rounded-input font-bold text-[11px] uppercase tracking-[0.3em] hover:bg-[#050d18] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-4 group disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_20px_40px_rgba(10,25,47,0.3)]"
                             >
                                 {isSending ? 'Authenticating...' : 'Sign In & Verify'}
                                 {!isSending && <ChevronRight size={18} className="transition-transform group-hover:translate-x-1" />}
@@ -409,7 +465,7 @@ const AdminDashboard = () => {
                                     type="text"
                                     value={otp}
                                     onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 8))}
-                                    className="w-full bg-[#F8F9FD] border border-transparent rounded-[1.25rem] py-6 px-8 focus:outline-none focus:bg-white focus:border-slate-200 transition-all font-mono text-4xl text-center tracking-[0.4em] text-navy-deep placeholder-slate-200"
+                                    className="w-full bg-[#F8F9FD] border border-transparent rounded-input py-6 px-8 focus:outline-none focus:bg-white focus:border-slate-200 transition-all font-mono text-4xl text-center tracking-[0.4em] text-navy-deep placeholder-slate-200"
                                     placeholder="000000"
                                     required
                                     maxLength={8}
@@ -422,7 +478,7 @@ const AdminDashboard = () => {
                                 <motion.div
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="bg-red-50 text-red-600 p-5 rounded-2xl text-[11px] font-bold uppercase tracking-wider text-center flex items-center justify-center gap-3 border border-red-100"
+                                    className="bg-red-50 text-red-600 p-5 rounded-card-sm text-[11px] font-bold uppercase tracking-wider text-center flex items-center justify-center gap-3 border border-red-100"
                                 >
                                     <AlertCircle size={18} /> {error}
                                 </motion.div>
@@ -432,7 +488,7 @@ const AdminDashboard = () => {
                                 <button
                                     type="submit"
                                     disabled={isSending || otp.length < 6}
-                                    className="w-full py-5 bg-[#0a192f] text-white rounded-[1.25rem] font-bold text-[11px] uppercase tracking-[0.3em] hover:bg-[#050d18] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-4 group disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_20px_40px_rgba(10,25,47,0.3)]"
+                                    className="w-full py-5 bg-[#0a192f] text-white rounded-input font-bold text-[11px] uppercase tracking-[0.3em] hover:bg-[#050d18] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-4 group disabled:opacity-70 disabled:cursor-not-allowed shadow-[0_20px_40px_rgba(10,25,47,0.3)]"
                                 >
                                     {isSending ? 'Verifying...' : 'Access Dashboard'}
                                     {!isSending && <CheckCircle size={18} />}
@@ -476,7 +532,7 @@ const AdminDashboard = () => {
 
 /* --- Sub-Components --- */
 
-const OverviewSection = () => {
+const OverviewSection = ({ visitorCount }: { visitorCount: number }) => {
     const { newsItems, loading: newsLoading } = useNews();
     const { applications, loading: careerLoading, fetchApplications } = useCareer();
 
@@ -485,9 +541,10 @@ const OverviewSection = () => {
     }, []);
 
     const stats = [
-        { label: "Active News", value: newsLoading ? "..." : newsItems.filter(i => i.type === 'news').length.toString(), icon: <Newspaper />, trend: "Real-time" },
-        { label: "New Applications", value: careerLoading ? "..." : applications.length.toString(), icon: <Users />, trend: "+12.5%" },
-        { label: "Avg. Response", value: "2.4d", icon: <Clock />, trend: "-0.2d" },
+        { label: "Total Visitors", value: visitorCount.toLocaleString(), icon: <Eye />, trend: "Real-time" },
+        { label: "Active News", value: newsLoading ? "..." : newsItems.filter(i => i.type === 'news').length.toString(), icon: <Newspaper />, trend: "Official" },
+        { label: "New Applications", value: careerLoading ? "..." : applications.length.toString(), icon: <Users />, trend: "Career Portal" },
+        // { label: "Total Inquiries", value: totalContacts.toString(), icon: <Mail />, trend: "Contact Us" },
     ];
 
     const recentApps = applications.slice(0, 3);
@@ -496,7 +553,7 @@ const OverviewSection = () => {
         <div className="space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {stats.map((stat, idx) => (
-                    <div key={idx} className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden relative group">
+                    <div key={idx} className="bg-white p-8 rounded-card border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden relative group">
                         <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity whitespace-nowrap overflow-hidden">
                             {stat.icon}
                         </div>
@@ -510,14 +567,14 @@ const OverviewSection = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 text-center md:text-left">
-                <div className="lg:col-span-2 bg-white rounded-3xl p-10 border border-slate-100 shadow-sm">
+                <div className="lg:col-span-2 bg-white rounded-card-sm p-10 border border-slate-100 shadow-sm">
                     <h3 className="text-xl font-display mb-8">Recent Activity</h3>
                     <div className="space-y-6">
                         {recentApps.length > 0 ? (
                             recentApps.map((app) => (
-                                <div key={app.id} className="flex items-center justify-between py-4 border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors rounded-xl px-4 -mx-4 group">
+                                <div key={app.id} className="flex items-center justify-between py-4 border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors rounded-card-sm px-4 -mx-4 group">
                                     <div className="flex items-center gap-6 text-left">
-                                        <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#BA9B32] group-hover:text-white transition-all shrink-0">
+                                        <div className="w-12 h-12 rounded-card-sm bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#BA9B32] group-hover:text-white transition-all shrink-0">
                                             <Clock size={20} />
                                         </div>
                                         <div className="min-w-0">
@@ -527,7 +584,7 @@ const OverviewSection = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <button className="p-2 text-[#BA9B32] hover:bg-[#BA9B32]/10 rounded-lg transition-all">
+                                    <button className="p-2 text-[#BA9B32] hover:bg-[#BA9B32]/10 rounded-card-sm transition-all">
                                         <ChevronRight size={18} />
                                     </button>
                                 </div>
@@ -540,7 +597,7 @@ const OverviewSection = () => {
                     </div>
                 </div>
 
-                <div className="bg-navy-deep rounded-3xl p-10 text-white relative overflow-hidden shadow-2xl">
+                <div className="bg-navy-deep rounded-card-sm p-10 text-white relative overflow-hidden shadow-2xl">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#BA9B32]/20 to-transparent"></div>
                     <div className="relative z-10">
                         <h3 className="text-xl font-display mb-6">System Status</h3>
@@ -551,7 +608,7 @@ const OverviewSection = () => {
                                 { name: "Media Server", status: "Live" },
                                 { name: "Application API", status: "Live" }
                             ].map((service) => (
-                                <div key={service.name} className="flex items-center justify-between bg-white/5 p-4 rounded-2xl hover:bg-white/10 transition-colors">
+                                <div key={service.name} className="flex items-center justify-between bg-white/5 p-4 rounded-card-sm hover:bg-white/10 transition-colors">
                                     <span className="text-xs font-bold uppercase tracking-widest">{service.name}</span>
                                     <div className="flex items-center gap-2">
                                         <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
@@ -571,17 +628,15 @@ const NewsModal = ({
     isOpen,
     onClose,
     onSave,
-    initialData = null,
-    type
+    initialData = null
 }: {
     isOpen: boolean,
     onClose: () => void,
     onSave: (data: Omit<NewsItem, 'id'>) => void,
-    initialData?: NewsItem | null,
-    type: 'news' | 'csr'
+    initialData?: NewsItem | null
 }) => {
     const [formData, setFormData] = useState<Omit<NewsItem, 'id'>>({
-        type: initialData?.type || type,
+        type: "news",
         title: initialData?.title || "",
         category: initialData?.category || "Corporate",
         date: initialData?.date || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
@@ -623,7 +678,7 @@ const NewsModal = ({
             } else {
                 // Create Mode: Defaults
                 setFormData({
-                    type: type,
+                    type: "news",
                     title: "",
                     category: "Corporate",
                     date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
@@ -640,7 +695,7 @@ const NewsModal = ({
                 });
             }
         }
-    }, [isOpen, initialData, type]);
+    }, [isOpen, initialData]);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -665,7 +720,7 @@ const NewsModal = ({
             <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl"
+                className="bg-white rounded-card w-full max-w-2xl overflow-hidden shadow-2xl"
             >
                 <div className="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50 text-left">
                     <h3 className="text-2xl font-display">{initialData ? 'Edit Story' : 'New Story'}</h3>
@@ -680,7 +735,7 @@ const NewsModal = ({
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                             placeholder="Enter article title..."
                         />
                     </div>
@@ -691,13 +746,13 @@ const NewsModal = ({
                         <div className="flex gap-4">
                             <button
                                 onClick={() => setFormData({ ...formData, media_type: 'image' })}
-                                className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${formData.media_type !== 'video' ? 'bg-navy-deep text-white shadow-lg' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+                                className={`flex-1 py-3 px-4 rounded-input text-xs font-bold uppercase tracking-widest transition-all ${formData.media_type !== 'video' ? 'bg-navy-deep text-white shadow-lg' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
                             >
                                 Image
                             </button>
                             <button
                                 onClick={() => setFormData({ ...formData, media_type: 'video' })}
-                                className={`flex-1 py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${formData.media_type === 'video' ? 'bg-[#BA9B32] text-white shadow-lg' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
+                                className={`flex-1 py-3 px-4 rounded-input text-xs font-bold uppercase tracking-widest transition-all ${formData.media_type === 'video' ? 'bg-[#BA9B32] text-white shadow-lg' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
                             >
                                 Video
                             </button>
@@ -711,7 +766,7 @@ const NewsModal = ({
                                         type="text"
                                         value={formData.video_url || ''}
                                         onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                        className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                                         placeholder="https://www.youtube.com/watch?v=..."
                                     />
                                     {formData.video_url && (
@@ -724,7 +779,7 @@ const NewsModal = ({
                                                     setFormData({ ...formData, image: thumbUrl });
                                                 }
                                             }}
-                                            className="px-6 bg-slate-100 text-slate-500 rounded-2xl hover:bg-[#BA9B32] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 whitespace-nowrap"
+                                            className="px-6 bg-slate-100 text-slate-500 rounded-input hover:bg-[#BA9B32] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 whitespace-nowrap"
                                             title="Auto-fetch Thumbnail from YouTube"
                                         >
                                             <Camera size={16} /> <span>Get Thumb</span>
@@ -742,7 +797,7 @@ const NewsModal = ({
                         <div className="flex flex-col gap-4">
                             <div
                                 onClick={() => fileInputRef.current?.click()}
-                                className="w-full aspect-video bg-slate-50 border-2 border-dashed border-slate-200 rounded-3xl flex flex-col items-center justify-center gap-4 cursor-pointer hover:border-[#BA9B32] transition-colors overflow-hidden relative group"
+                                className="w-full aspect-video bg-slate-50 border-2 border-dashed border-slate-200 rounded-card-sm flex flex-col items-center justify-center gap-4 cursor-pointer hover:border-[#BA9B32] transition-colors overflow-hidden relative group"
                             >
                                 {formData.image ? (
                                     <>
@@ -780,7 +835,7 @@ const NewsModal = ({
                                     type="text"
                                     value={formData.image}
                                     onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                                    className="flex-1 bg-slate-50 border border-slate-100 rounded-xl py-2 px-4 text-[10px] focus:outline-none text-slate-400"
+                                    className="flex-1 bg-slate-50 border border-slate-100 rounded-input py-2 px-4 text-[10px] focus:outline-none text-slate-400"
                                     placeholder="Or paste URL here..."
                                 />
                             </div>
@@ -794,7 +849,7 @@ const NewsModal = ({
                                 type="text"
                                 value={formData.date}
                                 onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                                 placeholder="15 Jan 2026"
                             />
                         </div>
@@ -804,7 +859,7 @@ const NewsModal = ({
                                 type="text"
                                 value={formData.category}
                                 onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                             />
                         </div>
                         <div className="space-y-2">
@@ -813,7 +868,7 @@ const NewsModal = ({
                                 type="text"
                                 value={formData.author}
                                 onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                             />
                         </div>
                     </div>
@@ -822,7 +877,7 @@ const NewsModal = ({
                         <textarea
                             value={formData.excerpt}
                             onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-24 resize-none"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-24 resize-none"
                             placeholder="Brief summary for cards..."
                         />
                     </div>
@@ -832,7 +887,7 @@ const NewsModal = ({
                             type="text"
                             value={formData.tags || ''}
                             onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                             placeholder="Example: news, corporate, 2026"
                         />
                         <div className="flex flex-wrap gap-2 pt-2">
@@ -848,7 +903,7 @@ const NewsModal = ({
                         <textarea
                             value={formData.quote || ''}
                             onChange={(e) => setFormData({ ...formData, quote: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-24 resize-none"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-24 resize-none"
                             placeholder="Enter a highlight quote..."
                         />
                     </div>
@@ -858,14 +913,14 @@ const NewsModal = ({
                             type="text"
                             value={formData.quote_author || ''}
                             onChange={(e) => setFormData({ ...formData, quote_author: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                             placeholder="e.g. Gesit Foundation Executive Board"
                         />
                     </div>
 
                     <div className="space-y-2">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Full Content</label>
-                        <div className="border border-slate-100 rounded-2xl overflow-hidden bg-slate-50 focus-within:ring-2 focus-within:ring-[#BA9B32]/20">
+                        <div className="border border-slate-100 rounded-card-sm overflow-hidden bg-slate-50 focus-within:ring-2 focus-within:ring-[#BA9B32]/20">
                             {/* Formatting Toolbar */}
                             <div className="flex items-center gap-1 p-2 border-b border-slate-200 bg-slate-100/50">
                                 <button
@@ -991,19 +1046,24 @@ const NewsModal = ({
 
 const ContentSection = () => {
     const { newsItems, loading, addNews, updateNews, deleteNews } = useNews();
-    const [type, setType] = useState<"news" | "csr">("news");
+    const [searchQuery, setSearchQuery] = useState("");
     const [isSliderOpen, setIsSliderOpen] = useState(false);
     const [editingItem, setEditingItem] = useState<NewsItem | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 8;
 
-    const filteredItems = newsItems.filter(item => item.type === type);
+    // Filter by type "news" only (removing CSR) and search query
+    const filteredItems = newsItems.filter(item =>
+        item.type === "news" &&
+        (item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            item.category.toLowerCase().includes(searchQuery.toLowerCase()))
+    );
     const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
     const currentItems = filteredItems.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [type]);
+    }, [searchQuery]);
 
     const handleSave = (data: Omit<NewsItem, 'id'>) => {
         if (editingItem) {
@@ -1017,28 +1077,19 @@ const ContentSection = () => {
 
     return (
         <div className="space-y-8">
-            {/* Type Toggle */}
-            <div className="flex gap-4 p-1 bg-slate-100 rounded-2xl w-fit">
-                <button
-                    onClick={() => setType("news")}
-                    className={`px-8 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${type === "news" ? "bg-navy-deep text-white shadow-lg" : "text-slate-400 hover:text-navy-deep"}`}
-                >
-                    Official News
-                </button>
-                <button
-                    onClick={() => setType("csr")}
-                    className={`px-8 py-3 rounded-xl text-[10px] font-bold uppercase tracking-widest transition-all ${type === "csr" ? "bg-[#BA9B32] text-white shadow-lg" : "text-slate-400 hover:text-[#BA9B32]"}`}
-                >
-                    CSR Initiatives
-                </button>
-            </div>
-
             <div className="flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                    <button className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-100 rounded-full font-bold text-[10px] uppercase tracking-widest text-slate-500 hover:bg-slate-50 shadow-sm transition-all">
-                        <Filter size={16} /> <span>Filter List</span>
-                    </button>
-                    <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Showing {filteredItems.length} {type === 'news' ? 'News' : 'CSR'} items</span>
+                <div className="flex items-center gap-4 flex-1 max-w-md">
+                    <div className="relative w-full">
+                        <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
+                        <input
+                            type="text"
+                            placeholder="Filter articles by title or category..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-12 pr-4 py-3 bg-white border border-slate-100 rounded-full font-bold text-[10px] uppercase tracking-widest text-[#103065] placeholder:text-slate-300 focus:ring-2 focus:ring-[#BA9B32]/20 outline-none shadow-sm transition-all"
+                        />
+                    </div>
+                    <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest whitespace-nowrap">Found {filteredItems.length} news items</span>
                 </div>
                 <button
                     onClick={() => { setEditingItem(null); setIsSliderOpen(true); }}
@@ -1048,7 +1099,7 @@ const ContentSection = () => {
                 </button>
             </div>
 
-            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden min-h-[400px]">
+            <div className="bg-white rounded-card border border-slate-100 shadow-sm overflow-hidden min-h-[400px]">
                 <table className="w-full text-left">
                     <thead>
                         <tr className="bg-slate-50 border-b border-slate-100">
@@ -1072,7 +1123,7 @@ const ContentSection = () => {
                                 <tr key={item.id} className="hover:bg-slate-50/50 transition-colors group">
                                     <td className="px-10 py-8">
                                         <div className="flex items-center gap-6">
-                                            <div className="w-20 h-14 bg-slate-100 rounded-xl overflow-hidden shadow-sm group-hover:scale-105 transition-transform shrink-0">
+                                            <div className="w-20 h-14 bg-slate-100 rounded-card-sm overflow-hidden shadow-sm group-hover:scale-105 transition-transform shrink-0">
                                                 <img src={item.image} className="w-full h-full object-cover grayscale" alt="Thumb" />
                                             </div>
                                             <div className="min-w-0">
@@ -1089,13 +1140,13 @@ const ContentSection = () => {
                                         <div className="flex items-center justify-end gap-3">
                                             <button
                                                 onClick={() => { setEditingItem(item); setIsSliderOpen(true); }}
-                                                className="p-3 bg-slate-100 text-slate-400 hover:bg-[#BA9B32]/10 hover:text-[#BA9B32] rounded-xl transition-all"
+                                                className="p-3 bg-slate-100 text-slate-400 hover:bg-[#BA9B32]/10 hover:text-[#BA9B32] rounded-card-sm transition-all"
                                             >
                                                 <Edit2 size={16} />
                                             </button>
                                             <button
                                                 onClick={() => deleteNews(item.id)}
-                                                className="p-3 bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-500 rounded-xl transition-all"
+                                                className="p-3 bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-500 rounded-card-sm transition-all"
                                             >
                                                 <Trash2 size={16} />
                                             </button>
@@ -1114,32 +1165,36 @@ const ContentSection = () => {
                 )}
             </div>
 
-            {/* Pagination */}
-            {!loading && totalPages > 1 && (
-                <div className="flex justify-center items-center gap-2 mt-8">
-                    <button
-                        disabled={currentPage === 1}
-                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                        className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-slate-50 transition-all text-slate-500"
-                    >
-                        Prev
-                    </button>
-                    {[...Array(totalPages)].map((_, i) => (
+            {!loading && filteredItems.length > 0 && (
+                <div className="mt-8 flex items-center justify-between">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        Page {currentPage} of {totalPages}
+                    </p>
+                    <div className="flex items-center gap-2">
                         <button
-                            key={i}
-                            onClick={() => setCurrentPage(i + 1)}
-                            className={`w-10 h-10 rounded-lg border text-[10px] font-bold transition-all ${currentPage === i + 1 ? 'bg-[#BA9B32] border-[#BA9B32] text-white shadow-lg' : 'border-slate-200 text-slate-400 hover:bg-slate-50'}`}
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-white transition-all text-slate-500"
                         >
-                            {i + 1}
+                            Previous
                         </button>
-                    ))}
-                    <button
-                        disabled={currentPage === totalPages}
-                        onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                        className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-slate-50 transition-all text-slate-500"
-                    >
-                        Next
-                    </button>
+                        {[...Array(totalPages)].map((_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => setCurrentPage(i + 1)}
+                                className={`w-8 h-8 rounded-lg border text-[10px] font-bold transition-all ${currentPage === i + 1 ? 'bg-navy-deep border-navy-deep text-white shadow-lg' : 'border-slate-200 text-slate-400 hover:bg-white'}`}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                        <button
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-white transition-all text-slate-500"
+                        >
+                            Next
+                        </button>
+                    </div>
                 </div>
             )}
 
@@ -1148,15 +1203,15 @@ const ContentSection = () => {
                 onClose={() => { setIsSliderOpen(false); setEditingItem(null); }}
                 onSave={handleSave}
                 initialData={editingItem}
-                type={type}
             />
-        </div>
+        </div >
     );
 };
 
 const CareersVault = () => {
     const { jobs, applications, deleteJob, addJob, updateJob, fetchApplications, deleteApplication } = useCareer();
     const [view, setView] = useState<'jobs' | 'applications'>('jobs');
+    const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
         fetchApplications();
@@ -1180,15 +1235,28 @@ const CareersVault = () => {
     });
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 8;
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [view]);
+    }, [view, searchQuery]);
 
-    const totalPages = Math.ceil((view === 'jobs' ? jobs.length : applications.length) / itemsPerPage);
-    const currentJobs = jobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-    const currentApplications = applications.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    // Filtering logic
+    const filteredJobs = jobs.filter(job =>
+        job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.department.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        job.location.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const filteredApplications = applications.filter(app =>
+        app.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.position.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.email.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const totalPages = Math.ceil((view === 'jobs' ? filteredJobs.length : filteredApplications.length) / itemsPerPage);
+    const currentJobs = filteredJobs.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    const currentApplications = filteredApplications.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     const handleConfirmDelete = async () => {
         if (!confirmModal.id) return;
@@ -1220,7 +1288,7 @@ const CareersVault = () => {
 
     return (
         <div className="space-y-8">
-            <div className="bg-white p-10 rounded-[2.5rem] border border-slate-100 shadow-sm min-h-[600px]">
+            <div className="bg-white p-10 rounded-card border border-slate-100 shadow-sm min-h-[600px]">
                 <div className="flex justify-between items-center mb-10">
                     <div className="flex gap-4 bg-slate-50 p-1.5 rounded-full border border-slate-100">
                         <button
@@ -1238,27 +1306,80 @@ const CareersVault = () => {
                     </div>
 
                     {view === 'jobs' && (
-                        <button
-                            onClick={() => { setEditingJob(null); setIsModalOpen(true); }}
-                            className="flex items-center gap-3 px-6 py-3 bg-[#BA9B32] text-white rounded-full font-bold text-[10px] uppercase tracking-[.2em] hover:bg-navy-deep shadow-lg transition-all"
-                        >
-                            <Plus size={16} /> <span>Add Position</span>
-                        </button>
+                        <div className="flex items-center gap-6">
+                            {searchQuery && (
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                    Found {filteredJobs.length} {filteredJobs.length === 1 ? 'position' : 'positions'}
+                                </p>
+                            )}
+                            <div className="relative group max-w-sm">
+                                <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#BA9B32] transition-colors" size={16} />
+                                <input
+                                    type="text"
+                                    placeholder="Search positions..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="pl-12 pr-6 py-3 bg-slate-50 border border-slate-100 rounded-full text-xs focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/10 focus:bg-white transition-all w-64"
+                                />
+                                {searchQuery && (
+                                    <button
+                                        onClick={() => setSearchQuery("")}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-red-500 transition-colors"
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                )}
+                            </div>
+                            <button
+                                onClick={() => { setEditingJob(null); setIsModalOpen(true); }}
+                                className="flex items-center gap-3 px-6 py-3 bg-[#BA9B32] text-white rounded-full font-bold text-[10px] uppercase tracking-[.2em] hover:bg-navy-deep shadow-lg transition-all shrink-0"
+                            >
+                                <Plus size={16} /> <span>Add Position</span>
+                            </button>
+                        </div>
+                    )}
+
+                    {view === 'applications' && (
+                        <div className="flex items-center gap-6">
+                            {searchQuery && (
+                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                    Found {filteredApplications.length} {filteredApplications.length === 1 ? 'applicant' : 'applicants'}
+                                </p>
+                            )}
+                            <div className="relative group max-w-sm">
+                                <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#BA9B32] transition-colors" size={16} />
+                                <input
+                                    type="text"
+                                    placeholder="Search applicants..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="pl-12 pr-6 py-3 bg-slate-50 border border-slate-100 rounded-full text-xs focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/10 focus:bg-white transition-all w-64"
+                                />
+                                {searchQuery && (
+                                    <button
+                                        onClick={() => setSearchQuery("")}
+                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-red-500 transition-colors"
+                                    >
+                                        <X size={14} />
+                                    </button>
+                                )}
+                            </div>
+                        </div>
                     )}
                 </div>
 
                 {view === 'jobs' ? (
                     <div className="space-y-4">
-                        {jobs.length === 0 ? (
+                        {filteredJobs.length === 0 ? (
                             <div className="text-center py-20 text-slate-300">
                                 <Briefcase size={48} className="mx-auto mb-4 opacity-20" />
-                                <p className="text-[10px] font-bold uppercase tracking-widest">No active job listings</p>
+                                <p className="text-[10px] font-bold uppercase tracking-widest">{searchQuery ? 'No matching positions' : 'No active job listings'}</p>
                             </div>
                         ) : (
                             currentJobs.map((job) => (
-                                <div key={job.id} className="flex items-center justify-between p-6 bg-slate-50/50 rounded-3xl border border-transparent hover:border-[#BA9B32]/30 hover:bg-white transition-all group">
+                                <div key={job.id} className="flex items-center justify-between p-6 bg-slate-50/50 rounded-card-sm border border-transparent hover:border-[#BA9B32]/30 hover:bg-white transition-all group">
                                     <div className="flex items-center gap-8 text-left">
-                                        <div className="w-16 h-16 bg-white rounded-2xl border border-slate-200 flex items-center justify-center text-slate-300 group-hover:bg-[#BA9B32] group-hover:text-white transition-all shrink-0 shadow-sm">
+                                        <div className="w-16 h-16 bg-white rounded-card-sm border border-slate-200 flex items-center justify-center text-slate-300 group-hover:bg-[#BA9B32] group-hover:text-white transition-all shrink-0 shadow-sm">
                                             <Briefcase size={24} />
                                         </div>
                                         <div>
@@ -1274,7 +1395,7 @@ const CareersVault = () => {
                                     <div className="flex items-center gap-3">
                                         <button
                                             onClick={() => { setEditingJob(job); setIsModalOpen(true); }}
-                                            className="p-3 bg-white border border-slate-100 text-slate-400 hover:text-[#BA9B32] hover:border-[#BA9B32] rounded-xl transition-all"
+                                            className="p-3 bg-white border border-slate-100 text-slate-400 hover:text-[#BA9B32] hover:border-[#BA9B32] rounded-card-sm transition-all"
                                         >
                                             <Edit2 size={18} />
                                         </button>
@@ -1286,7 +1407,7 @@ const CareersVault = () => {
                                                 title: 'Delete Position',
                                                 message: `Are you sure you want to delete "${job.title}"? This action cannot be undone.`
                                             })}
-                                            className="p-3 bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-500 rounded-xl transition-all"
+                                            className="p-3 bg-white border border-slate-100 text-slate-400 hover:text-red-500 hover:border-red-500 rounded-card-sm transition-all"
                                         >
                                             <Trash2 size={18} />
                                         </button>
@@ -1297,15 +1418,14 @@ const CareersVault = () => {
                     </div>
                 ) : (
                     <div className="space-y-4">
-                        {/* Application List (Placeholder logic) */}
-                        {applications.length === 0 ? (
+                        {filteredApplications.length === 0 ? (
                             <div className="text-center py-20 text-slate-300">
                                 <Users size={48} className="mx-auto mb-4 opacity-20" />
-                                <p className="text-[10px] font-bold uppercase tracking-widest">No applications yet</p>
+                                <p className="text-[10px] font-bold uppercase tracking-widest">{searchQuery ? 'No matching applicants' : 'No applications yet'}</p>
                             </div>
                         ) : (
                             currentApplications.map((app) => (
-                                <div key={app.id} className="flex items-center justify-between p-6 bg-slate-50/50 rounded-3xl border border-transparent hover:border-[#BA9B32]/30 hover:bg-white transition-all group">
+                                <div key={app.id} className="flex items-center justify-between p-6 bg-slate-50/50 rounded-card-sm border border-transparent hover:border-[#BA9B32]/30 hover:bg-white transition-all group">
                                     <div className="flex items-center gap-6">
                                         <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center font-display font-bold text-slate-500">
                                             {app.full_name.charAt(0)}
@@ -1351,21 +1471,27 @@ const CareersVault = () => {
                     </div>
                 )}
 
-                {/* Pagination */}
-                {totalPages > 1 && (
-                    <div className="flex justify-center items-center gap-2 mt-12 pb-4">
+            </div>
+
+            {/* Pagination */}
+            {(view === 'jobs' ? filteredJobs : filteredApplications).length > 0 && (
+                <div className="flex items-center justify-between">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        Page {currentPage} of {totalPages}
+                    </p>
+                    <div className="flex items-center gap-2">
                         <button
                             disabled={currentPage === 1}
                             onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                            className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-slate-50 transition-all text-slate-500"
+                            className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-white transition-all text-slate-500"
                         >
-                            Prev
+                            Previous
                         </button>
                         {[...Array(totalPages)].map((_, i) => (
                             <button
                                 key={i}
                                 onClick={() => setCurrentPage(i + 1)}
-                                className={`w-10 h-10 rounded-lg border text-[10px] font-bold transition-all ${currentPage === i + 1 ? 'bg-[#BA9B32] border-[#BA9B32] text-white shadow-lg' : 'border-slate-200 text-slate-400 hover:bg-slate-50'}`}
+                                className={`w-8 h-8 rounded-lg border text-[10px] font-bold transition-all ${currentPage === i + 1 ? 'bg-navy-deep border-navy-deep text-white shadow-lg' : 'border-slate-200 text-slate-400 hover:bg-white'}`}
                             >
                                 {i + 1}
                             </button>
@@ -1373,13 +1499,13 @@ const CareersVault = () => {
                         <button
                             disabled={currentPage === totalPages}
                             onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                            className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-slate-50 transition-all text-slate-500"
+                            className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-white transition-all text-slate-500"
                         >
                             Next
                         </button>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
             <JobModal
                 isOpen={isModalOpen}
@@ -1398,7 +1524,7 @@ const CareersVault = () => {
                 isDangerous={true}
                 isLoading={isDeleting}
             />
-        </div>
+        </div >
     );
 };
 
@@ -1460,7 +1586,7 @@ const JobModal = ({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-white rounded-[2rem] w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
+                className="bg-white rounded-card-sm w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
             >
                 <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
                     <h3 className="text-xl font-display">{initialData ? 'Edit Position' : 'Post New Job'}</h3>
@@ -1476,7 +1602,7 @@ const JobModal = ({
                                 type="text"
                                 value={formData.title}
                                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                                 placeholder="e.g. Senior Frontend Engineer"
                             />
                         </div>
@@ -1486,7 +1612,7 @@ const JobModal = ({
                                 type="text"
                                 value={formData.department}
                                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                                 placeholder="e.g. Engineering"
                             />
                         </div>
@@ -1498,7 +1624,7 @@ const JobModal = ({
                                 type="text"
                                 value={formData.location}
                                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                             />
                         </div>
                         <div className="space-y-2">
@@ -1506,7 +1632,7 @@ const JobModal = ({
                             <select
                                 value={formData.type}
                                 onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                             >
                                 <option>Full-time</option>
                                 <option>Contract</option>
@@ -1520,7 +1646,7 @@ const JobModal = ({
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-32 resize-none"
+                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-32 resize-none"
                             placeholder="Describe the role responsibilities..."
                         />
                     </div>
@@ -1534,7 +1660,7 @@ const JobModal = ({
                                     type="text"
                                     value={formData.linkedin_url}
                                     onChange={(e) => setFormData({ ...formData, linkedin_url: e.target.value })}
-                                    className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                    className="w-full bg-slate-50 border border-slate-100 rounded-input py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                                     placeholder="https://linkedin.com/jobs/..."
                                 />
                             </div>
@@ -1546,7 +1672,7 @@ const JobModal = ({
                                 type="date"
                                 value={formData.expires_at}
                                 onChange={(e) => setFormData({ ...formData, expires_at: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-xl py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
+                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
                             />
                         </div>
                     </div>
@@ -1566,322 +1692,7 @@ const JobModal = ({
 };
 
 
-const PropertyModal = ({
-    isOpen,
-    onClose,
-    onSave,
-    initialData = null
-}: {
-    isOpen: boolean,
-    onClose: () => void,
-    onSave: (data: Omit<Property, 'id'>) => void,
-    initialData?: Property | null
-}) => {
-    const [formData, setFormData] = useState<Omit<Property, 'id'>>({
-        title: initialData?.title || "",
-        subtitle: initialData?.subtitle || "",
-        location: initialData?.location || "",
-        property_type: initialData?.property_type || "Premium Grade A",
-        description: initialData?.description || "",
-        points: initialData?.points || [],
-        images: initialData?.images || [],
-        reverse: initialData?.reverse || false,
-        order_index: initialData?.order_index || 0
-    });
 
-    const [uploading, setUploading] = useState(false);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [newPoint, setNewPoint] = useState("");
-
-    useEffect(() => {
-        if (isOpen) {
-            if (initialData) {
-                setFormData({
-                    title: initialData.title,
-                    subtitle: initialData.subtitle,
-                    location: initialData.location,
-                    property_type: initialData.property_type,
-                    description: initialData.description,
-                    points: initialData.points,
-                    images: initialData.images,
-                    reverse: initialData.reverse,
-                    order_index: initialData.order_index
-                });
-            } else {
-                setFormData({
-                    title: "",
-                    subtitle: "",
-                    location: "",
-                    property_type: "Premium Grade A",
-                    description: "",
-                    points: [],
-                    images: [],
-                    reverse: false,
-                    order_index: 0
-                });
-            }
-        }
-    }, [isOpen, initialData]);
-
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        try {
-            setUploading(true);
-            const url = await uploadImage(file);
-            setFormData(prev => ({ ...prev, images: [...prev.images, url] }));
-        } catch (error: any) {
-            alert("Upload failed: " + error.message);
-        } finally {
-            setUploading(false);
-        }
-    };
-
-    if (!isOpen) return null;
-
-    return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 backdrop-blur-sm bg-black/40">
-            <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl"
-            >
-                <div className="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50 text-left">
-                    <h3 className="text-2xl font-display">{initialData ? 'Edit Project' : 'New Project'}</h3>
-                    <button onClick={onClose} className="p-2 hover:bg-slate-200 rounded-full transition-colors">
-                        <X size={20} />
-                    </button>
-                </div>
-                <div className="p-10 space-y-6 max-h-[70vh] overflow-y-auto text-left">
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Project Title</label>
-                            <input
-                                type="text"
-                                value={formData.title}
-                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 font-medium text-slate-700"
-                                placeholder="e.g. Trinity Tower"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Subtitle/Category</label>
-                            <input
-                                type="text"
-                                value={formData.subtitle}
-                                onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 font-medium text-slate-700"
-                                placeholder="e.g. Premium Office Tower"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Location</label>
-                            <input
-                                type="text"
-                                value={formData.location}
-                                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 font-medium text-slate-700"
-                                placeholder="e.g. Jakarta, Indonesia"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Property Type</label>
-                            <input
-                                type="text"
-                                value={formData.property_type}
-                                onChange={(e) => setFormData({ ...formData, property_type: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 font-medium text-slate-700"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Project Description</label>
-                        <textarea
-                            value={formData.description}
-                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-32 resize-none font-medium text-slate-700"
-                            placeholder="Describe the property project..."
-                        />
-                    </div>
-
-                    {/* Points/Features */}
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Key Features</label>
-                        <div className="flex gap-2">
-                            <input
-                                type="text"
-                                value={newPoint}
-                                onChange={(e) => setNewPoint(e.target.value)}
-                                onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), setNewPoint(""), setFormData(prev => ({ ...prev, points: [...prev.points, newPoint] })))}
-                                className="flex-1 bg-slate-50 border border-slate-100 rounded-2xl py-3 px-4 focus:outline-none font-medium text-slate-700"
-                                placeholder="Add feature point..."
-                            />
-                            <button
-                                type="button"
-                                onClick={() => { if (newPoint) { setFormData(prev => ({ ...prev, points: [...prev.points, newPoint] })); setNewPoint(""); } }}
-                                className="px-6 bg-[#BA9B32] text-white rounded-2xl hover:bg-navy-deep transition-all font-bold text-[10px] uppercase tracking-widest"
-                            >
-                                Add
-                            </button>
-                        </div>
-                        <div className="flex flex-wrap gap-2 pt-2">
-                            {formData.points.map((point, idx) => (
-                                <span key={idx} className="bg-slate-100 text-slate-500 px-3 py-1 rounded-full text-[10px] font-bold flex items-center gap-2 group">
-                                    {point}
-                                    <button onClick={() => setFormData(prev => ({ ...prev, points: prev.points.filter((_, i) => i !== idx) }))} className="hover:text-red-500 transition-colors">
-                                        <X size={12} />
-                                    </button>
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Image Gallery */}
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Project Gallery</label>
-                        <div className="grid grid-cols-4 gap-4">
-                            {formData.images.map((url, idx) => (
-                                <div key={idx} className="relative aspect-square rounded-xl overflow-hidden group">
-                                    <img src={url} className="w-full h-full object-cover" alt="Gallery" />
-                                    <button
-                                        onClick={() => setFormData(prev => ({ ...prev, images: prev.images.filter((_, i) => i !== idx) }))}
-                                        className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
-                                    >
-                                        <X size={12} />
-                                    </button>
-                                </div>
-                            ))}
-                            <button
-                                type="button"
-                                onClick={() => fileInputRef.current?.click()}
-                                disabled={uploading}
-                                className="aspect-square bg-slate-50 border-2 border-dashed border-slate-200 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-[#BA9B32] transition-colors"
-                            >
-                                {uploading ? <div className="w-4 h-4 border-2 border-[#BA9B32] border-t-transparent rounded-full animate-spin"></div> : <Camera size={20} className="text-slate-300" />}
-                                <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest">Upload</span>
-                            </button>
-                        </div>
-                        <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
-                    </div>
-
-                    <div className="flex items-center gap-4 py-2 border-t border-slate-100">
-                        <input
-                            type="checkbox"
-                            checked={formData.reverse}
-                            onChange={(e) => setFormData({ ...formData, reverse: e.target.checked })}
-                            className="w-5 h-5 rounded border-slate-300 text-[#BA9B32] focus:ring-[#BA9B32]"
-                        />
-                        <label className="text-sm font-bold text-slate-700">Reverse Layout (Left-to-Right Image)</label>
-                    </div>
-                </div>
-                <div className="p-10 bg-slate-50 border-t border-slate-100 flex justify-end gap-4">
-                    <button onClick={onClose} className="px-8 py-4 font-bold text-[10px] uppercase tracking-widest text-slate-500 hover:text-navy-deep transition-colors">Cancel</button>
-                    <button
-                        onClick={() => onSave(formData)}
-                        disabled={uploading}
-                        className={`px-8 py-4 rounded-full font-bold text-[10px] uppercase tracking-[.3em] transition-all shadow-xl ${uploading ? 'bg-slate-300 cursor-not-allowed' : 'bg-navy-deep text-white hover:bg-[#BA9B32] shadow-navy-deep/20'}`}
-                    >
-                        Save Project
-                    </button>
-                </div>
-            </motion.div>
-        </div>
-    );
-};
-
-const PropertySection = () => {
-    const { properties, loading, addProperty, updateProperty, deleteProperty } = useProperty();
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [editingItem, setEditingItem] = useState<Property | null>(null);
-
-    const handleSave = (data: Omit<Property, 'id'>) => {
-        if (editingItem) {
-            updateProperty(editingItem.id, data);
-        } else {
-            addProperty({ ...data, order_index: properties.length });
-        }
-        setIsModalOpen(false);
-        setEditingItem(null);
-    };
-
-    return (
-        <div className="space-y-8">
-            <div className="flex justify-between items-center">
-                <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">Managing {properties.length} Active Projects</span>
-                <button
-                    onClick={() => { setEditingItem(null); setIsModalOpen(true); }}
-                    className="flex items-center gap-3 px-8 py-4 bg-[#BA9B32] text-white rounded-full font-bold text-[10px] uppercase tracking-[.3em] hover:bg-navy-deep shadow-xl shadow-[#BA9B32]/20 transition-all hover:scale-105"
-                >
-                    <Plus size={20} /> <span>Add New Project</span>
-                </button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {loading ? (
-                    <div className="col-span-2 py-32 text-center">
-                        <div className="w-12 h-12 border-4 border-[#BA9B32] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Loading Portfolio...</p>
-                    </div>
-                ) : properties.map((project) => (
-                    <div key={project.id} className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden group hover:shadow-xl transition-all duration-500">
-                        <div className="aspect-[16/10] relative overflow-hidden bg-slate-50">
-                            {project.images && project.images.length > 0 ? (
-                                <img src={project.images[0]} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2s]" alt={project.title} />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center text-slate-200">
-                                    <Building2 size={48} />
-                                </div>
-                            )}
-                            <div className="absolute inset-x-0 bottom-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
-                                <h4 className="text-white text-2xl font-display">{project.title}</h4>
-                                <p className="text-white/60 text-[10px] font-bold uppercase tracking-widest mt-1">{project.location}</p>
-                            </div>
-                            <div className="absolute top-6 right-6 flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button
-                                    onClick={() => { setEditingItem(project); setIsModalOpen(true); }}
-                                    className="p-3 bg-white/90 backdrop-blur text-navy-deep hover:bg-[#BA9B32] hover:text-white rounded-xl transition-all shadow-lg"
-                                >
-                                    <Edit2 size={16} />
-                                </button>
-                                <button
-                                    onClick={() => deleteProperty(project.id)}
-                                    className="p-3 bg-red-500/90 backdrop-blur text-white hover:bg-red-600 rounded-xl transition-all shadow-lg"
-                                >
-                                    <Trash2 size={16} />
-                                </button>
-                            </div>
-                        </div>
-                        <div className="p-8 space-y-4">
-                            <div className="flex gap-2">
-                                <span className="px-3 py-1 bg-slate-100 text-slate-400 rounded-full text-[8px] font-bold uppercase tracking-widest">{project.property_type}</span>
-                                <span className="px-3 py-1 bg-slate-100 text-slate-400 rounded-full text-[8px] font-bold uppercase tracking-widest">{project.points.length} Features</span>
-                            </div>
-                            <p className="text-slate-500 text-xs leading-relaxed line-clamp-2">{project.description}</p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-
-            {!loading && properties.length === 0 && (
-                <div className="py-32 text-center text-slate-300 bg-white rounded-[2.5rem] border border-slate-100 col-span-2">
-                    <Building2 size={48} className="mx-auto mb-4 opacity-10" />
-                    <p className="font-bold uppercase tracking-[.3em] text-[10px]">No projects in portfolio</p>
-                </div>
-            )}
-
-            <PropertyModal
-                isOpen={isModalOpen}
-                onClose={() => { setIsModalOpen(false); setEditingItem(null); }}
-                onSave={handleSave}
-                initialData={editingItem}
-            />
-        </div>
-    );
-};
 
 
 const ConfirmationModal = ({
@@ -1913,7 +1724,7 @@ const ConfirmationModal = ({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-white rounded-[2rem] w-full max-w-md shadow-2xl overflow-hidden"
+                className="bg-white rounded-card w-full max-w-md shadow-2xl overflow-hidden"
             >
                 <div className="p-8 text-center">
                     <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-6 ${isDangerous ? 'bg-red-50 text-red-500' : 'bg-[#BA9B32]/10 text-[#BA9B32]'}`}>
@@ -1947,5 +1758,382 @@ const ConfirmationModal = ({
     );
 };
 
+
+const ContactSection = () => {
+    const [contacts, setContacts] = useState<any[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [deletingId, setDeletingId] = useState<string | null>(null);
+    const [selectedContact, setSelectedContact] = useState<any | null>(null);
+
+    // Filter and Pagination State
+    const [searchQuery, setSearchQuery] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+
+    const fetchContacts = async () => {
+        setLoading(true);
+        const { data, error } = await supabase
+            .from('contact_submissions')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (!error && data) setContacts(data);
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        fetchContacts();
+    }, []);
+
+    const handleDelete = async (id: string) => {
+        const { error } = await supabase.from('contact_submissions').delete().eq('id', id);
+        if (!error) {
+            setContacts(contacts.filter(c => c.id !== id));
+        }
+        setDeletingId(null);
+    };
+
+    // Filter Logic
+    const filteredContacts = contacts.filter(contact => {
+        const matchesSearch =
+            contact.first_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            contact.last_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            contact.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            contact.message?.toLowerCase().includes(searchQuery.toLowerCase());
+
+        const contactDate = new Date(contact.created_at).toISOString().split('T')[0];
+        const matchesStartDate = !startDate || contactDate >= startDate;
+        const matchesEndDate = !endDate || contactDate <= endDate;
+
+        return matchesSearch && matchesStartDate && matchesEndDate;
+    });
+
+    // Pagination Logic
+    const totalPages = Math.ceil(filteredContacts.length / itemsPerPage);
+    const currentItems = filteredContacts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [searchQuery, startDate, endDate]);
+
+    return (
+        <div className="space-y-8">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+                <div>
+                    <h2 className="text-2xl font-display text-navy-deep">Contact Inquiries</h2>
+                    <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-1">
+                        Showing {currentItems.length} of {filteredContacts.length} total results
+                    </p>
+                </div>
+                <button
+                    onClick={fetchContacts}
+                    className="flex items-center gap-3 px-8 py-4 bg-white border border-slate-100 text-navy-deep rounded-full font-bold text-[10px] uppercase tracking-[.3em] hover:bg-slate-50 transition-all shadow-sm"
+                >
+                    <Clock size={16} /> <span>Refresh List</span>
+                </button>
+            </div>
+
+            {/* Filter Bar */}
+            <div className="bg-white p-6 rounded-card border border-slate-100 shadow-sm space-y-4 lg:space-y-0 lg:flex lg:items-center lg:gap-4">
+                <div className="flex-1 relative">
+                    <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
+                    <input
+                        type="text"
+                        placeholder="Search name, email or message..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-transparent rounded-card-sm text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
+                    />
+                </div>
+                <div className="flex items-center gap-3">
+                    <div className="relative">
+                        <span className="absolute -top-2 left-3 bg-white px-1 text-[8px] font-bold text-slate-300 uppercase tracking-widest z-10">From</span>
+                        <input
+                            type="date"
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
+                            className="bg-slate-50 border border-transparent rounded-card-sm py-3 px-4 text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
+                        />
+                    </div>
+                    <div className="relative">
+                        <span className="absolute -top-2 left-3 bg-white px-1 text-[8px] font-bold text-slate-300 uppercase tracking-widest z-10">To</span>
+                        <input
+                            type="date"
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
+                            className="bg-slate-50 border border-transparent rounded-card-sm py-3 px-4 text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
+                        />
+                    </div>
+                </div>
+                {(searchQuery || startDate || endDate) && (
+                    <button
+                        onClick={() => { setSearchQuery(""); setStartDate(""); setEndDate(""); }}
+                        className="px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-red-400 hover:text-red-500 hover:bg-red-50 rounded-card-sm transition-all whitespace-nowrap"
+                    >
+                        Reset Filters
+                    </button>
+                )}
+            </div>
+
+            <div className="bg-white rounded-card border border-slate-100 shadow-sm overflow-hidden">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="bg-slate-50 border-b border-slate-100">
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-slate-400">Date</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-slate-400">Sender</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-slate-400">Message</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-widest text-slate-400 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-50">
+                            {loading ? (
+                                <tr>
+                                    <td colSpan={4} className="px-8 py-20 text-center">
+                                        <div className="w-8 h-8 border-2 border-[#BA9B32] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Fetching messages...</p>
+                                    </td>
+                                </tr>
+                            ) : contacts.length === 0 ? (
+                                <tr>
+                                    <td colSpan={4} className="px-8 py-20 text-center">
+                                        <Mail size={40} className="mx-auto mb-4 text-slate-100" />
+                                        <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">No inquiries found</p>
+                                    </td>
+                                </tr>
+                            ) : (
+                                currentItems.map((contact) => (
+                                    <tr key={contact.id} className="hover:bg-slate-50 transition-colors group">
+                                        <td className="px-8 py-6 whitespace-nowrap">
+                                            <p className="text-xs font-bold text-navy-deep">{new Date(contact.created_at).toLocaleDateString()}</p>
+                                            <p className="text-[9px] text-slate-400 uppercase tracking-tighter mt-1">{new Date(contact.created_at).toLocaleTimeString()}</p>
+                                        </td>
+                                        <td className="px-8 py-6">
+                                            <p className="text-sm font-bold text-navy-deep">{contact.first_name} {contact.last_name}</p>
+                                            <p className="text-xs text-[#BA9B32] font-medium">{contact.email}</p>
+                                        </td>
+                                        <td className="px-8 py-6 max-w-md">
+                                            <p className="text-xs text-slate-500 leading-relaxed line-clamp-2 italic">"{contact.message}"</p>
+                                        </td>
+                                        <td className="px-8 py-6 text-right">
+                                            <div className="flex justify-end gap-2">
+                                                <button
+                                                    onClick={() => setSelectedContact(contact)}
+                                                    className="p-3 text-slate-300 hover:text-[#BA9B32] hover:bg-[#BA9B32]/5 rounded-card-sm transition-all"
+                                                    title="View Details"
+                                                >
+                                                    <Eye size={18} />
+                                                </button>
+                                                <button
+                                                    onClick={() => setDeletingId(contact.id)}
+                                                    className="p-3 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-card-sm transition-all"
+                                                    title="Delete Inquiry"
+                                                >
+                                                    <Trash2 size={18} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {/* Pagination */}
+            {filteredContacts.length > 0 && (
+                <div className="flex items-center justify-between">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                        Page {currentPage} of {totalPages}
+                    </p>
+                    <div className="flex items-center gap-2">
+                        <button
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-white transition-all text-slate-500"
+                        >
+                            Previous
+                        </button>
+                        {[...Array(totalPages)].map((_, i) => (
+                            <button
+                                key={i}
+                                onClick={() => setCurrentPage(i + 1)}
+                                className={`w-8 h-8 rounded-lg border text-[10px] font-bold transition-all ${currentPage === i + 1 ? 'bg-navy-deep border-navy-deep text-white shadow-lg' : 'border-slate-200 text-slate-400 hover:bg-white'}`}
+                            >
+                                {i + 1}
+                            </button>
+                        ))}
+                        <button
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            className="px-4 py-2 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-white transition-all text-slate-500"
+                        >
+                            Next
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            <ConfirmationModal
+                isOpen={!!deletingId}
+                onClose={() => setDeletingId(null)}
+                onConfirm={() => deletingId && handleDelete(deletingId)}
+                title="Delete Inquiry?"
+                message="This will permanently remove this contact message from the database. This action cannot be undone."
+                confirmText="Delete Message"
+                isDangerous={true}
+            />
+
+            <ContactDetailModal
+                contact={selectedContact}
+                isOpen={!!selectedContact}
+                onClose={() => setSelectedContact(null)}
+            />
+        </div>
+    );
+};
+
+const ContactDetailModal = ({ contact, isOpen, onClose }: { contact: any, isOpen: boolean, onClose: () => void }) => {
+    if (!isOpen || !contact) return null;
+
+    return (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 backdrop-blur-sm bg-black/40">
+            <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white rounded-card w-full max-w-xl overflow-hidden shadow-2xl"
+            >
+                <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+                    <div>
+                        <h3 className="text-xl font-display">Inquiry Details</h3>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Submitted on {new Date(contact.created_at).toLocaleString()}</p>
+                    </div>
+                    <button onClick={onClose} className="p-2 hover:bg-slate-200 rounded-full transition-colors">
+                        <X size={20} />
+                    </button>
+                </div>
+                <div className="p-8 space-y-6">
+                    <div className="grid grid-cols-2 gap-6">
+                        <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">First Name</label>
+                            <p className="text-sm font-bold text-navy-deep">{contact.first_name || '-'}</p>
+                        </div>
+                        <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Last Name</label>
+                            <p className="text-sm font-bold text-navy-deep">{contact.last_name || '-'}</p>
+                        </div>
+                    </div>
+                    <div className="space-y-1">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Email Address</label>
+                        <p className="text-sm font-bold text-[#BA9B32]">{contact.email}</p>
+                    </div>
+                    <div className="space-y-1">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Message</label>
+                        <div className="bg-slate-50 border border-slate-100 rounded-card-sm p-6">
+                            <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-wrap italic">"{contact.message}"</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="p-8 bg-slate-50 border-t border-slate-100 flex justify-end">
+                    <button
+                        onClick={onClose}
+                        className="px-10 py-4 bg-navy-deep text-white rounded-full font-bold text-[10px] uppercase tracking-[.3em] hover:bg-[#BA9B32] transition-all shadow-xl shadow-navy-deep/20"
+                    >
+                        Close Detail
+                    </button>
+                </div>
+            </motion.div>
+        </div>
+    );
+};
+
+const SettingsSection = () => {
+    const { maintenanceMode, toggleMaintenanceMode, loading } = useSettings();
+
+    return (
+        <div className="space-y-12">
+            <div className="bg-white rounded-card p-10 border border-slate-100 shadow-sm relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
+                    <Settings size={120} />
+                </div>
+
+                <h3 className="text-2xl font-display mb-8">General Site Settings</h3>
+
+                <div className="space-y-10 max-w-2xl">
+                    <div className="flex items-center justify-between p-8 bg-slate-50 rounded-card-sm border border-slate-100 group hover:border-[#BA9B32]/30 transition-all">
+                        <div className="space-y-2">
+                            <h4 className="text-lg font-bold text-navy-deep flex items-center gap-3">
+                                <AlertCircle size={20} className={maintenanceMode ? "text-red-500" : "text-slate-300"} />
+                                Under Maintenance Mode
+                            </h4>
+                            <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                                When enabled, all public-facing pages will redirect to the maintenance page. Admin access remains available.
+                            </p>
+                        </div>
+
+                        <div className="relative">
+                            <button
+                                onClick={() => toggleMaintenanceMode(!maintenanceMode)}
+                                disabled={loading}
+                                className={`w-16 h-8 rounded-full transition-all duration-500 p-1 relative ${maintenanceMode ? 'bg-red-500' : 'bg-slate-200'} ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer shadow-inner'}`}
+                            >
+                                <motion.div
+                                    animate={{ x: maintenanceMode ? 32 : 0 }}
+                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                    className="w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center transform"
+                                >
+                                    {loading && (
+                                        <div className="w-3 h-3 border-2 border-slate-200 border-t-navy-deep rounded-full animate-spin"></div>
+                                    )}
+                                </motion.div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="bg-[#BA9B32]/5 border border-[#BA9B32]/20 p-8 rounded-card-sm">
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#BA9B32] mb-4">Security Notice</h4>
+                        <p className="text-[11px] text-slate-600 leading-relaxed">
+                            Maintenance mode is synchronized in real-time. Changes made here will take effect immediately for all visitors. Please ensure you have backup of critical data before performing major maintenance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div className="bg-navy-deep rounded-card p-10 text-white relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#BA9B32]/20 to-transparent"></div>
+                <div className="relative z-10">
+                    <h3 className="text-xl font-display mb-6">System Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+                        <div className="space-y-8">
+                            {[
+                                { label: "Version Control", value: "v2.0.4-stable" },
+                                { label: "Deployment Environment", value: "Production - Cloud" },
+                                { label: "Last System Health Check", value: new Date().toLocaleDateString() },
+                                { label: "Deploy by", value: "IT Departemen" }
+                            ].map((info) => (
+                                <div key={info.label} className="space-y-1">
+                                    <p className="text-[9px] uppercase tracking-[.3em] text-white/40 font-bold">{info.label}</p>
+                                    <p className="text-sm font-medium tracking-wide">{info.value}</p>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="flex flex-col justify-end items-end space-y-4">
+                            <div className="text-right">
+                                <p className="text-[9px] uppercase tracking-[.3em] text-white/40 font-bold mb-2">Supabase Connectivity</p>
+                                <div className="flex items-center gap-2 justify-end">
+                                    <span className="text-[10px] font-bold text-green-400">ACTIVE - SECURE</span>
+                                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 export default AdminDashboard;

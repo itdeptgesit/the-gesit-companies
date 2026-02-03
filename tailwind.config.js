@@ -16,6 +16,11 @@ export default {
                 serif: ["Crimson Text", "serif"],
                 sans: ["Lato", "sans-serif"],
             },
+            borderRadius: {
+                "card": "2rem",
+                "card-sm": "1rem",
+                "input": "1rem",
+            },
         },
     },
     plugins: [],

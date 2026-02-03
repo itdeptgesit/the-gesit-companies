@@ -1,73 +1,90 @@
-# React + TypeScript + Vite
+# The Gesit Companies - Official Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains the source code for the official website of The Gesit Companies, built with a focus on premium editorial design, high performance, and modern web standards.
 
-Currently, two official plugins are available:
+## 🚀 Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Core**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **CMS/Database**: [Supabase](https://supabase.com/) (for news and contact submissions)
+- **Email**: [Resend](https://resend.com/) (for contact forms)
 
-## React Compiler
+## ✨ Core Features
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- **Dynamic News Room**: Integrated news system with categorized feeds and high-fidelity detail pages.
+- **Career Management**: Centralized job listings portal for the entire Group.
+- **Premium Business Segments**: Dedicated, highly-styled pages for Property, Trading & Services, Manufacturing, and Natural Resources.
+- **Professional Philosophy Section**: A beautifully crafted section detailing the corporate origin and the "Yi Cheng" philosophy with custom calligraphic styling.
+- **Interactive Image Gallery**: Smooth, animated galleries showcasing the Group's portfolio with optimized performance.
+- **Secure Contact System**: Validated contact form with automatic database logging and email notifications.
+- **Content Protection**: Custom-built image protection mechanisms (disabled context menus and drag-and-drop) to safeguard corporate assets.
+- **SEO & Meta Management**: Automated dynamic title and meta tag updates for social sharing and search engine optimization on every route.
+- **Smart UX**: Seamless "scroll-to-top" navigation and a responsive mobile-first experience.
 
-## Expanding the ESLint configuration
+## 📁 Project Structure
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```text
+src/
+├── components/     # Reusable UI components (Navbar, Footer, etc.)
+├── context/        # React Context for global state (News, Career)
+├── lib/            # External service configurations (Supabase, Email)
+├── pages/          # Individual page components
+├── types/          # TypeScript definitions
+├── App.tsx         # Main application component & routes
+└── main.tsx        # Application entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠️ Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Node.js (Latest LTS version recommended)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Configure environment variables:
+   Create a `.env` file in the root directory and add your keys (Supabase, Resend, etc.).
+
+### Local Development
+
+To start the development server:
+```bash
+npm run dev
 ```
+
+To enable access from other devices on the same network:
+```bash
+npm run dev -- --host
+```
+
+### Production Build
+
+To create an optimized production build:
+```bash
+npm run build
+```
+
+## ✨ Design Principles
+
+- **Premium & Minimalist**: High use of whitespace and elegant typography.
+- **Responsive**: Fully optimized for mobile, tablet, and desktop.
+- **Dynamic**: Smooth entrance animations and micro-interactions.
+- **Accessible**: Semantic HTML and clear navigation structures.
+
+---
+
+© 2026 The Gesit Companies. All rights reserved.

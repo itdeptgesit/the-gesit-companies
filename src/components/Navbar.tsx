@@ -156,7 +156,7 @@ const Navbar = () => {
                                                 initial={{ opacity: 0, y: 10 }}
                                                 animate={{ opacity: 1, y: 0 }}
                                                 exit={{ opacity: 0, y: 10 }}
-                                                className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white shadow-xl rounded-xl py-4 mt-2 border border-slate-100 overflow-hidden"
+                                                className="absolute top-full left-1/2 -translate-x-1/2 w-64 bg-white shadow-xl rounded-card-sm py-4 mt-2 border border-slate-100 overflow-hidden"
                                             >
                                                 {link.subMenu.map((sub) => (
                                                     <Link

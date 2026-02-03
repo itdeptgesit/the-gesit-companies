@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Shield, Briefcase, FileText, MapPin, Building2, X, AlertCircle } from "lucide-react";
 import { useCareer, type Career } from "../context/CareerContext";
+import Skeleton from "../components/Skeleton";
 
 const CareerPage = () => {
     const { jobs, submitApplication, loading: jobsLoading } = useCareer();
@@ -119,7 +120,7 @@ const CareerPage = () => {
                         initial={{ scale: 1.05 }}
                         animate={{ scale: 1.2 }}
                         transition={{ duration: 10, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
-                        src="career/cover.png"
+                        src="career/bg.png"
                         alt="Join Gesit"
                         className="w-full h-full object-cover"
                     />
@@ -179,9 +180,23 @@ const CareerPage = () => {
 
                     <div className="grid gap-6">
                         {jobsLoading ? (
-                            <p className="text-center text-slate-400">Loading positions...</p>
+                            <>
+                                {[1, 2, 3].map((i) => (
+                                    <div key={i} className="bg-white/40 backdrop-blur-xl p-8 rounded-card-sm shadow-xl shadow-slate-200/30 border border-white/50 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                        <div className="flex-grow space-y-4">
+                                            <Skeleton className="h-8 w-1/2" />
+                                            <div className="flex gap-4">
+                                                <Skeleton className="h-4 w-24" />
+                                                <Skeleton className="h-4 w-24" />
+                                                <Skeleton className="h-4 w-20" />
+                                            </div>
+                                        </div>
+                                        <Skeleton className="h-12 w-32 rounded-input shrink-0" />
+                                    </div>
+                                ))}
+                            </>
                         ) : jobs.length === 0 ? (
-                            <div className="text-center py-12 bg-white rounded-3xl border border-slate-100 p-8 shadow-sm">
+                            <div className="text-center py-12 bg-white rounded-card border border-slate-100 p-8 shadow-sm">
                                 <Briefcase className="mx-auto text-slate-300 mb-4" size={48} />
                                 <h3 className="text-lg font-display text-navy-deep mb-2">No Open Positions</h3>
                                 <p className="text-slate-400 font-light">We don't have active openings right now. Please check back later for future opportunities.</p>
@@ -193,7 +208,7 @@ const CareerPage = () => {
                                     initial={{ opacity: 0, y: 20 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    className="bg-white/40 backdrop-blur-xl p-8 rounded-[2rem] shadow-xl shadow-slate-200/30 border border-white/50 hover:border-[#BA9B32]/30 hover:bg-white/80 transition-all duration-500 group flex flex-col md:flex-row md:items-center justify-between gap-6"
+                                    className="bg-white/40 backdrop-blur-xl p-8 rounded-card-sm shadow-xl shadow-slate-200/30 border border-white/50 hover:border-[#BA9B32]/30 hover:bg-white/80 transition-all duration-500 group flex flex-col md:flex-row md:items-center justify-between gap-6"
                                 >
                                     <div className="flex-grow">
                                         <h3 className="text-2xl font-display text-navy-deep mb-3 group-hover:text-[#BA9B32] transition-colors">{job.title}</h3>
@@ -216,7 +231,7 @@ const CareerPage = () => {
                                         ) : (
                                             <button
                                                 onClick={() => handleApplyClick(job)}
-                                                className="px-8 py-4 bg-[#BA9B32] text-white rounded-2xl font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-navy-deep transition-all duration-500 shadow-lg shadow-[#BA9B32]/20"
+                                                className="px-8 py-4 bg-[#BA9B32] text-white rounded-input font-bold text-[10px] uppercase tracking-[0.3em] hover:bg-navy-deep transition-all duration-500 shadow-lg shadow-[#BA9B32]/20"
                                             >
                                                 Apply Now
                                             </button>
@@ -237,7 +252,7 @@ const CareerPage = () => {
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
-                            className="bg-white rounded-[2rem] w-full max-w-2xl max-h-[90vh] overflow-y-auto relative shadow-2xl"
+                            className="bg-white rounded-card w-full max-w-2xl max-h-[90vh] overflow-y-auto relative shadow-2xl"
                         >
                             <button
                                 onClick={() => setIsApplying(false)}
@@ -292,7 +307,7 @@ const CareerPage = () => {
                                                 <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 transition-colors group-focus-within:text-[#BA9B32]">CV / Resume (PDF, Max 1MB) *</label>
                                                 <div className="relative group/file">
                                                     <input required type="file" accept=".pdf" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                                                    <div className={`w-full border-2 border-dashed rounded-[1.5rem] py-10 text-center transition-all flex flex-col items-center justify-center gap-3 ${form.resume ? 'border-[#BA9B32] bg-[#BA9B32]/5' : 'border-slate-100 bg-slate-50 group-hover/file:border-[#BA9B32] group-hover/file:bg-white'}`}>
+                                                    <div className={`w-full border-2 border-dashed rounded-card-sm py-10 text-center transition-all flex flex-col items-center justify-center gap-3 ${form.resume ? 'border-[#BA9B32] bg-[#BA9B32]/5' : 'border-slate-100 bg-slate-50 group-hover/file:border-[#BA9B32] group-hover/file:bg-white'}`}>
                                                         <FileText size={32} className={form.resume ? 'text-[#BA9B32]' : 'text-slate-300'} />
                                                         <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
                                                             {form.resume ? form.resume.name : "Click or Drag to Upload PDF"}
@@ -308,7 +323,7 @@ const CareerPage = () => {
                                             </div>
 
                                             {submitStatus === 'error' && (
-                                                <div className="p-4 bg-red-50 text-red-500 text-xs rounded-xl flex items-center gap-2">
+                                                <div className="p-4 bg-red-50 text-red-500 text-xs rounded-card-sm flex items-center gap-2">
                                                     <AlertCircle size={16} /> {errorMessage}
                                                 </div>
                                             )}
@@ -316,7 +331,7 @@ const CareerPage = () => {
                                             <button
                                                 type="submit"
                                                 disabled={submitStatus === 'uploading'}
-                                                className={`w-full py-5 rounded-2xl font-bold uppercase tracking-[.4em] text-[10px] shadow-2xl transition-all duration-500 relative overflow-hidden group ${submitStatus === 'uploading' ? 'bg-slate-300 cursor-not-allowed' : 'bg-navy-deep text-white hover:bg-[#BA9B32] shadow-navy-deep/20'}`}
+                                                className={`w-full py-5 rounded-input font-bold uppercase tracking-[.4em] text-[10px] shadow-2xl transition-all duration-500 relative overflow-hidden group ${submitStatus === 'uploading' ? 'bg-slate-300 cursor-not-allowed' : 'bg-navy-deep text-white hover:bg-[#BA9B32] shadow-navy-deep/20'}`}
                                             >
                                                 <div className="absolute inset-0 bg-white/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
                                                 <span className="relative z-10">{submitStatus === 'uploading' ? 'Uploading Application...' : 'Submit Application'}</span>

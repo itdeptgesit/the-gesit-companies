@@ -29,7 +29,7 @@ const AboutSection = () => {
                     >
                         <div className="w-[1px] bg-white/20 shrink-0" />
                         <p className="text-lg md:text-2xl leading-relaxed text-slate-200 font-light py-2">
-                            At Gesit, we put the stakeholders first and we are committed to contribute and grow with Indonesia. We invest in our workforce, research, and innovation to create the best and most sustainable industry solutions, while remaining mindful of the environment and our impact.
+                            Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of <span className="text-white font-medium">Property</span>, <span className="text-white font-medium">Trading & Service</span>, <span className="text-white font-medium">Manufacturing</span>, and <span className="text-white font-medium">Natural Resources</span>.
                         </p>
                     </motion.div>
                 </div>

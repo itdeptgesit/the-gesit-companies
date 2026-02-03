@@ -40,10 +40,10 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Business Sectors */}
+                    {/* Our Business */}
                     <div>
                         <h4 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
-                            Business Sectors
+                            Our Business
                         </h4>
                         <ul className="space-y-4 text-slate-300 text-sm font-semibold tracking-wide">
                             <li><Link to="/property" className="hover:text-[#BA9B32] transition-colors">Property</Link></li>
@@ -53,10 +53,10 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    {/* Contact */}
+                    {/* Find Us */}
                     <div>
                         <h4 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
-                            Contact Us
+                            Find Us
                         </h4>
                         <div className="space-y-5 text-slate-300 text-sm font-medium leading-relaxed tracking-wide">
                             <p className="font-semibold">

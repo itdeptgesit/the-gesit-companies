@@ -102,16 +102,9 @@ const AboutPage = () => {
                             variants={containerVariants}
                             className="relative"
                         >
-                            <span className="absolute -top-12 -left-20 text-[20rem] font-display text-white/5 leading-none -z-10 select-none">01</span>
-                            <div className="space-y-12">
-                                <motion.h2 variants={revealVariants} className="text-white text-4xl md:text-7xl font-display leading-[1.1]">
-                                    Strategic partners in <br />
-                                    <span className="text-[#BA9B32]">Indonesia's growth</span> since <br />
-                                    the 1950s.
-                                </motion.h2>
-                                <motion.p variants={revealVariants} className="text-white/70 text-lg md:text-xl font-light leading-relaxed max-w-2xl">
-                                    Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of Property, Trading & Service, Manufacturing, and Natural Resources.
-                                </motion.p>
+                            <div className="space-y-12">                                <motion.p variants={revealVariants} className="text-white/80 text-xl md:text-3xl font-light leading-relaxed max-w-4xl">
+                                Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of <span className="text-white font-medium">Property</span>, <span className="text-white font-medium">Trading & Service</span>, <span className="text-white font-medium">Manufacturing</span>, and <span className="text-white font-medium">Natural Resources</span>.
+                            </motion.p>
                             </div>
                         </motion.div>
                     </div>
@@ -138,13 +131,14 @@ const AboutPage = () => {
                                         hidden: { opacity: 0, filter: "blur(20px)", y: 20 },
                                         visible: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] } as any }
                                     }}
-                                    className="bg-gradient-to-br from-[#BA9B32] via-[#e2c15a] to-[#8a6d3b] bg-clip-text text-transparent text-8xl md:text-9xl font-display mb-10 leading-none py-2"
+                                    className="bg-gradient-to-br from-[#BA9B32] via-[#e2c15a] to-[#8a6d3b] bg-clip-text text-transparent text-7xl md:text-8xl font-display mb-6 leading-none py-2"
+                                    style={{ fontFamily: "'Noto Serif SC', serif", fontWeight: 510 }}
                                 >
                                     艺成
                                 </motion.h3>
 
-                                <motion.p variants={revealVariants} className="text-navy-deep text-xl font-medium mb-12 leading-relaxed">
-                                    Based on the Mandarin <span className="italic font-bold">"yi cheng"</span> and Hokkien <span className="italic font-bold">"geseng"</span>, which means <span className="text-[#BA9B32] font-bold">"perfection for art."</span>
+                                <motion.p variants={revealVariants} className="text-navy-deep text-xl font-light mb-12 leading-relaxed">
+                                    Based on the Mandarin <span className="font-bold">“yi cheng”</span> and Hokkien <span className="font-bold">“geseng”</span>, which means <span className="font-bold">“perfection for art”</span>
                                 </motion.p>
 
                                 <motion.h4 variants={revealVariants} className="text-navy-deep text-2xl md:text-3xl font-display font-light mb-14 leading-[1.4] max-w-xl border-l-2 border-[#BA9B32]/30 pl-8">
@@ -177,8 +171,8 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 className="relative"
                             >
-                                <div className="aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl relative z-10">
-                                    <img src="/about/property.jpeg" className="w-full h-full object-cover" alt="History" />
+                                <div className="aspect-[4/5] rounded-card-sm md:rounded-card overflow-hidden shadow-2xl relative z-10">
+                                    <img src="/about/property.jpeg" className="w-full h-full object-cover" alt="History" loading="lazy" />
                                     <div className="absolute inset-0 bg-navy-deep/20"></div>
                                 </div>
 
@@ -187,9 +181,9 @@ const AboutPage = () => {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     transition={{ duration: 1.5, delay: 0.4 }}
                                     viewport={{ once: true }}
-                                    className="absolute -bottom-12 md:-bottom-20 -left-8 md:-left-20 w-3/4 aspect-square rounded-[2rem] md:rounded-[2.5rem] overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white z-20 hidden md:block"
+                                    className="absolute -bottom-12 md:-bottom-20 -left-8 md:-left-20 w-3/4 aspect-square rounded-card-sm md:rounded-card overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white z-20 hidden md:block"
                                 >
-                                    <img src="/about/resources.jpeg" className="w-full h-full object-cover" alt="Context" />
+                                    <img src="/about/resources.jpeg" className="w-full h-full object-cover" alt="Context" loading="lazy" />
                                     <div className="absolute inset-0 bg-[#BA9B32]/10"></div>
                                 </motion.div>
                             </motion.div>
@@ -209,8 +203,8 @@ const AboutPage = () => {
                             viewport={{ once: true }}
                             className="relative group/vision"
                         >
-                            <div className="absolute -top-10 -left-10 w-40 h-40 border-t-2 border-l-2 border-[#BA9B32]/20 z-0"></div>
-                            <div className="relative aspect-video rounded-[2rem] md:rounded-[3rem] shadow-2xl overflow-hidden bg-navy-deep">
+
+                            <div className="relative aspect-video rounded-card-sm md:rounded-card shadow-2xl overflow-hidden bg-navy-deep">
                                 <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-90">
                                     <source src="/video/about-us-video.mp4" type="video/mp4" />
                                 </video>
@@ -223,22 +217,19 @@ const AboutPage = () => {
                             whileInView="visible"
                             viewport={{ once: true }}
                             variants={containerVariants}
-                            className="space-y-20"
+                            className="space-y-16"
                         >
                             <motion.div variants={revealVariants}>
-                                <span className="text-[#BA9B32] font-bold uppercase tracking-[.6em] text-[10px] mb-6 block">Our Vision</span>
-                                <h3 className="text-navy-deep text-2xl md:text-4xl font-display leading-relaxed">
-                                    To be a <span className="font-bold">Group of Companies</span> that are recognized by
-                                    <span className="text-[#BA9B32] font-bold"> Stakeholders</span> as{' '}
-                                    <span className="underline decoration-[#BA9B32] decoration-[2px] underline-offset-6 font-bold">Strategic First Choice Business Partner</span>.
+                                <span className="text-[#BA9B32] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Vision</span>
+                                <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light">
+                                    To be a Group of Companies that are Recognized by Stakeholders as Strategic First Choice Business Partner
                                 </h3>
                             </motion.div>
 
                             <motion.div variants={revealVariants}>
-                                <span className="text-[#BA9B32] font-bold uppercase tracking-[.6em] text-[10px] mb-6 block">Our Mission</span>
-                                <h3 className="text-navy-deep text-2xl md:text-4xl font-display leading-relaxed">
-                                    To establish <span className="font-bold">resourceful business entities</span> that deliver
-                                    <span className="text-[#BA9B32] font-bold"> sustainable value</span> to stakeholders.
+                                <span className="text-[#BA9B32] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Mission</span>
+                                <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light">
+                                    To Establish Resourceful Business Entities that Deliver Sustainable Value to Stakeholders
                                 </h3>
                             </motion.div>
                         </motion.div>
@@ -248,13 +239,10 @@ const AboutPage = () => {
 
             {/* 5. Core Values */}
             <section className="py-24 md:py-40 bg-white">
-                <div className="container mx-auto px-6 mb-20 md:mb-32 flex flex-col md:flex-row justify-between items-end gap-10">
+                <div className="container mx-auto px-6 mb-20 md:mb-32 flex flex-col items-center text-center">
                     <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                        <h2 className="text-navy-deep text-5xl md:text-7xl font-display">Our Core Values.</h2>
+                        <h2 className="text-navy-deep text-5xl md:text-6xl font-display">Our Core Values.</h2>
                     </motion.div>
-                    <p className="text-slate-400 max-w-sm italic font-light hidden md:block">
-                        The four pillars that define our culture and drive our collective ambition for Indonesian excellence.
-                    </p>
                 </div>
 
                 <div className="container mx-auto px-6">
@@ -268,12 +256,12 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 className="group flex flex-col items-center h-full"
                             >
-                                <div className="relative w-full aspect-video rounded-3xl overflow-hidden shadow-xl mb-4 shrink-0">
-                                    <img src={value.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]" alt={value.title} />
+                                <div className="relative w-full aspect-video rounded-card-sm overflow-hidden shadow-xl mb-4 shrink-0">
+                                    <img src={value.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]" alt={value.title} loading="lazy" />
                                     <div className="absolute inset-0 bg-navy-deep/10"></div>
                                 </div>
                                 <div className="w-[1.5px] h-10 bg-slate-200 shrink-0"></div>
-                                <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-3xl relative group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
+                                <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-card relative group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
                                     <h4 className="text-white text-2xl font-display mb-6 tracking-wide">{value.title}</h4>
                                     <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
                                     <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide">{value.desc}</p>

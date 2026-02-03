@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage.tsx";
 import AboutPage from "./pages/AboutPage.tsx";
@@ -13,21 +14,41 @@ import ManufacturingPage from "./pages/ManufacturingPage.tsx";
 import NaturalResourcesPage from "./pages/NaturalResourcesPage.tsx";
 import NewsDetailPage from "./pages/NewsDetailPage.tsx";
 import AdminDashboard from "./pages/AdminDashboard.tsx";
+import NotFoundPage from "./pages/NotFoundPage.tsx";
+import MaintenancePage from "./pages/MaintenancePage.tsx";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop.tsx";
+import PageTransition from "./components/PageTransition";
 import { NewsProvider } from "./context/NewsContext.tsx";
 import { CareerProvider } from "./context/CareerContext.tsx";
 
 import { PropertyProvider } from "./context/PropertyContext.tsx";
+import { SettingsProvider, useSettings } from "./context/SettingsContext.tsx";
+import { supabase } from "./lib/supabase";
 
 const AppContent = () => {
+  const { maintenanceMode, loading } = useSettings();
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
+  const isMaintenancePage = location.pathname === "/maintenance";
+
+  const isStandalone = isMaintenancePage ||
+    !["/", "/about", "/news", "/csr", "/career", "/contact", "/property", "/trading-service", "/manufacturing", "/natural-resources"].some(path =>
+      location.pathname === path || (path !== "/" && location.pathname.startsWith(`${path}/`))
+    );
 
   useEffect(() => {
-    // Scroll to top on route change
-    window.scrollTo(0, 0);
+    // If maintenance mode is active, redirect to /maintenance unless path is admin or already maintenance
+    if (maintenanceMode && !isAdmin && !isMaintenancePage && !loading) {
+      window.location.href = "/maintenance";
+    }
+  }, [maintenanceMode, isAdmin, isMaintenancePage, loading]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
+  useEffect(() => {
     const titles: { [key: string]: string } = {
       "/": "Home",
       "/about": "About Us",
@@ -40,6 +61,7 @@ const AppContent = () => {
       "/manufacturing": "Manufacturing",
       "/natural-resources": "Natural Resources",
       "/admin": "Admin Dashboard",
+      "/maintenance": "Under Maintenance",
     };
 
     const path = location.pathname;
@@ -56,6 +78,7 @@ const AppContent = () => {
       "/news": "Stay updated with the latest insights, official newsroom releases, and corporate announcements from The Gesit Companies.",
       "/career": "Join our team and build your future with The Gesit Companies. Explore career opportunities in diverse business sectors.",
       "/contact": "Get in touch with us at The Gesit Companies headquarters. We're here to answer your inquiries and build partnerships.",
+      "/maintenance": "Our website is currently under maintenance. We'll be back shortly.",
     };
 
     const keywords: { [key: string]: string } = {
@@ -124,42 +147,77 @@ const AppContent = () => {
     };
   }, []);
 
+  // Visitor Tracking
+  useEffect(() => {
+    const trackVisitor = async () => {
+      const hasVisited = sessionStorage.getItem('v3_visited');
+      if (!hasVisited) {
+        try {
+          // Increment visitor count in Supabase 'site_stats' table
+          // We use RPC if possible for atomic increment, or fetch and update
+          const { data: stats } = await supabase
+            .from('site_stats')
+            .select('value')
+            .eq('key', 'total_visitors')
+            .single();
+
+          const currentCount = stats ? parseInt(stats.value) : 0;
+          await supabase
+            .from('site_stats')
+            .upsert({ key: 'total_visitors', value: (currentCount + 1).toString() }, { onConflict: 'key' });
+
+          sessionStorage.setItem('v3_visited', 'true');
+        } catch (err) {
+          console.error('Visitor tracking error:', err);
+        }
+      }
+    };
+
+    trackVisitor();
+  }, []);
+
   return (
     <div className="min-h-screen bg-white transition-colors duration-300">
-      {!isAdmin && <Navbar />}
+      {!isAdmin && !isStandalone && <Navbar />}
       <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/news/:id" element={<NewsDetailPage />} />
-          <Route path="/csr" element={<CSRPage />} />
-          <Route path="/career" element={<CareerPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/property" element={<PropertyPage />} />
-          <Route path="/trading-service" element={<TradingServicePage />} />
-          <Route path="/manufacturing" element={<ManufacturingPage />} />
-          <Route path="/natural-resources" element={<NaturalResourcesPage />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+            <Route path="/news" element={<PageTransition><NewsPage /></PageTransition>} />
+            <Route path="/news/:id" element={<PageTransition><NewsDetailPage /></PageTransition>} />
+            <Route path="/csr" element={<PageTransition><CSRPage /></PageTransition>} />
+            <Route path="/career" element={<PageTransition><CareerPage /></PageTransition>} />
+            <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+            <Route path="/admin" element={<PageTransition><AdminDashboard /></PageTransition>} />
+            <Route path="/property" element={<PageTransition><PropertyPage /></PageTransition>} />
+            <Route path="/trading-service" element={<PageTransition><TradingServicePage /></PageTransition>} />
+            <Route path="/manufacturing" element={<PageTransition><ManufacturingPage /></PageTransition>} />
+            <Route path="/natural-resources" element={<PageTransition><NaturalResourcesPage /></PageTransition>} />
+            <Route path="/maintenance" element={<PageTransition><MaintenancePage /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
+          </Routes>
+        </AnimatePresence>
       </main>
-      {!isAdmin && <Footer />}
-      <BackToTop />
+      {!isAdmin && !isStandalone && <Footer />}
+      {!isStandalone && <BackToTop />}
     </div>
   );
 };
 
 function App() {
   return (
-    <NewsProvider>
-      <CareerProvider>
-        <PropertyProvider>
-          <Router>
-            <AppContent />
-          </Router>
-        </PropertyProvider>
-      </CareerProvider>
-    </NewsProvider>
+    <SettingsProvider>
+      <NewsProvider>
+        <CareerProvider>
+          <PropertyProvider>
+            <Router>
+              <AppContent />
+            </Router>
+          </PropertyProvider>
+        </CareerProvider>
+      </NewsProvider>
+    </SettingsProvider>
   );
 }
 
