@@ -68,6 +68,7 @@ const BusinessSection = () => {
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
                                             alt={biz.title}
                                             loading="lazy"
+                                            decoding="async"
                                         />
                                         <div className="absolute inset-0 bg-navy-deep/10"></div>
                                     </div>

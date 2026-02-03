@@ -85,13 +85,11 @@ const Navbar = () => {
             initial={false}
             animate={{
                 backgroundColor: isScrolled ? "rgba(255, 255, 255, 1)" : "rgba(255, 255, 255, 0)",
-                paddingTop: isScrolled ? "1rem" : "2rem",
-                paddingBottom: isScrolled ? "1rem" : "2rem",
                 boxShadow: isScrolled ? "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)" : "0 0 0 0 rgb(0 0 0 / 0)",
                 borderBottomColor: isScrolled ? "rgba(241, 245, 249, 1)" : "rgba(241, 245, 249, 0)",
             }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed top-0 left-0 w-full z-50 border-b"
+            className={`fixed top-0 left-0 w-full z-50 border-b transition-[padding] duration-500 ${isScrolled ? "py-4" : "py-8"}`}
         >
             <div className="container mx-auto px-6 sm:px-12 flex justify-between items-center h-full">
                 <Link

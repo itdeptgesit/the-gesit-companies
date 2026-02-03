@@ -17,8 +17,9 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'animation-vendor': ['framer-motion'],
           'ui-vendor': ['lucide-react', 'swiper'],
-          // Supabase and email services
-          'services': ['@supabase/supabase-js', '@emailjs/browser'],
+          // Separate services to avoid unused JS
+          'supabase': ['@supabase/supabase-js'],
+          'emailjs': ['@emailjs/browser'],
         },
       },
     },

@@ -9,7 +9,6 @@ import { NewsProvider } from "./context/NewsContext.tsx";
 import { CareerProvider } from "./context/CareerContext.tsx";
 import { PropertyProvider } from "./context/PropertyContext.tsx";
 import { SettingsProvider, useSettings } from "./context/SettingsContext.tsx";
-import { supabase } from "./lib/supabase";
 
 // Lazy load all page components for better performance
 const HomePage = lazy(() => import("./pages/HomePage.tsx"));
@@ -148,33 +147,14 @@ const AppContent = () => {
     };
   }, []);
 
-  // Visitor Tracking
+  // Visitor Tracking - Optimized with dynamic import
   useEffect(() => {
-    const trackVisitor = async () => {
-      const hasVisited = sessionStorage.getItem('v3_visited');
-      if (!hasVisited) {
-        try {
-          // Increment visitor count in Supabase 'site_stats' table
-          // We use RPC if possible for atomic increment, or fetch and update
-          const { data: stats } = await supabase
-            .from('site_stats')
-            .select('value')
-            .eq('key', 'total_visitors')
-            .single();
-
-          const currentCount = stats ? parseInt(stats.value) : 0;
-          await supabase
-            .from('site_stats')
-            .upsert({ key: 'total_visitors', value: (currentCount + 1).toString() }, { onConflict: 'key' });
-
-          sessionStorage.setItem('v3_visited', 'true');
-        } catch (err) {
-          console.error('Visitor tracking error:', err);
-        }
-      }
+    const initTracking = async () => {
+      const { trackVisitor } = await import("./lib/tracking");
+      trackVisitor();
     };
 
-    trackVisitor();
+    initTracking();
   }, []);
 
   return (

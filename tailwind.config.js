@@ -11,10 +11,10 @@ export default {
                 "navy-deep": "#103065",
             },
             fontFamily: {
-                display: ["Crimson Text", "serif"],
-                body: ["Lato", "sans-serif"],
-                serif: ["Crimson Text", "serif"],
-                sans: ["Lato", "sans-serif"],
+                display: ["Lora", "serif"],
+                body: ["Inter", "sans-serif"],
+                serif: ["Lora", "serif"],
+                sans: ["Inter", "sans-serif"],
             },
             borderRadius: {
                 "card": "2rem",

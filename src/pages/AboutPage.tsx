@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 
@@ -8,6 +8,15 @@ import type { Variants } from "framer-motion";
  */
 const AboutPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play().catch(error => {
+                console.log("Autoplay was prevented:", error);
+            });
+        }
+    }, []);
 
     const revealVariants: Variants = {
         hidden: { opacity: 0, y: 25 },
@@ -60,13 +69,20 @@ const AboutPage = () => {
             {/* 1. Hero */}
             <section className="relative h-screen flex items-end justify-start overflow-hidden bg-navy-deep">
                 <div className="absolute inset-0 z-0">
-                    <video autoPlay loop muted playsInline className="w-full h-full object-cover">
+                    <video
+                        ref={videoRef}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="w-full h-full object-cover"
+                    >
                         <source src="/video/about-us-video.mp4" type="video/mp4" />
-                        <img src="/hero/hero (1).png" className="w-full h-full object-cover" alt="Fallback" />
                     </video>
-                    <div className="absolute inset-0 bg-black/30 mix-blend-multiply"></div>
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-transparent"></div>
-                    <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-navy-deep via-navy-deep/40 to-transparent"></div>
+                    {/* Lightened Overlays */}
+                    <div className="absolute inset-0 bg-navy-deep/20"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-transparent to-transparent"></div>
+                    <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-navy-deep via-navy-deep/20 to-transparent"></div>
                 </div>
 
                 <div className="container mx-auto px-6 relative z-10 pb-24 md:pb-32">
@@ -205,7 +221,14 @@ const AboutPage = () => {
                         >
 
                             <div className="relative aspect-video rounded-card-sm md:rounded-card shadow-2xl overflow-hidden bg-navy-deep">
-                                <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover opacity-90">
+                                <video
+                                    autoPlay
+                                    loop
+                                    muted
+                                    playsInline
+                                    poster="/hero/property.png"
+                                    className="absolute inset-0 w-full h-full object-cover opacity-90"
+                                >
                                     <source src="/video/about-us-video.mp4" type="video/mp4" />
                                 </video>
                                 <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/60 via-transparent to-transparent"></div>
