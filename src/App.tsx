@@ -1,30 +1,31 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
-import HomePage from "./pages/HomePage.tsx";
-import AboutPage from "./pages/AboutPage.tsx";
-import NewsPage from "./pages/NewsPage.tsx";
-import CSRPage from "./pages/CSRPage.tsx";
-import CareerPage from "./pages/CareerPage.tsx";
-import ContactPage from "./pages/ContactPage.tsx";
-import PropertyPage from "./pages/PropertyPage.tsx";
-import TradingServicePage from "./pages/TradingServicePage.tsx";
-import ManufacturingPage from "./pages/ManufacturingPage.tsx";
-import NaturalResourcesPage from "./pages/NaturalResourcesPage.tsx";
-import NewsDetailPage from "./pages/NewsDetailPage.tsx";
-import AdminDashboard from "./pages/AdminDashboard.tsx";
-import NotFoundPage from "./pages/NotFoundPage.tsx";
-import MaintenancePage from "./pages/MaintenancePage.tsx";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop.tsx";
 import PageTransition from "./components/PageTransition";
 import { NewsProvider } from "./context/NewsContext.tsx";
 import { CareerProvider } from "./context/CareerContext.tsx";
-
 import { PropertyProvider } from "./context/PropertyContext.tsx";
 import { SettingsProvider, useSettings } from "./context/SettingsContext.tsx";
 import { supabase } from "./lib/supabase";
+
+// Lazy load all page components for better performance
+const HomePage = lazy(() => import("./pages/HomePage.tsx"));
+const AboutPage = lazy(() => import("./pages/AboutPage.tsx"));
+const NewsPage = lazy(() => import("./pages/NewsPage.tsx"));
+const CSRPage = lazy(() => import("./pages/CSRPage.tsx"));
+const CareerPage = lazy(() => import("./pages/CareerPage.tsx"));
+const ContactPage = lazy(() => import("./pages/ContactPage.tsx"));
+const PropertyPage = lazy(() => import("./pages/PropertyPage.tsx"));
+const TradingServicePage = lazy(() => import("./pages/TradingServicePage.tsx"));
+const ManufacturingPage = lazy(() => import("./pages/ManufacturingPage.tsx"));
+const NaturalResourcesPage = lazy(() => import("./pages/NaturalResourcesPage.tsx"));
+const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage.tsx"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard.tsx"));
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage.tsx"));
+const MaintenancePage = lazy(() => import("./pages/MaintenancePage.tsx"));
 
 const AppContent = () => {
   const { maintenanceMode, loading } = useSettings();
@@ -180,24 +181,33 @@ const AppContent = () => {
     <div className="min-h-screen bg-white transition-colors duration-300">
       {!isAdmin && !isStandalone && <Navbar />}
       <main>
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
-            <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
-            <Route path="/news" element={<PageTransition><NewsPage /></PageTransition>} />
-            <Route path="/news/:id" element={<PageTransition><NewsDetailPage /></PageTransition>} />
-            <Route path="/csr" element={<PageTransition><CSRPage /></PageTransition>} />
-            <Route path="/career" element={<PageTransition><CareerPage /></PageTransition>} />
-            <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
-            <Route path="/admin" element={<PageTransition><AdminDashboard /></PageTransition>} />
-            <Route path="/property" element={<PageTransition><PropertyPage /></PageTransition>} />
-            <Route path="/trading-service" element={<PageTransition><TradingServicePage /></PageTransition>} />
-            <Route path="/manufacturing" element={<PageTransition><ManufacturingPage /></PageTransition>} />
-            <Route path="/natural-resources" element={<PageTransition><NaturalResourcesPage /></PageTransition>} />
-            <Route path="/maintenance" element={<PageTransition><MaintenancePage /></PageTransition>} />
-            <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
-          </Routes>
-        </AnimatePresence>
+        <Suspense fallback={
+          <div className="min-h-screen flex items-center justify-center bg-white">
+            <div className="text-center">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#BA9B32]"></div>
+              <p className="mt-4 text-navy-deep font-semibold">Loading...</p>
+            </div>
+          </div>
+        }>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<PageTransition><HomePage /></PageTransition>} />
+              <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
+              <Route path="/news" element={<PageTransition><NewsPage /></PageTransition>} />
+              <Route path="/news/:id" element={<PageTransition><NewsDetailPage /></PageTransition>} />
+              <Route path="/csr" element={<PageTransition><CSRPage /></PageTransition>} />
+              <Route path="/career" element={<PageTransition><CareerPage /></PageTransition>} />
+              <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
+              <Route path="/admin" element={<PageTransition><AdminDashboard /></PageTransition>} />
+              <Route path="/property" element={<PageTransition><PropertyPage /></PageTransition>} />
+              <Route path="/trading-service" element={<PageTransition><TradingServicePage /></PageTransition>} />
+              <Route path="/manufacturing" element={<PageTransition><ManufacturingPage /></PageTransition>} />
+              <Route path="/natural-resources" element={<PageTransition><NaturalResourcesPage /></PageTransition>} />
+              <Route path="/maintenance" element={<PageTransition><MaintenancePage /></PageTransition>} />
+              <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
       </main>
       {!isAdmin && !isStandalone && <Footer />}
       {!isStandalone && <BackToTop />}

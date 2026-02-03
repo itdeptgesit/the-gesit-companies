@@ -102,6 +102,8 @@ const Navbar = () => {
                         alt="Gesit Logo"
                         className="w-9 h-9 sm:w-11 sm:h-11 object-contain"
                         src="/logo gesit.png"
+                        loading="eager"
+                        decoding="async"
                     />
                     <div className={`flex flex-col uppercase tracking-[.15em] font-black text-[13px] sm:text-[16px] transition-colors duration-500 drop-shadow-md ${isScrolled ? "text-navy-deep" : "text-white"}`}>
                         <span>THE GESIT COMPANIES</span>
@@ -181,6 +183,7 @@ const Navbar = () => {
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className={`p-2 transition-all duration-300 drop-shadow-md ${isScrolled ? "text-navy-deep" : "text-white"}`}
+                        aria-label="Open menu"
                     >
                         {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
@@ -214,6 +217,8 @@ const Navbar = () => {
                                             alt="Gesit Logo"
                                             className="w-8 h-8 object-contain"
                                             src="/logo gesit.png"
+                                            loading="eager"
+                                            decoding="async"
                                         />
                                         <div className="flex flex-col uppercase tracking-[.15em] font-black text-[13px] text-navy-deep">
                                             <span>THE GESIT COMPANIES</span>
@@ -222,6 +227,7 @@ const Navbar = () => {
                                     <button
                                         onClick={() => setIsMobileMenuOpen(false)}
                                         className="text-navy-deep p-1 active:scale-90 transition-transform"
+                                        aria-label="Close menu"
                                     >
                                         <X size={28} />
                                     </button>
@@ -241,6 +247,8 @@ const Navbar = () => {
                                                         <button
                                                             onClick={() => setActiveSubMenu(activeSubMenu === link.name ? null : link.name)}
                                                             className={`flex items-center justify-between w-full py-4 text-[14px] font-black uppercase tracking-widest transition-colors ${activeSubMenu === link.name ? "text-[#BA9B32]" : (isLinkActive(link.href) ? "text-[#BA9B32]" : "text-navy-deep")}`}
+                                                            aria-label={`Toggle ${link.name} submenu`}
+                                                            aria-expanded={activeSubMenu === link.name}
                                                         >
                                                             <span>{link.name}</span>
                                                             <ChevronDown

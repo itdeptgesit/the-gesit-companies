@@ -1099,7 +1099,10 @@ const ContentSection = () => {
                 </button>
             </div>
 
-            <div className="bg-white rounded-card border border-slate-100 shadow-sm overflow-hidden min-h-[400px]">
+            <div className="mb-4">
+                <h3 className="text-lg font-bold text-navy-deep uppercase tracking-widest">News Database</h3>
+            </div>
+            <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden min-h-[400px]">
                 <table className="w-full text-left">
                     <thead>
                         <tr className="bg-slate-50 border-b border-slate-100">
@@ -1288,7 +1291,11 @@ const CareersVault = () => {
 
     return (
         <div className="space-y-8">
-            <div className="bg-white p-10 rounded-card border border-slate-100 shadow-sm min-h-[600px]">
+
+            <div className="mb-4">
+                <h3 className="text-lg font-bold text-navy-deep uppercase tracking-widest">{view === 'jobs' ? 'Position Management' : 'Candidate Applications'}</h3>
+            </div>
+            <div className="bg-white p-10 rounded-xl border border-slate-100 shadow-sm min-h-[600px]">
                 <div className="flex justify-between items-center mb-10">
                     <div className="flex gap-4 bg-slate-50 p-1.5 rounded-full border border-slate-100">
                         <button
@@ -1836,7 +1843,7 @@ const ContactSection = () => {
             </div>
 
             {/* Filter Bar */}
-            <div className="bg-white p-6 rounded-card border border-slate-100 shadow-sm space-y-4 lg:space-y-0 lg:flex lg:items-center lg:gap-4">
+            <div className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm space-y-4 lg:space-y-0 lg:flex lg:items-center lg:gap-4">
                 <div className="flex-1 relative">
                     <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
                     <input
@@ -1844,7 +1851,7 @@ const ContactSection = () => {
                         placeholder="Search name, email or message..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-transparent rounded-card-sm text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
+                        className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-transparent rounded-lg text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
                     />
                 </div>
                 <div className="flex items-center gap-3">
@@ -1854,7 +1861,7 @@ const ContactSection = () => {
                             type="date"
                             value={startDate}
                             onChange={(e) => setStartDate(e.target.value)}
-                            className="bg-slate-50 border border-transparent rounded-card-sm py-3 px-4 text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
+                            className="bg-slate-50 border border-transparent rounded-lg py-3 px-4 text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
                         />
                     </div>
                     <div className="relative">
@@ -1863,21 +1870,24 @@ const ContactSection = () => {
                             type="date"
                             value={endDate}
                             onChange={(e) => setEndDate(e.target.value)}
-                            className="bg-slate-50 border border-transparent rounded-card-sm py-3 px-4 text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
+                            className="bg-slate-50 border border-transparent rounded-lg py-3 px-4 text-xs font-medium focus:bg-white focus:border-slate-200 outline-none transition-all"
                         />
                     </div>
                 </div>
                 {(searchQuery || startDate || endDate) && (
                     <button
                         onClick={() => { setSearchQuery(""); setStartDate(""); setEndDate(""); }}
-                        className="px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-red-400 hover:text-red-500 hover:bg-red-50 rounded-card-sm transition-all whitespace-nowrap"
+                        className="px-6 py-3 text-[10px] font-bold uppercase tracking-widest text-red-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all whitespace-nowrap"
                     >
                         Reset Filters
                     </button>
                 )}
             </div>
 
-            <div className="bg-white rounded-card border border-slate-100 shadow-sm overflow-hidden">
+            <div className="mb-4">
+                <h3 className="text-lg font-bold text-navy-deep uppercase tracking-widest">Inquiries List</h3>
+            </div>
+            <div className="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
@@ -2055,77 +2065,78 @@ const SettingsSection = () => {
 
     return (
         <div className="space-y-12">
-            <div className="bg-white rounded-card p-10 border border-slate-100 shadow-sm relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
-                    <Settings size={120} />
-                </div>
+            <div>
+                <h3 className="text-lg font-bold text-navy-deep uppercase tracking-widest mb-4">General Site Settings</h3>
+                <div className="bg-white rounded-xl p-10 border border-slate-100 shadow-sm relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-10 opacity-5 pointer-events-none">
+                        <Settings size={120} />
+                    </div>
 
-                <h3 className="text-2xl font-display mb-8">General Site Settings</h3>
+                    <div className="space-y-10 max-w-2xl">
+                        <div className="flex items-center justify-between p-8 bg-slate-50 rounded-xl border border-slate-100 group hover:border-[#BA9B32]/30 transition-all">
+                            <div className="space-y-2">
+                                <h4 className="text-lg font-bold text-navy-deep flex items-center gap-3">
+                                    <AlertCircle size={20} className={maintenanceMode ? "text-red-500" : "text-slate-300"} />
+                                    Under Maintenance Mode
+                                </h4>
+                                <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                                    When enabled, all public-facing pages will redirect to the maintenance page. Admin access remains available.
+                                </p>
+                            </div>
 
-                <div className="space-y-10 max-w-2xl">
-                    <div className="flex items-center justify-between p-8 bg-slate-50 rounded-card-sm border border-slate-100 group hover:border-[#BA9B32]/30 transition-all">
-                        <div className="space-y-2">
-                            <h4 className="text-lg font-bold text-navy-deep flex items-center gap-3">
-                                <AlertCircle size={20} className={maintenanceMode ? "text-red-500" : "text-slate-300"} />
-                                Under Maintenance Mode
-                            </h4>
-                            <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
-                                When enabled, all public-facing pages will redirect to the maintenance page. Admin access remains available.
+                            <div className="relative">
+                                <button
+                                    onClick={() => toggleMaintenanceMode(!maintenanceMode)}
+                                    disabled={loading}
+                                    className={`w-16 h-8 rounded-full transition-all duration-500 p-1 relative ${maintenanceMode ? 'bg-red-500' : 'bg-slate-200'} ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer shadow-inner'}`}
+                                >
+                                    <motion.div
+                                        animate={{ x: maintenanceMode ? 32 : 0 }}
+                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                        className="w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center transform"
+                                    >
+                                        {loading && (
+                                            <div className="w-3 h-3 border-2 border-slate-200 border-t-navy-deep rounded-full animate-spin"></div>
+                                        )}
+                                    </motion.div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="bg-[#BA9B32]/5 border border-[#BA9B32]/20 p-8 rounded-xl">
+                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#BA9B32] mb-4">Security Notice</h4>
+                            <p className="text-[11px] text-slate-600 leading-relaxed">
+                                Maintenance mode is synchronized in real-time. Changes made here will take effect immediately for all visitors. Please ensure you have backup of critical data before performing major maintenance.
                             </p>
                         </div>
-
-                        <div className="relative">
-                            <button
-                                onClick={() => toggleMaintenanceMode(!maintenanceMode)}
-                                disabled={loading}
-                                className={`w-16 h-8 rounded-full transition-all duration-500 p-1 relative ${maintenanceMode ? 'bg-red-500' : 'bg-slate-200'} ${loading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer shadow-inner'}`}
-                            >
-                                <motion.div
-                                    animate={{ x: maintenanceMode ? 32 : 0 }}
-                                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                    className="w-6 h-6 bg-white rounded-full shadow-md flex items-center justify-center transform"
-                                >
-                                    {loading && (
-                                        <div className="w-3 h-3 border-2 border-slate-200 border-t-navy-deep rounded-full animate-spin"></div>
-                                    )}
-                                </motion.div>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div className="bg-[#BA9B32]/5 border border-[#BA9B32]/20 p-8 rounded-card-sm">
-                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-[#BA9B32] mb-4">Security Notice</h4>
-                        <p className="text-[11px] text-slate-600 leading-relaxed">
-                            Maintenance mode is synchronized in real-time. Changes made here will take effect immediately for all visitors. Please ensure you have backup of critical data before performing major maintenance.
-                        </p>
                     </div>
                 </div>
-            </div>
 
-            <div className="bg-navy-deep rounded-card p-10 text-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#BA9B32]/20 to-transparent"></div>
-                <div className="relative z-10">
-                    <h3 className="text-xl font-display mb-6">System Information</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
-                        <div className="space-y-8">
-                            {[
-                                { label: "Version Control", value: "v2.0.4-stable" },
-                                { label: "Deployment Environment", value: "Production - Cloud" },
-                                { label: "Last System Health Check", value: new Date().toLocaleDateString() },
-                                { label: "Deploy by", value: "IT Departemen" }
-                            ].map((info) => (
-                                <div key={info.label} className="space-y-1">
-                                    <p className="text-[9px] uppercase tracking-[.3em] text-white/40 font-bold">{info.label}</p>
-                                    <p className="text-sm font-medium tracking-wide">{info.value}</p>
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex flex-col justify-end items-end space-y-4">
-                            <div className="text-right">
-                                <p className="text-[9px] uppercase tracking-[.3em] text-white/40 font-bold mb-2">Supabase Connectivity</p>
-                                <div className="flex items-center gap-2 justify-end">
-                                    <span className="text-[10px] font-bold text-green-400">ACTIVE - SECURE</span>
-                                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                <div className="bg-navy-deep rounded-xl p-10 text-white relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#BA9B32]/20 to-transparent"></div>
+                    <div className="relative z-10">
+                        <h3 className="text-xl font-display mb-6">System Information</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10">
+                            <div className="space-y-8">
+                                {[
+                                    { label: "Version Control", value: "v2.0.4-stable" },
+                                    { label: "Deployment Environment", value: "Production - Cloud" },
+                                    { label: "Last System Health Check", value: new Date().toLocaleDateString() },
+                                    { label: "Deploy by", value: "IT Departemen" }
+                                ].map((info) => (
+                                    <div key={info.label} className="space-y-1">
+                                        <p className="text-[9px] uppercase tracking-[.3em] text-white/40 font-bold">{info.label}</p>
+                                        <p className="text-sm font-medium tracking-wide">{info.value}</p>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex flex-col justify-end items-end space-y-4">
+                                <div className="text-right">
+                                    <p className="text-[9px] uppercase tracking-[.3em] text-white/40 font-bold mb-2">Supabase Connectivity</p>
+                                    <div className="flex items-center gap-2 justify-end">
+                                        <span className="text-[10px] font-bold text-green-400">ACTIVE - SECURE</span>
+                                        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -24,6 +24,7 @@ const ContactPage = () => {
 
     const recaptchaSiteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
+
     const fadeIn = {
         initial: { opacity: 0, y: 30 },
         whileInView: { opacity: 1, y: 0 },
