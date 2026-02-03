@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { SpeedInsights } from "@vercel/speed-insights/react";
+import { Analytics } from "@vercel/analytics/react";
 import { useEffect, lazy, Suspense } from "react";
 import { AnimatePresence } from "framer-motion";
 import Navbar from "./components/Navbar";
@@ -203,6 +205,8 @@ function App() {
           <PropertyProvider>
             <Router>
               <AppContent />
+              <SpeedInsights />
+              <Analytics />
             </Router>
           </PropertyProvider>
         </CareerProvider>
