@@ -99,6 +99,11 @@ const NaturalResourcesPage = () => {
                                         animate={{ scale: activeIndex === index ? 1.2 : 1.05 }}
                                         transition={{ duration: 7, ease: "linear" }}
                                         className="w-full h-full object-cover"
+                                        width="1920"
+                                        height="1080"
+                                        fetchPriority={index === 0 ? "high" : "low"}
+                                        loading={index === 0 ? "eager" : "lazy"}
+                                        decoding="async"
                                     />
                                     <div className="absolute inset-0 bg-navy-deep/75 backdrop-blur-[1px]"></div>
                                 </div>
@@ -179,7 +184,7 @@ const NaturalResourcesPage = () => {
             </section>
 
             {/* 3. Bauxite Mining Section (Editorial Staggered) */}
-            <section className="py-24 md:py-40 bg-white">
+            <section className="py-24 md:py-40 bg-white overflow-hidden">
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
                         <div className="order-2 lg:order-1">

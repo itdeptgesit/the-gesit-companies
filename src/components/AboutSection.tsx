@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 const AboutSection = () => {
     return (
-        <section className="bg-navy-deep py-32 text-white relative">
+        <section className="bg-navy-deep py-32 text-white relative overflow-hidden">
             <div className="container mx-auto px-6 max-w-5xl relative z-10">
                 <div className="flex flex-col items-center text-center space-y-16">
                     {/* Centered Heading */}

@@ -36,7 +36,7 @@ interface CareerContextType {
     error: string | null;
     fetchJobs: () => Promise<void>;
     fetchApplications: () => Promise<void>;
-    addJob: (job: Omit<Career, 'id' | 'created_at' | 'is_active'>) => Promise<void>;
+    addJob: (job: Omit<Career, 'id' | 'created_at'>) => Promise<void>;
     updateJob: (id: number, job: Partial<Career>) => Promise<void>;
     deleteJob: (id: number) => Promise<void>;
     submitApplication: (application: Omit<CareerApplication, 'id' | 'created_at' | 'status'>, file: File) => Promise<void>;
@@ -86,11 +86,11 @@ export const CareerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         }
     };
 
-    const addJob = async (job: Omit<Career, 'id' | 'created_at' | 'is_active'>) => {
+    const addJob = async (job: Omit<Career, 'id' | 'created_at'>) => {
         try {
             const { data, error } = await supabase
                 .from('careers')
-                .insert([{ ...job, is_active: true }])
+                .insert([job])
                 .select();
 
             if (error) throw error;

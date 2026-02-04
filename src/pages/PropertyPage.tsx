@@ -98,6 +98,11 @@ const PropertyPage = () => {
                                         animate={{ scale: activeIndex === index ? 1.2 : 1.05 }}
                                         transition={{ duration: 7, ease: "linear" }}
                                         className="w-full h-full object-cover"
+                                        width="1920"
+                                        height="1080"
+                                        fetchPriority={index === 0 ? "high" : "low"}
+                                        loading={index === 0 ? "eager" : "lazy"}
+                                        decoding="async"
                                     />
                                     <div className="absolute inset-0 bg-navy-deep/75 backdrop-blur-[1px]"></div>
                                 </div>
@@ -187,7 +192,7 @@ const PropertyPage = () => {
             </section>
 
             {/* 3. Project Showcase */}
-            <section className="py-24 md:py-32 bg-slate-50">
+            <section className="py-24 md:py-32 bg-slate-50 overflow-hidden">
                 <div className="container mx-auto px-6">
                     <div className="space-y-32">
                         {projects.map((project, index) => (

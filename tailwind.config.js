@@ -11,9 +11,9 @@ export default {
                 "navy-deep": "#103065",
             },
             fontFamily: {
-                display: ["Lora", "serif"],
+                display: ["Outfit", "sans-serif"],
                 body: ["Inter", "sans-serif"],
-                serif: ["Lora", "serif"],
+                serif: ["Outfit", "sans-serif"],
                 sans: ["Inter", "sans-serif"],
             },
             borderRadius: {

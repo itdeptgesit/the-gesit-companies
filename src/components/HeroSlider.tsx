@@ -70,9 +70,9 @@ const HeroSlider = () => {
                                 src={slide.image}
                                 alt={slide.title}
                                 className="absolute inset-0 h-full w-full object-cover scale-105 animate-slow-zoom"
-                                fetchPriority={index === 0 ? "high" : "auto"}
+                                fetchPriority={index === 0 ? "high" : "low"}
                                 loading={index === 0 ? "eager" : "lazy"}
-                                decoding={index === 0 ? "sync" : "async"}
+                                decoding="async"
                             />
                             {/* Rich Overlay System */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />

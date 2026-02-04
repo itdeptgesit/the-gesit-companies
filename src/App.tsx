@@ -11,6 +11,8 @@ import { NewsProvider } from "./context/NewsContext.tsx";
 import { CareerProvider } from "./context/CareerContext.tsx";
 import { PropertyProvider } from "./context/PropertyContext.tsx";
 import { SettingsProvider, useSettings } from "./context/SettingsContext.tsx";
+import AnalyticsTracker from "./components/AnalyticsTracker";
+import CookieConsent from "./components/CookieConsent";
 
 // Lazy load all page components for better performance
 const HomePage = lazy(() => import("./pages/HomePage.tsx"));
@@ -27,9 +29,10 @@ const NewsDetailPage = lazy(() => import("./pages/NewsDetailPage.tsx"));
 const AdminDashboard = lazy(() => import("./pages/AdminDashboard.tsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.tsx"));
 const MaintenancePage = lazy(() => import("./pages/MaintenancePage.tsx"));
+const CookiePolicyPage = lazy(() => import("./pages/CookiePolicyPage.tsx"));
 
 const AppContent = () => {
-  const { maintenanceMode, loading } = useSettings();
+  const { settings, loading } = useSettings();
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
   const isMaintenancePage = location.pathname === "/maintenance";
@@ -41,10 +44,10 @@ const AppContent = () => {
 
   useEffect(() => {
     // If maintenance mode is active, redirect to /maintenance unless path is admin or already maintenance
-    if (maintenanceMode && !isAdmin && !isMaintenancePage && !loading) {
+    if (settings.maintenanceMode && !isAdmin && !isMaintenancePage && !loading) {
       window.location.href = "/maintenance";
     }
-  }, [maintenanceMode, isAdmin, isMaintenancePage, loading]);
+  }, [settings.maintenanceMode, isAdmin, isMaintenancePage, loading]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -186,6 +189,7 @@ const AppContent = () => {
               <Route path="/manufacturing" element={<PageTransition><ManufacturingPage /></PageTransition>} />
               <Route path="/natural-resources" element={<PageTransition><NaturalResourcesPage /></PageTransition>} />
               <Route path="/maintenance" element={<PageTransition><MaintenancePage /></PageTransition>} />
+              <Route path="/cookie-policy" element={<PageTransition><CookiePolicyPage /></PageTransition>} />
               <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
             </Routes>
           </AnimatePresence>
@@ -204,7 +208,9 @@ function App() {
         <CareerProvider>
           <PropertyProvider>
             <Router>
+              <AnalyticsTracker />
               <AppContent />
+              <CookieConsent />
               <SpeedInsights />
               <Analytics />
             </Router>

@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import { Phone, Mail } from "lucide-react";
+import { useSettings } from "../context/SettingsContext";
 
 const Footer = () => {
+    const { settings } = useSettings();
     const currentYear = new Date().getFullYear();
 
     return (
@@ -12,16 +14,16 @@ const Footer = () => {
                     <div className="col-span-1 lg:col-span-1">
                         <Link to="/" className="flex items-center gap-4 mb-8 group/logo">
                             <img
-                                alt="Gesit Logo"
+                                alt={settings.siteTitle || "Gesit Logo"}
                                 className="w-10 h-10 object-contain transition-transform duration-500 group-hover/logo:scale-110"
-                                src="/logo gesit.png"
+                                src={settings.logoUrl || "/logo gesit.png"}
                             />
                             <span className="font-extrabold text-[13px] tracking-[.15em] uppercase text-white group-hover/logo:text-[#BA9B32] transition-colors whitespace-nowrap">
                                 THE GESIT COMPANIES
                             </span>
                         </Link>
                         <p className="text-slate-400 text-sm leading-relaxed mb-8 font-light">
-                            A trusted strategic partner in Indonesia&apos;s growth for over five decades.
+                            {settings.siteDescription || "A trusted strategic partner in Indonesia's growth for over five decades."}
                         </p>
                     </div>
 
@@ -59,23 +61,21 @@ const Footer = () => {
                             Find Us
                         </h3>
                         <div className="space-y-5 text-slate-300 text-sm font-medium leading-relaxed tracking-wide">
-                            <p className="font-semibold">
-                                The City Tower, 27th Floor<br />
-                                Jl. M.H. Thamrin No 81<br />
-                                Jakarta Pusat, 10310 – Indonesia
+                            <p className="font-semibold whitespace-pre-line">
+                                {settings.officeAddress}
                             </p>
                             <div className="space-y-3">
                                 <p className="flex items-center gap-4 group/contact font-bold">
                                     <Phone size={16} className="text-[#BA9B32] transition-transform group-hover/contact:scale-110" />
-                                    <span>+62 21 3101601</span>
+                                    <span>{settings.phoneNumber}</span>
                                 </p>
                                 <p className="flex items-center gap-4 group/contact font-bold">
                                     <Mail size={16} className="text-[#BA9B32] transition-transform group-hover/contact:scale-110" />
                                     <Link
-                                        to="mailto:contact@gesit.co.id"
+                                        to={`mailto:${settings.email}`}
                                         className="hover:text-[#BA9B32] transition-colors outline-none"
                                     >
-                                        contact@gesit.co.id
+                                        {settings.email}
                                     </Link>
                                 </p>
                             </div>
@@ -84,10 +84,13 @@ const Footer = () => {
                 </div>
 
                 {/* Copyright */}
-                <div className="border-t border-white/5 pt-12 flex justify-center items-center">
+                <div className="border-t border-white/5 pt-12 flex flex-col items-center gap-4">
                     <p className="text-[10px] uppercase tracking-[0.4em] text-slate-400 font-medium text-center">
                         © {currentYear} THE GESIT COMPANIES. ALL RIGHTS RESERVED.
                     </p>
+                    <div className="flex gap-6">
+                        <Link to="/cookie-policy" className="text-[10px] text-slate-500 hover:text-[#BA9B32] transition-colors">Cookie Policy</Link>
+                    </div>
                 </div>
             </div>
         </footer>

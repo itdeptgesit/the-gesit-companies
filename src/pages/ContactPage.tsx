@@ -4,6 +4,7 @@ import { Send, ChevronRight, CheckCircle2, MapPin, Phone, Mail, X } from "lucide
 import { supabase } from "../lib/supabase";
 import { sendContactEmail } from "../lib/email";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useSettings } from "../context/SettingsContext";
 
 /**
  * ContactPage - Final Refined Corporate Design
@@ -108,27 +109,33 @@ const ContactPage = () => {
         }
     };
 
+
+    const { settings } = useSettings();
+
+    // Removed duplicated state hooks block that was here in original (lines 13-24 were correct, but need to make sure we don't duplicate or shadow)
+    // Actually, I'll just keeping the surrounding code as I am replacing the card definition.
+
     const contactCards = [
         {
             icon: <MapPin size={24} />,
             title: "Head Office",
-            content: "The City Tower, 27th Floor, Jl. M.H. Thamrin No 81, Jakarta Pusat, 10310",
+            content: settings.officeAddress,
             sub: "Indonesia",
-            link: "https://maps.app.goo.gl/tpHm5Hvy8LnV3ayu8"
+            link: settings.googleMapsUrl || "https://maps.google.com"
         },
         {
             icon: <Phone size={24} />,
             title: "Phone",
-            content: "+62 21 3101601",
+            content: settings.phoneNumber,
             sub: "Mon - Fri, 08:30 - 17:30",
-            link: "tel:+62213101601"
+            link: `tel:${settings.phoneNumber.replace(/[^\d+]/g, '')}`
         },
         {
             icon: <Mail size={24} />,
             title: "Email",
-            content: "contact@gesit.co.id",
+            content: settings.email,
             sub: "General Inquiry",
-            link: "mailto:contact@gesit.co.id"
+            link: `mailto:${settings.email}`
         }
     ];
 

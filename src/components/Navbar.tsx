@@ -100,17 +100,19 @@ const Navbar = () => {
                         alt="Gesit Logo"
                         className="w-9 h-9 sm:w-11 sm:h-11 object-contain"
                         src="/logo gesit.png"
+                        width="59"
+                        height="70"
                         loading="eager"
                         decoding="async"
                     />
-                    <div className={`flex flex-col uppercase tracking-[.15em] font-black text-[13px] sm:text-[16px] transition-colors duration-500 drop-shadow-md ${isScrolled ? "text-navy-deep" : "text-white"}`}>
+                    <div className={`flex flex-col uppercase tracking-[.15em] font-black text-[13px] sm:text-[16px] transition-all duration-500 ${isScrolled ? "text-navy-deep" : "text-white drop-shadow-md"}`}>
                         <span>THE GESIT COMPANIES</span>
                     </div>
                 </Link>
 
                 {/* Desktop Menu */}
                 <div className={`hidden lg:flex items-center gap-10 transition-opacity duration-300 ${isMobileMenuOpen ? "opacity-0" : "opacity-100"}`}>
-                    <ul className={`flex items-center gap-8 uppercase text-[13px] font-bold tracking-wider transition-colors duration-300 drop-shadow-md ${navTextColor}`}>
+                    <ul className={`flex items-center gap-8 uppercase text-[13px] font-bold tracking-wider transition-all duration-300 ${navTextColor} ${!isScrolled ? "drop-shadow-md" : ""}`}>
                         {navLinks.map((link) => (
                             <li
                                 key={link.name}
@@ -180,7 +182,7 @@ const Navbar = () => {
                 <div className={`lg:hidden transition-all duration-300 ${isMobileMenuOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className={`p-2 transition-all duration-300 drop-shadow-md ${isScrolled ? "text-navy-deep" : "text-white"}`}
+                        className={`p-2 transition-all duration-300 ${isScrolled ? "text-navy-deep" : "text-white drop-shadow-md"}`}
                         aria-label="Open menu"
                     >
                         {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}

@@ -1,39 +1,78 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
-interface SettingsContextType {
+interface SettingsState {
     maintenanceMode: boolean;
-    loading: boolean;
-    toggleMaintenanceMode: (value: boolean) => Promise<void>;
+    siteTitle: string;
+    siteDescription: string;
+    keywords: string;
+    officeAddress: string;
+    phoneNumber: string;
+    socialFacebook: string;
+    socialInstagram: string;
+    socialLinkedin: string;
+    logoUrl: string;
+    faviconUrl: string;
+    email: string;
+    googleMapsUrl: string;
+    googleAnalyticsId: string;
 }
+
+interface SettingsContextType {
+    settings: SettingsState;
+    loading: boolean;
+    updateSetting: (key: keyof SettingsState, value: string | boolean) => Promise<void>;
+    updateSettings: (newSettings: Partial<SettingsState>) => Promise<void>;
+}
+
+const defaultSettings: SettingsState = {
+    maintenanceMode: false,
+    siteTitle: 'The Gesit Companies',
+    siteDescription: 'A diversified conglomerate in Indonesia.',
+    keywords: 'business, property, trading, mining',
+    officeAddress: 'The City Tower, 27th Floor, Jl. M.H. Thamrin No 81, Jakarta Pusat, 10310',
+    phoneNumber: '+62 21 3101601',
+    socialFacebook: '',
+    socialInstagram: '',
+    socialLinkedin: '',
+    logoUrl: '',
+    faviconUrl: '',
+    email: 'contact@gesit.co.id',
+    googleMapsUrl: 'https://maps.app.goo.gl/tpHm5Hvy8LnV3ayu8',
+    googleAnalyticsId: ''
+};
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [maintenanceMode, setMaintenanceMode] = useState(false);
+    const [settings, setSettings] = useState<SettingsState>(defaultSettings);
     const [loading, setLoading] = useState(true);
 
     const fetchSettings = async () => {
         try {
             setLoading(true);
-            // Try to fetch from Supabase. If table doesn't exist, we'll catch and fallback to localStorage
             const { data } = await supabase
                 .from('site_settings')
-                .select('value')
-                .eq('key', 'maintenance_mode')
-                .single();
+                .select('key, value');
 
             if (data) {
-                setMaintenanceMode(data.value === 'true');
-            } else {
-                // Fallback to localStorage for MVP/Safety
-                const localValue = localStorage.getItem('maintenance_mode');
-                setMaintenanceMode(localValue === 'true');
+                const newSettings = { ...defaultSettings };
+                data.forEach(item => {
+                    const key = item.key as keyof SettingsState;
+                    if (key in newSettings) {
+                        if (key === 'maintenanceMode') {
+                            // @ts-ignore
+                            newSettings[key] = item.value === 'true';
+                        } else {
+                            // @ts-ignore
+                            newSettings[key] = item.value;
+                        }
+                    }
+                });
+                setSettings(newSettings);
             }
         } catch (err) {
-            console.warn('Settings fetch error (possibly table missing):', err);
-            const localValue = localStorage.getItem('maintenance_mode');
-            setMaintenanceMode(localValue === 'true');
+            console.warn('Settings fetch error:', err);
         } finally {
             setLoading(false);
         }
@@ -43,24 +82,40 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         fetchSettings();
     }, []);
 
-    const toggleMaintenanceMode = async (value: boolean) => {
+    const updateSetting = async (key: keyof SettingsState, value: string | boolean) => {
         try {
-            setMaintenanceMode(value);
-            localStorage.setItem('maintenance_mode', String(value));
+            setSettings(prev => ({ ...prev, [key]: value }));
 
-            // Try to sync with Supabase
-            const { error } = await supabase
+            // Persist to Supabase
+            await supabase
                 .from('site_settings')
-                .upsert({ key: 'maintenance_mode', value: String(value) }, { onConflict: 'key' });
+                .upsert({ key, value: String(value) }, { onConflict: 'key' });
 
-            if (error) throw error;
         } catch (err) {
-            console.error('Error updating maintenance mode:', err);
+            console.error(`Error updating ${key}:`, err);
+        }
+    };
+
+    const updateSettings = async (newSettings: Partial<SettingsState>) => {
+        try {
+            setSettings(prev => ({ ...prev, ...newSettings }));
+
+            const updates = Object.entries(newSettings).map(([key, value]) => ({
+                key,
+                value: String(value)
+            }));
+
+            await supabase
+                .from('site_settings')
+                .upsert(updates, { onConflict: 'key' });
+
+        } catch (err) {
+            console.error('Error batch updating settings:', err);
         }
     };
 
     return (
-        <SettingsContext.Provider value={{ maintenanceMode, loading, toggleMaintenanceMode }}>
+        <SettingsContext.Provider value={{ settings, loading, updateSetting, updateSettings }}>
             {children}
         </SettingsContext.Provider>
     );
