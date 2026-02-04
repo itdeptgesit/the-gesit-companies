@@ -160,7 +160,7 @@ const AppContent = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white transition-colors duration-300">
+    <div className="min-h-screen bg-white transition-colors duration-300 overflow-x-hidden">
       {!isAdmin && !isStandalone && <Navbar />}
       <main>
         <Suspense fallback={
