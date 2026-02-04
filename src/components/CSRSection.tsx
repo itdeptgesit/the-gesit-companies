@@ -73,10 +73,10 @@ const CSRSection = () => {
                             transition={{ delay: 0.3 }}
                             className="bg-gray-50 p-8 border-l-[4px] border-[#BA9B32] shadow-sm"
                         >
-                            <h4 className="text-lg font-display font-bold mb-2 text-navy-deep tracking-wide uppercase">
+                            <h3 className="text-lg font-display font-bold mb-2 text-navy-deep tracking-wide uppercase">
                                 {latestCSR ? latestCSR.category : "Gesit Foundation COVID-19 Vaccination Program"}
-                            </h4>
-                            <p className="text-slate-500 text-sm leading-relaxed font-light">
+                            </h3>
+                            <p className="text-slate-600 text-sm leading-relaxed font-light">
                                 {latestCSR ? `Update published on ${latestCSR.date}` : "Participating in COVID control and distributing vaccines."}
                             </p>
                         </motion.div>

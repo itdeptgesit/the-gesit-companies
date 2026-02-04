@@ -27,9 +27,9 @@ const Footer = () => {
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
+                        <h3 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
                             Quick Links
-                        </h4>
+                        </h3>
                         <ul className="space-y-4 text-slate-300 text-sm font-semibold tracking-wide">
                             <li><Link to="/" className="hover:text-[#BA9B32] transition-colors">Home</Link></li>
                             <li><Link to="/about" className="hover:text-[#BA9B32] transition-colors">About Us</Link></li>
@@ -42,9 +42,9 @@ const Footer = () => {
 
                     {/* Our Business */}
                     <div>
-                        <h4 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
+                        <h3 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
                             Our Business
-                        </h4>
+                        </h3>
                         <ul className="space-y-4 text-slate-300 text-sm font-semibold tracking-wide">
                             <li><Link to="/property" className="hover:text-[#BA9B32] transition-colors">Property</Link></li>
                             <li><Link to="/trading-service" className="hover:text-[#BA9B32] transition-colors">Trading & Services</Link></li>
@@ -55,9 +55,9 @@ const Footer = () => {
 
                     {/* Find Us */}
                     <div>
-                        <h4 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
+                        <h3 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
                             Find Us
-                        </h4>
+                        </h3>
                         <div className="space-y-5 text-slate-300 text-sm font-medium leading-relaxed tracking-wide">
                             <p className="font-semibold">
                                 The City Tower, 27th Floor<br />
@@ -85,7 +85,7 @@ const Footer = () => {
 
                 {/* Copyright */}
                 <div className="border-t border-white/5 pt-12 flex justify-center items-center">
-                    <p className="text-[10px] uppercase tracking-[0.4em] text-slate-500 font-medium text-center">
+                    <p className="text-[10px] uppercase tracking-[0.4em] text-slate-400 font-medium text-center">
                         © {currentYear} THE GESIT COMPANIES. ALL RIGHTS RESERVED.
                     </p>
                 </div>

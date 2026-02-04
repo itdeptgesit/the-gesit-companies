@@ -40,9 +40,10 @@ const HeroSlider = () => {
             <div className="absolute top-0 left-0 w-full h-[3px] bg-white/5 z-30">
                 <motion.div
                     key={activeIndex}
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
                     transition={{ duration: 5, ease: "linear" }}
+                    style={{ originX: 0 }}
                     className="h-full bg-[#BC9C33] shadow-[0_0_8px_rgba(188,156,51,0.6)]"
                 />
             </div>

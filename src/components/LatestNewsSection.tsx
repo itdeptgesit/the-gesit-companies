@@ -14,9 +14,6 @@ const LatestNewsSection = () => {
             <div className="container mx-auto px-6">
                 <div className="flex justify-between items-end mb-16">
                     <div>
-                        <span className="text-[#BA9B32] font-bold uppercase tracking-[.4em] text-xs mb-4 block">
-                            Stay Informed
-                        </span>
                         <h2 className="text-4xl md:text-5xl font-display">Latest News</h2>
                     </div>
                     <Link
@@ -53,7 +50,7 @@ const LatestNewsSection = () => {
                                     <h3 className="text-2xl font-display leading-tight text-navy-deep group-hover:text-[#BA9B32] transition-colors duration-300 line-clamp-2">
                                         {item.title}
                                     </h3>
-                                    <p className="text-slate-500 text-[15px] leading-relaxed line-clamp-3 font-normal">
+                                    <p className="text-slate-600 text-[15px] leading-relaxed line-clamp-3 font-normal">
                                         {item.excerpt}
                                     </p>
                                 </div>
