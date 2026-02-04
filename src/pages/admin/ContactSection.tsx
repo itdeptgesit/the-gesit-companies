@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
     Clock,
     Filter,
-    Mail,
     Eye,
     Trash2,
     X
@@ -109,7 +108,6 @@ const ContactSection = () => {
         return matchesSearch && matchesStartDate && matchesEndDate;
     });
 
-    const totalPages = Math.ceil(filteredContacts.length / itemsPerPage);
     const currentItems = filteredContacts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     useEffect(() => {
