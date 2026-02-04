@@ -33,12 +33,13 @@ const CookieConsent = () => {
                             <div className="flex-1">
                                 <h4 className="font-display font-bold text-navy-deep text-sm">We use cookies</h4>
                                 <p className="text-[10px] text-slate-500 mt-2 leading-relaxed">
-                                    We use cookies to analyze site traffic and enhance your user experience. By continuing, you agree to our use of cookies. <a href="/cookie-policy" className="text-navy-deep hover:text-[#BA9B32] underline decoration-slate-300 underline-offset-2 transition-all">Learn more</a>
+                                    We use cookies to analyze site traffic and enhance your user experience. By continuing, you agree to our use of cookies. <a href="/cookie-policy" className="text-navy-deep hover:text-[#BA9B32] underline decoration-slate-300 underline-offset-2 transition-all" aria-label="Learn more about our Cookie Policy">Learn more</a>
                                 </p>
                             </div>
                             <button
                                 onClick={() => setIsVisible(false)}
                                 className="text-slate-400 hover:text-navy-deep transition-colors"
+                                aria-label="Close cookie consent banner"
                             >
                                 <X size={16} />
                             </button>

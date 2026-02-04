@@ -25,7 +25,7 @@ export const ContactDetailModal = ({ contact, isOpen, onClose }: { contact: any,
                         <h3 className="text-xl font-display">Inquiry Details</h3>
                         <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Submitted on {new Date(contact.created_at).toLocaleString()}</p>
                     </div>
-                    <button onClick={onClose} className="p-2 hover:bg-slate-200 rounded-full transition-colors">
+                    <button onClick={onClose} className="p-2 hover:bg-slate-200 rounded-full transition-colors" aria-label="Close inquiry details">
                         <X size={20} />
                     </button>
                 </div>

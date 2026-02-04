@@ -177,7 +177,7 @@ const AdminDashboard = () => {
                     className="fixed lg:sticky top-0 h-screen w-[280px] bg-white shadow-2xl lg:shadow-none z-50 flex flex-col border-r border-slate-100"
                 >
                     <div className="p-8 pb-10 flex flex-col items-center text-center relative border-b border-slate-50">
-                        <button onClick={() => setIsSidebarOpen(false)} className="absolute top-4 right-4 p-2 text-slate-300 lg:hidden"><X size={20} /></button>
+                        <button onClick={() => setIsSidebarOpen(false)} className="absolute top-4 right-4 p-2 text-slate-300 lg:hidden" aria-label="Close sidebar"><X size={20} /></button>
                         <div className="w-16 h-16 bg-white rounded-card-sm shadow-md border border-slate-100 flex items-center justify-center mb-4 p-2">
                             <img src="/logo gesit.png" alt="Gesit" className="w-full h-full object-contain" />
                         </div>
@@ -223,7 +223,7 @@ const AdminDashboard = () => {
                             <img src="/logo gesit.png" alt="Gesit" className="w-6 h-6 object-contain" />
                             <span className="font-display font-bold text-navy-deep text-sm">Gesit Admin</span>
                         </div>
-                        <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-navy-deep bg-slate-50 rounded-card-sm"><Menu size={20} /></button>
+                        <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-navy-deep bg-slate-50 rounded-card-sm" aria-label="Open sidebar menu"><Menu size={20} /></button>
                     </header>
 
                     <div className="p-6 lg:p-12 max-w-7xl mx-auto">
