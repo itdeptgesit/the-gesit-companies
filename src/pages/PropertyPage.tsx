@@ -217,7 +217,15 @@ const PropertyPage = () => {
                                         >
                                             {project.images.map((img, i) => (
                                                 <SwiperSlide key={i}>
-                                                    <img src={img} alt={`${project.title} ${i + 1}`} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000" />
+                                                    <img
+                                                        src={img}
+                                                        alt={`${project.title} ${i + 1}`}
+                                                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-1000"
+                                                        width="800"
+                                                        height="600"
+                                                        loading="lazy"
+                                                        decoding="async"
+                                                    />
                                                 </SwiperSlide>
                                             ))}
                                         </Swiper>

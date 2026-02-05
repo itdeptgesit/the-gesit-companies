@@ -70,6 +70,7 @@ const BusinessSection = () => {
                                             width="400"
                                             height="300"
                                             loading="lazy"
+                                            decoding="async"
                                         />
                                         <div className="absolute inset-0 bg-navy-deep/10 group-hover:bg-transparent transition-colors duration-500"></div>
                                     </div>

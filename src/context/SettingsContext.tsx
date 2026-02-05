@@ -30,7 +30,7 @@ const defaultSettings: SettingsState = {
     siteTitle: 'The Gesit Companies',
     siteDescription: 'A diversified conglomerate in Indonesia.',
     keywords: 'business, property, trading, mining',
-    officeAddress: 'The City Tower, 27th Floor, Jl. M.H. Thamrin No 81, Jakarta Pusat, 10310',
+    officeAddress: 'The City Tower, 27th Floor\nJl. M.H. Thamrin No 81, Jakarta Pusat, 10310',
     phoneNumber: '+62 21 3101601',
     socialFacebook: '',
     socialInstagram: '',

@@ -128,6 +128,11 @@ const NewsPage = () => {
                                         animate={{ scale: activeIndex === index ? 1.2 : 1.05 }}
                                         transition={{ duration: 7, ease: "linear" }}
                                         className="w-full h-full object-cover"
+                                        width="1920"
+                                        height="1080"
+                                        fetchPriority={index === 0 ? "high" : "low"}
+                                        loading={index === 0 ? "eager" : "lazy"}
+                                        decoding="async"
                                     />
                                     <div className="absolute inset-0 bg-navy-deep/75 backdrop-blur-[1px]"></div>
                                 </div>
@@ -201,6 +206,10 @@ const NewsPage = () => {
                                     src={featuredArticle.image}
                                     alt={featuredArticle.title}
                                     className="w-full aspect-[16/10] object-cover group-hover:scale-105 transition duration-1000"
+                                    width="1600"
+                                    height="1000"
+                                    loading="eager"
+                                    decoding="async"
                                 />
                                 <div className="absolute top-8 left-8">
                                     <span className="bg-[#BA9B32] text-white text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full">
@@ -276,6 +285,10 @@ const NewsPage = () => {
                                             src={item.image}
                                             alt={item.title}
                                             className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
+                                            width="800"
+                                            height="600"
+                                            loading="lazy"
+                                            decoding="async"
                                         />
                                         <div className="absolute top-6 left-6 flex gap-2">
                                             <span className="bg-white/90 text-[9px] font-bold uppercase tracking-widest px-4 py-2 rounded-full">

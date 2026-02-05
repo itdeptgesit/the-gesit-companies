@@ -16,7 +16,7 @@ const LatestNewsSection = () => {
                     <div className="space-y-4">
                         <div className="flex items-center gap-4">
                             <span className="w-12 h-[1px] bg-[#BA9B32]"></span>
-                            <span className="text-[10px] font-bold uppercase tracking-[.4em] text-[#BA9B32]">Our Perspective</span>
+                            <span className="text-[10px] font-bold uppercase tracking-[.4em] text-[#9A7D1F]">Our Perspective</span>
                         </div>
                         <h2 className="text-5xl md:text-6xl font-display text-navy-deep leading-tight">Latest News<br />& Insights</h2>
                     </div>

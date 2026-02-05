@@ -36,6 +36,10 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
                     transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
                     className="absolute inset-0 w-full h-full object-cover"
                     alt="Manufacturing"
+                    width="800"
+                    height="600"
+                    loading="lazy"
+                    decoding="async"
                 />
             </AnimatePresence>
         </div>
@@ -306,7 +310,7 @@ const ManufacturingPage = () => {
                                 transition={{ duration: 1 }}
                                 className="relative rounded-card overflow-hidden shadow-2xl aspect-[4/5]"
                             >
-                                <img src="/manufacturing/alumina.jpeg" className="w-full h-full object-cover" alt="Smelter Development" />
+                                <img src="/manufacturing/alumina.jpeg" className="w-full h-full object-cover" alt="Smelter Development" width="800" height="1000" loading="lazy" decoding="async" />
                                 <div className="absolute inset-0 bg-navy-deep/20"></div>
                             </motion.div>
                         </div>

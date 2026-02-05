@@ -30,6 +30,8 @@ const AdminDashboard = lazy(() => import("./pages/AdminDashboard.tsx"));
 const NotFoundPage = lazy(() => import("./pages/NotFoundPage.tsx"));
 const MaintenancePage = lazy(() => import("./pages/MaintenancePage.tsx"));
 const CookiePolicyPage = lazy(() => import("./pages/CookiePolicyPage.tsx"));
+const PrivacyPolicyPage = lazy(() => import("./pages/PrivacyPolicyPage.tsx"));
+const TermsOfServicePage = lazy(() => import("./pages/TermsOfServicePage.tsx"));
 
 const AppContent = () => {
   const { settings, loading } = useSettings();
@@ -190,6 +192,8 @@ const AppContent = () => {
               <Route path="/natural-resources" element={<PageTransition><NaturalResourcesPage /></PageTransition>} />
               <Route path="/maintenance" element={<PageTransition><MaintenancePage /></PageTransition>} />
               <Route path="/cookie-policy" element={<PageTransition><CookiePolicyPage /></PageTransition>} />
+              <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicyPage /></PageTransition>} />
+              <Route path="/terms-of-service" element={<PageTransition><TermsOfServicePage /></PageTransition>} />
               <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
             </Routes>
           </AnimatePresence>

@@ -70,6 +70,8 @@ const HeroSlider = () => {
                                 src={slide.image}
                                 alt={slide.title}
                                 className="absolute inset-0 h-full w-full object-cover scale-105 animate-slow-zoom"
+                                width="1920"
+                                height="1080"
                                 fetchPriority={index === 0 ? "high" : "low"}
                                 loading={index === 0 ? "eager" : "lazy"}
                                 decoding="async"
@@ -119,6 +121,7 @@ const HeroSlider = () => {
             <style>{`
         .animate-slow-zoom {
           animation: slowZoom 25s infinite alternate ease-in-out;
+          will-change: transform;
         }
         @keyframes slowZoom {
           from { transform: scale(1.05); }

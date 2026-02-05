@@ -44,7 +44,7 @@ const CSRSection = () => {
                         <div>
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="w-8 h-[1px] bg-[#BA9B32]"></span>
-                                <span className="text-[10px] font-bold uppercase tracking-[.3em] text-[#BA9B32]">Social Responsibility</span>
+                                <span className="text-[10px] font-bold uppercase tracking-[.3em] text-[#9A7D1F]">Social Responsibility</span>
                             </div>
                             <h2 className="text-4xl lg:text-5xl font-display leading-[1.15] text-navy-deep">
                                 {latestCSR ? latestCSR.title : "We want to create a positive effect on lives and communities in Indonesia"}
@@ -77,7 +77,7 @@ const CSRSection = () => {
                         <div className="pt-2">
                             <Link
                                 to={latestCSR ? `/news/${latestCSR.id}` : "/csr"}
-                                className="group inline-flex items-center gap-4 text-xs font-bold uppercase tracking-[0.3em] text-[#BA9B32] hover:text-navy-deep transition-colors"
+                                className="group inline-flex items-center gap-4 text-xs font-bold uppercase tracking-[0.3em] text-[#9A7D1F] hover:text-navy-deep transition-colors"
                             >
                                 {latestCSR ? "Read Full Story" : "Read Our CSR Report"}
                                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />

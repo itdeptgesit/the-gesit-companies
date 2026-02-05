@@ -9,9 +9,9 @@ const Footer = () => {
     return (
         <footer className="bg-navy-deep pt-24 pb-12 text-white border-t border-[#BA9B32]/20">
             <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-20 items-start">
                     {/* Logo & Description */}
-                    <div className="col-span-1 lg:col-span-1">
+                    <div>
                         <Link to="/" className="flex items-center gap-4 mb-8 group/logo">
                             <img
                                 alt={settings.siteTitle || "Gesit Logo"}
@@ -22,7 +22,7 @@ const Footer = () => {
                                 THE GESIT COMPANIES
                             </span>
                         </Link>
-                        <p className="text-slate-400 text-sm leading-relaxed mb-8 font-light">
+                        <p className="text-slate-400 text-sm leading-relaxed mb-8 font-light max-w-[240px]">
                             {settings.siteDescription || "A trusted strategic partner in Indonesia's growth for over five decades."}
                         </p>
                     </div>
@@ -81,16 +81,25 @@ const Footer = () => {
                             </div>
                         </div>
                     </div>
+
+                    {/* Legal */}
+                    <div>
+                        <h3 className="text-[#BA9B32] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
+                            Legal
+                        </h3>
+                        <ul className="space-y-4 text-slate-300 text-sm font-semibold tracking-wide">
+                            <li><Link to="/cookie-policy" className="hover:text-[#BA9B32] transition-colors">Cookie Policy</Link></li>
+                            <li><Link to="/privacy-policy" className="hover:text-[#BA9B32] transition-colors">Privacy Policy</Link></li>
+                            <li><Link to="/terms-of-service" className="hover:text-[#BA9B32] transition-colors">Terms of Service</Link></li>
+                        </ul>
+                    </div>
                 </div>
 
                 {/* Copyright */}
-                <div className="border-t border-white/5 pt-12 flex flex-col items-center gap-4">
+                <div className="border-t border-white/5 pt-12">
                     <p className="text-[10px] uppercase tracking-[0.4em] text-slate-400 font-medium text-center">
                         © {currentYear} THE GESIT COMPANIES. ALL RIGHTS RESERVED.
                     </p>
-                    <div className="flex gap-6">
-                        <Link to="/cookie-policy" className="text-[10px] text-slate-500 hover:text-[#BA9B32] transition-colors">Cookie Policy</Link>
-                    </div>
                 </div>
             </div>
         </footer>
