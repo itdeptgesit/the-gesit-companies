@@ -1,8 +1,12 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+// @ts-ignore
+import { supabase } from "../lib/supabase";
 
-const businesses = [
+// Static backup just in case
+const defaultBusinesses = [
     {
         title: "Property",
         description: "Creating value-adding and sustainable assets to our communities and partnering with leading multinational corporations.",
@@ -30,6 +34,26 @@ const businesses = [
 ];
 
 const BusinessSection = () => {
+    const [businesses, setBusinesses] = useState<any[]>(defaultBusinesses);
+
+    useEffect(() => {
+        const fetchBusinesses = async () => {
+            const { data } = await supabase
+                .from('business_segments')
+                .select('*')
+                .order('order_index', { ascending: true });
+
+            if (data && data.length > 0) {
+                setBusinesses(data.map(b => ({
+                    title: b.title,
+                    description: b.description,
+                    image: b.image_url,
+                    href: b.href
+                })));
+            }
+        };
+        fetchBusinesses();
+    }, []);
     return (
         <section className="bg-gray-50 py-32 overflow-hidden relative">
             <div className="container mx-auto px-6 relative z-10">

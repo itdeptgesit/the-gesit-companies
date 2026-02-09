@@ -1,38 +1,53 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
+// @ts-ignore
+import { supabase } from '../lib/supabase';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-const slides = [
-    {
-        image: "/hero/property.png",
-        title: "Your First Choice Strategic Partner",
-        subtitle: "Over 50 Years Of Investing In The Development Of Indonesia"
-    },
-    {
-        image: "/hero/manufacturing.jpg",
-        title: "Industrial Manufacturing Excellence",
-        subtitle: "Advanced production and engineering solutions for global standards."
-    },
-    {
-        image: "/hero/trading.png",
-        title: "Global Trading & Services",
-        subtitle: "Connecting Indonesia with international markets through quality and trust."
-    },
-    {
-        image: "/hero/mining.jpg",
-        title: "Sustainable Natural Resources",
-        subtitle: "Maximizing value from Indonesia's rich mineral assets responsibly."
-    }
-];
-
 const HeroSlider = () => {
     const [activeIndex, setActiveIndex] = useState(0);
+    const [slides, setSlides] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchSlides = async () => {
+            const { data } = await supabase
+                .from('hero_slides')
+                .select('*')
+                .order('order_index', { ascending: true });
+
+            if (data && data.length > 0) {
+                // Transform data keys to match component expectations if needed, 
+                // but our schema uses image_url, title, subtitle which matches closely
+                setSlides(data.map(s => ({
+                    image: s.image_url,
+                    title: s.title,
+                    subtitle: s.subtitle
+                })));
+            } else {
+                // Fallback content if DB is empty to prevent broken UI
+                setSlides([
+                    {
+                        image: "/hero/property.png",
+                        title: "Your First Choice Strategic Partner",
+                        subtitle: "Over 50 Years Of Investing In The Development Of Indonesia"
+                    }
+                ]);
+            }
+            setIsLoading(false);
+        };
+        fetchSlides();
+    }, []);
+
+    if (isLoading) return <div className="h-screen w-full bg-navy-deep flex items-center justify-center">
+        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+    </div>;
 
     return (
         <section className="relative h-screen w-full overflow-hidden">

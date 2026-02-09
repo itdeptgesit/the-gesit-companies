@@ -7,11 +7,11 @@ import {
     Settings,
     LogOut,
     Menu,
-    X,
     ChevronRight,
     AlertCircle,
     ShieldCheck,
-    Eye
+    Eye,
+    Globe
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "../lib/supabase";
@@ -20,6 +20,7 @@ import { supabase } from "../lib/supabase";
 const OverviewSection = lazy(() => import("./admin/OverviewSection"));
 const ContentSection = lazy(() => import("./admin/ContentSection"));
 const CareersVault = lazy(() => import("./admin/CareersVault"));
+const SiteEditor = lazy(() => import("./admin/SiteEditor"));
 const ContactSection = lazy(() => import("./admin/ContactSection"));
 const SettingsSection = lazy(() => import("./admin/SettingsSection"));
 
@@ -43,6 +44,7 @@ const AdminDashboard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [isSending, setIsSending] = useState(false);
     const [visitorCount, setVisitorCount] = useState<number>(0);
+
 
     const ALLOWED_EMAILS = [
         "admin@gesit.co.id",
@@ -142,11 +144,12 @@ const AdminDashboard = () => {
     };
 
     const tabs = [
-        { id: "overview", label: "Overview", icon: <LayoutDashboard size={20} /> },
-        { id: "news", label: "News & Insights", icon: <Newspaper size={20} /> },
-        { id: "careers", label: "Careers Vault", icon: <Briefcase size={20} /> },
-        { id: "contacts", label: "Contact Inquiries", icon: <Mail size={20} /> },
-        { id: "settings", label: "Site Settings", icon: <Settings size={20} /> },
+        { id: "overview", label: "Dashboard", icon: <LayoutDashboard size={20} /> },
+        { id: "news", label: "Journal", icon: <Newspaper size={20} /> },
+        { id: "careers", label: "Vault", icon: <Briefcase size={20} /> },
+        { id: "contacts", label: "Inbox", icon: <Mail size={20} /> },
+        { id: "site", label: "Global", icon: <Globe size={20} /> },
+        { id: "settings", label: "Config", icon: <Settings size={20} /> },
     ];
 
     if (authLoading) return (
@@ -157,7 +160,7 @@ const AdminDashboard = () => {
 
     if (isLoggedIn && is2FAVerified) {
         return (
-            <div className="flex min-h-screen bg-[#F8F9FD] text-navy-deep font-body overflow-x-hidden">
+            <div className="flex min-h-screen bg-[#F0F2F5] text-navy-deep overflow-x-hidden selection:bg-amber-100/50">
                 <AnimatePresence>
                     {isSidebarOpen && (
                         <motion.div
@@ -165,75 +168,139 @@ const AdminDashboard = () => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsSidebarOpen(false)}
-                            className="fixed inset-0 bg-navy-deep/80 backdrop-blur-sm z-40 lg:hidden"
+                            className="fixed inset-0 bg-slate-900/40 z-40 lg:hidden"
                         />
                     )}
                 </AnimatePresence>
 
+                {/* Solid Navy-Deep Sidebar */}
                 <motion.aside
                     initial={false}
-                    animate={{ x: (isSidebarOpen || window.innerWidth >= 1024) ? 0 : -300 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="fixed lg:sticky top-0 h-screen w-[280px] bg-white shadow-2xl lg:shadow-none z-50 flex flex-col border-r border-slate-100"
+                    animate={{
+                        x: (isSidebarOpen || window.innerWidth >= 1024) ? 0 : -280,
+                        width: 260
+                    }}
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                    className="fixed top-0 left-0 bottom-0 w-[260px] bg-navy-deep z-50 flex flex-col py-8 shadow-2xl transition-all"
                 >
-                    <div className="p-8 pb-10 flex flex-col items-center text-center relative border-b border-slate-50">
-                        <button onClick={() => setIsSidebarOpen(false)} className="absolute top-4 right-4 p-2 text-slate-300 lg:hidden" aria-label="Close sidebar"><X size={20} /></button>
-                        <div className="w-16 h-16 bg-white rounded-card-sm shadow-md border border-slate-100 flex items-center justify-center mb-4 p-2">
-                            <img src="/logo gesit.png" alt="Gesit" className="w-full h-full object-contain" />
+                    <div className="px-8 mb-12 flex items-center gap-4">
+                        <div className="w-11 h-11 bg-white/10 rounded-2xl flex items-center justify-center p-2.5 border border-white/10 shrink-0">
+                            <img src="/logo gesit.png" alt="" className="w-full h-full object-contain brightness-0 invert" />
                         </div>
-                        <h2 className="text-xl font-display font-bold text-navy-deep">Admin Portal</h2>
-                        <p className="text-[9px] font-bold tracking-[.25em] text-[#BA9B32] uppercase mt-1">The Gesit Companies</p>
+                        <div className="flex flex-col">
+                            <span className="text-[13px] font-black text-white tracking-tight leading-none font-body">The Gesit Companies</span>
+                            <span className="text-[9px] font-bold text-amber-500 uppercase tracking-widest mt-1.5 opacity-80">Admin</span>
+                        </div>
                     </div>
 
-                    <nav className="flex-grow px-6 py-8 space-y-2 overflow-y-auto custom-scrollbar">
-                        <p className="px-4 text-[10px] font-bold text-slate-300 uppercase tracking-widest mb-4">Main Menu</p>
+                    <nav className="flex-grow flex flex-col gap-1 px-3">
                         {tabs.map((tab) => (
                             <button
                                 key={tab.id}
                                 onClick={() => { setActiveTab(tab.id); setIsSidebarOpen(false); }}
-                                className={`w-full flex items-center gap-4 px-4 py-4 rounded-card-sm transition-all duration-300 relative ${activeTab === tab.id ? "bg-navy-deep text-white shadow-lg shadow-navy-deep/20" : "text-slate-500 hover:bg-slate-50"}`}
+                                className={`relative flex items-center gap-4 px-5 py-4 rounded-xl transition-all duration-300 group/nav text-left ${activeTab === tab.id ? "bg-white/10 text-white shadow-sm" : "text-white/50 hover:text-white hover:bg-white/5"}`}
                             >
-                                <div className={`relative p-2 rounded-card-sm transition-colors ${activeTab === tab.id ? "bg-white/10 text-[#BA9B32]" : "bg-slate-100/50"}`}>
-                                    {tab.icon}
+                                <div className={`shrink-0 transition-transform duration-300 ${activeTab === tab.id ? "scale-110 text-amber-500" : "group-hover/nav:scale-110"}`}>
+                                    {React.isValidElement(tab.icon) ? React.cloneElement(tab.icon as React.ReactElement<any>, { size: 18 }) : tab.icon}
                                 </div>
-                                <span className="font-medium text-xs tracking-wide">{tab.label}</span>
-                                {activeTab === tab.id && <ChevronRight size={14} className="ml-auto text-[#BA9B32]" />}
+                                <span className={`text-[11px] uppercase font-black tracking-widest leading-none transition-all duration-300 ${activeTab === tab.id ? "translate-x-1" : ""}`}>
+                                    {tab.label}
+                                </span>
+                                {activeTab === tab.id && (
+                                    <motion.div
+                                        layoutId="active-indicator"
+                                        className="absolute left-0 w-1 h-6 bg-amber-500 rounded-r-full shadow-[0_0_10px_rgba(245,158,11,0.5)]"
+                                    />
+                                )}
                             </button>
                         ))}
                     </nav>
 
-                    <div className="px-10 py-6 border-t border-slate-50 flex items-center gap-3 text-slate-400">
-                        <Eye size={16} className="text-[#BA9B32]" />
-                        <div className="flex flex-col">
-                            <span className="text-[9px] font-bold uppercase tracking-widest text-slate-300">Visitors</span>
-                            <span className="text-sm font-display font-bold text-navy-deep">{visitorCount.toLocaleString()}</span>
-                        </div>
-                    </div>
-
-                    <div className="p-6 border-t border-slate-50">
-                        <button onClick={handleLogout} className="w-full flex items-center justify-center gap-3 py-4 rounded-card-sm text-slate-300 hover:text-red-500 hover:bg-red-50 transition-all text-xs font-bold uppercase tracking-widest">
-                            <LogOut size={18} /> <span>Sign Out</span>
+                    <div className="mt-auto px-4">
+                        <button
+                            onClick={handleLogout}
+                            className="w-full flex items-center gap-4 px-5 py-4 text-white/40 hover:text-red-400 transition-all rounded-xl hover:bg-red-400/10 group/logout"
+                        >
+                            <div className="transition-transform duration-300 group-hover/logout:-translate-x-1">
+                                <LogOut size={18} />
+                            </div>
+                            <span className="text-[11px] font-black uppercase tracking-widest">Logout</span>
                         </button>
                     </div>
                 </motion.aside>
 
-                <main className="flex-1 min-h-screen overflow-y-auto">
-                    <header className="lg:hidden sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4 flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                            <img src="/logo gesit.png" alt="Gesit" className="w-6 h-6 object-contain" />
-                            <span className="font-display font-bold text-navy-deep text-sm">Gesit Admin</span>
+                {/* Main Content Area */}
+                <main className="flex-1 lg:pl-[260px] min-h-screen relative z-10">
+                    {/* Sleek Integrated Header */}
+                    <header className="fixed top-0 right-0 lg:left-[260px] left-0 z-40 bg-white border-b border-slate-200 px-8 py-5 flex items-center justify-between shadow-sm">
+                        <div className="flex flex-col">
+                            <h2 className="text-xl font-black text-navy-deep tracking-tight capitalize leading-none">
+                                {tabs.find(t => t.id === activeTab)?.label}
+                            </h2>
+                            <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-2 flex items-center gap-2">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                Operational Matrix
+                            </p>
                         </div>
-                        <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-navy-deep bg-slate-50 rounded-card-sm" aria-label="Open sidebar menu"><Menu size={20} /></button>
+
+                        <div className="flex items-center gap-6">
+                            <div className="hidden md:flex relative group w-64">
+                                <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-amber-500 transition-colors">
+                                    <Eye size={14} />
+                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="Execute search..."
+                                    className="w-full bg-slate-50 border border-slate-100 rounded-xl py-2.5 pl-10 pr-5 text-[10px] font-bold outline-none focus:bg-white focus:border-amber-200 transition-all"
+                                />
+                            </div>
+
+                            <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2">
+                                    <button className="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-slate-400 hover:text-navy-deep hover:shadow-sm transition-all active:scale-95">
+                                        <Settings size={18} />
+                                    </button>
+                                    <button
+                                        onClick={() => setIsSidebarOpen(true)}
+                                        className="lg:hidden w-10 h-10 bg-navy-deep text-white rounded-xl flex items-center justify-center shadow-lg shadow-navy-deep/20 active:scale-95 transition-transform"
+                                    >
+                                        <Menu size={18} />
+                                    </button>
+                                </div>
+                                <div className="h-6 w-px bg-slate-200 mx-1" />
+                                <div className="flex items-center gap-3 pl-1 group/profile cursor-pointer">
+                                    <div className="text-right hidden sm:block">
+                                        <p className="text-[11px] font-black text-navy-deep leading-none">Admin Hub</p>
+                                        <p className="text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-1">System Live</p>
+                                    </div>
+                                    <div className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 shadow-sm flex items-center justify-center p-0.5 overflow-hidden transition-transform group-hover/profile:scale-105">
+                                        <img src="https://ui-avatars.com/api/?name=Admin&background=103065&color=fff&bold=true" className="w-full h-full object-cover rounded-[10px]" alt="Admin" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </header>
 
-                    <div className="p-6 lg:p-12 max-w-7xl mx-auto">
-                        <Suspense fallback={<SectionLoader />}>
-                            {activeTab === 'overview' && <OverviewSection visitorCount={visitorCount} />}
-                            {activeTab === 'news' && <ContentSection />}
-                            {activeTab === 'careers' && <CareersVault />}
-                            {activeTab === 'contacts' && <ContactSection />}
-                            {activeTab === 'settings' && <SettingsSection />}
-                        </Suspense>
+                    {/* Content Section with Page Transitions */}
+                    <div className="max-w-7xl mx-auto p-8 md:p-12 mt-[88px]">
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={activeTab}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.3, ease: "easeOut" }}
+                            >
+                                <Suspense fallback={<SectionLoader />}>
+                                    {activeTab === 'overview' && <OverviewSection visitorCount={visitorCount} />}
+                                    {activeTab === 'news' && <ContentSection />}
+                                    {activeTab === 'careers' && <CareersVault />}
+                                    {activeTab === 'contacts' && <ContactSection />}
+                                    {activeTab === 'site' && <SiteEditor />}
+                                    {activeTab === 'settings' && <SettingsSection />}
+                                </Suspense>
+                            </motion.div>
+                        </AnimatePresence>
                     </div>
                 </main>
             </div>
@@ -257,7 +324,7 @@ const AdminDashboard = () => {
 
                 <div className="relative z-10 p-16 flex flex-col justify-between h-full text-white w-full">
                     <div>
-                        <div className="w-16 h-16 bg-white/10 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/20 mb-8">
+                        <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center border border-white/20 mb-8 shadow-lg">
                             <img src="/logo gesit.png" alt="Gesit" className="w-10 h-10 object-contain brightness-0 invert" />
                         </div>
                         <h1 className="text-4xl font-display font-bold leading-tight mb-4">
@@ -282,18 +349,21 @@ const AdminDashboard = () => {
             </div>
 
             {/* Right Side - Login Form */}
-            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-50 lg:bg-white">
+            <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-slate-50/50 lg:bg-white relative">
+                <div className="absolute inset-0 bg-[radial-gradient(#BA9B32_0.5px,transparent_0.5px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none lg:hidden" />
+
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="w-full max-w-[420px] bg-white lg:bg-transparent p-10 lg:p-0 rounded-3xl lg:rounded-none shadow-2xl lg:shadow-none"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="w-full max-w-[440px] bg-white lg:bg-transparent p-10 lg:p-0 rounded-[2.5rem] lg:rounded-none shadow-[0_20px_60px_-15px_rgba(16,48,101,0.1)] lg:shadow-none border border-slate-100 lg:border-0 relative z-10"
                 >
-                    <div className="mb-10">
-                        <div className="lg:hidden w-12 h-12 bg-navy-deep rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-navy-deep/20">
-                            <img src="/logo gesit.png" alt="Logo" className="w-8 h-8 object-contain brightness-0 invert" />
+                    <div className="mb-12">
+                        <div className="lg:hidden w-16 h-16 bg-navy-deep rounded-2xl flex items-center justify-center mb-8 shadow-2xl shadow-navy-deep/20 relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-gradient-to-tr from-[#BA9B32] to-navy-deep opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                            <img src="/logo gesit.png" alt="Logo" className="w-10 h-10 object-contain brightness-0 invert relative z-10" />
                         </div>
-                        <h2 className="text-3xl font-display font-bold text-navy-deep mb-2">Welcome Back</h2>
-                        <p className="text-slate-500 text-sm">Please sign in to your dashboard.</p>
+                        <h2 className="text-4xl font-display font-black text-navy-deep mb-3 tracking-tight">Management Access</h2>
+                        <p className="text-slate-400 text-sm font-medium tracking-wide">Enter your credentials to secure the portal.</p>
                     </div>
 
                     {!showOtpScreen ? (
@@ -359,7 +429,7 @@ const AdminDashboard = () => {
                         </form>
                     ) : (
                         <form onSubmit={handleVerifyOtp} className="space-y-8">
-                            <div className="text-center bg-emerald-50/50 p-8 rounded-2xl border border-emerald-100/50">
+                            <div className="text-center bg-emerald-50 p-8 rounded-2xl border border-emerald-100">
                                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 mb-4 shadow-sm ring-4 ring-white"><ShieldCheck size={32} /></div>
                                 <h3 className="text-lg font-bold text-navy-deep">Security Verification</h3>
                                 <p className="text-xs text-slate-500 mt-2">We sent a secure code to<br /><strong className="text-navy-deep">{email}</strong></p>

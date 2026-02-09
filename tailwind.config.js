@@ -11,10 +11,10 @@ export default {
                 "navy-deep": "#103065",
             },
             fontFamily: {
-                display: ["Outfit", "sans-serif"],
-                body: ["Inter", "sans-serif"],
-                serif: ["Outfit", "sans-serif"],
-                sans: ["Inter", "sans-serif"],
+                display: ["var(--font-heading)", "serif"],
+                body: ["var(--font-body)", "sans-serif"],
+                serif: ["var(--font-heading)", "serif"],
+                sans: ["var(--font-body)", "sans-serif"],
             },
             borderRadius: {
                 "card": "2rem",

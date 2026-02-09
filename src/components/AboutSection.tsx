@@ -1,6 +1,28 @@
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { supabase } from "../lib/supabase";
 
 const AboutSection = () => {
+    const [content, setContent] = useState<any>({});
+
+    useEffect(() => {
+        const fetchContent = async () => {
+            const { data } = await supabase
+                .from('page_content')
+                .select('*')
+                .eq('page', 'about');
+
+            if (data) {
+                const contentMap = data.reduce((acc: any, item: any) => {
+                    acc[item.key] = item.value;
+                    return acc;
+                }, {});
+                setContent(contentMap);
+            }
+        };
+        fetchContent();
+    }, []);
+
     return (
         <section className="bg-navy-deep py-32 text-white relative overflow-hidden">
             <div className="container mx-auto px-6 max-w-5xl relative z-10">
@@ -14,8 +36,7 @@ const AboutSection = () => {
                         className="max-w-4xl"
                     >
                         <h2 className="text-[#BC9C33] text-4xl md:text-[64px] font-display leading-[1.1] tracking-tight">
-                            Over 50 Years Of Investing In <br className="hidden md:block" />
-                            The Development Of Indonesia
+                            {content['intro_title'] || "Over 50 Years Of Investing In The Development Of Indonesia"}
                         </h2>
                     </motion.div>
 
@@ -29,7 +50,7 @@ const AboutSection = () => {
                     >
                         <div className="w-[1px] bg-white/20 shrink-0" />
                         <p className="text-lg md:text-2xl leading-relaxed text-slate-200 font-light py-2">
-                            Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of <span className="text-white font-medium">Property</span>, <span className="text-white font-medium">Trading & Service</span>, <span className="text-white font-medium">Manufacturing</span>, and <span className="text-white font-medium">Natural Resources</span>.
+                            {content['intro_description'] || "Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of Property, Trading & Service, Manufacturing, and Natural Resources."}
                         </p>
                     </motion.div>
                 </div>

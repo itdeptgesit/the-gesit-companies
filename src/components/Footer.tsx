@@ -18,7 +18,7 @@ const Footer = () => {
                                 className="w-10 h-10 object-contain transition-transform duration-500 group-hover/logo:scale-110"
                                 src={settings.logoUrl || "/logo gesit.png"}
                             />
-                            <span className="font-extrabold text-[13px] tracking-[.15em] uppercase text-white group-hover/logo:text-[#BA9B32] transition-colors whitespace-nowrap">
+                            <span className="font-body font-extrabold text-[13px] tracking-[.15em] uppercase text-white group-hover/logo:text-[#BA9B32] transition-colors whitespace-nowrap">
                                 THE GESIT COMPANIES
                             </span>
                         </Link>

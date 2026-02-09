@@ -16,6 +16,9 @@ interface SettingsState {
     email: string;
     googleMapsUrl: string;
     googleAnalyticsId: string;
+    adminFontFamily: string;
+    headingFont: string;
+    bodyFont: string;
 }
 
 interface SettingsContextType {
@@ -39,7 +42,10 @@ const defaultSettings: SettingsState = {
     faviconUrl: '',
     email: 'contact@gesit.co.id',
     googleMapsUrl: 'https://maps.app.goo.gl/tpHm5Hvy8LnV3ayu8',
-    googleAnalyticsId: ''
+    googleAnalyticsId: '',
+    adminFontFamily: 'Inter',
+    headingFont: 'Playfair Display',
+    bodyFont: 'Open Sans'
 };
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
@@ -61,11 +67,9 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
                     const key = item.key as keyof SettingsState;
                     if (key in newSettings) {
                         if (key === 'maintenanceMode') {
-                            // @ts-ignore
-                            newSettings[key] = item.value === 'true';
+                            (newSettings[key] as boolean) = item.value === 'true';
                         } else {
-                            // @ts-ignore
-                            newSettings[key] = item.value;
+                            (newSettings[key] as string) = item.value;
                         }
                     }
                 });

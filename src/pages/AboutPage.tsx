@@ -1,6 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
+// @ts-ignore
+import { supabase } from "../lib/supabase";
 
 /**
  * AboutPage - Ultra-Premium Editorial Design
@@ -9,35 +11,9 @@ import type { Variants } from "framer-motion";
 const AboutPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
-
-    useEffect(() => {
-        if (videoRef.current) {
-            videoRef.current.play().catch(error => {
-                console.log("Autoplay was prevented:", error);
-            });
-        }
-    }, []);
-
-    const revealVariants: Variants = {
-        hidden: { opacity: 0, y: 25 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } as any
-        }
-    };
-
-    const containerVariants: Variants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15
-            }
-        }
-    };
-
-    const coreValues = [
+    const [content, setContent] = useState<any>({});
+    // Default static values as fallback
+    const defaultCoreValues = [
         {
             id: "01",
             title: "Integrity",
@@ -63,6 +39,68 @@ const AboutPage = () => {
             image: "/about/passion.jpeg"
         }
     ];
+    const [coreValues, setCoreValues] = useState<any[]>(defaultCoreValues);
+
+    const revealVariants: Variants = {
+        hidden: { opacity: 0, y: 25 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 1, ease: [0.22, 1, 0.36, 1] } as any
+        }
+    };
+
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.15
+            }
+        }
+    };
+
+    useEffect(() => {
+        if (videoRef.current) {
+            videoRef.current.play().catch(error => {
+                console.log("Autoplay was prevented:", error);
+            });
+        }
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // Fetch key-value content
+            const { data: pageData } = await supabase
+                .from('page_content')
+                .select('*')
+                .eq('page', 'about');
+
+            if (pageData) {
+                const map = pageData.reduce((acc: any, item: any) => {
+                    acc[item.key] = item.value;
+                    return acc;
+                }, {});
+                setContent(map);
+            }
+
+            // Fetch core values
+            const { data: valuesData } = await supabase
+                .from('core_values')
+                .select('*')
+                .order('order_index', { ascending: true });
+
+            if (valuesData && valuesData.length > 0) {
+                setCoreValues(valuesData.map(v => ({
+                    id: v.id,
+                    title: v.title,
+                    desc: v.description,
+                    image: v.image_url
+                })));
+            }
+        };
+        fetchData();
+    }, []);
 
     return (
         <div ref={containerRef} className="bg-white font-body selection:bg-[#BA9B32] selection:text-white">
@@ -119,7 +157,7 @@ const AboutPage = () => {
                             className="relative"
                         >
                             <div className="space-y-12">                                <motion.p variants={revealVariants} className="text-white/80 text-xl md:text-3xl font-light leading-relaxed max-w-4xl">
-                                Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of <span className="text-white font-medium">Property</span>, <span className="text-white font-medium">Trading & Service</span>, <span className="text-white font-medium">Manufacturing</span>, and <span className="text-white font-medium">Natural Resources</span>.
+                                {content['intro_description'] || <>Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of <span className="text-white font-medium">Property</span>, <span className="text-white font-medium">Trading & Service</span>, <span className="text-white font-medium">Manufacturing</span>, and <span className="text-white font-medium">Natural Resources</span>.</>}
                             </motion.p>
                             </div>
                         </motion.div>
@@ -148,32 +186,27 @@ const AboutPage = () => {
                                         visible: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] } as any }
                                     }}
                                     className="bg-gradient-to-br from-[#BA9B32] via-[#e2c15a] to-[#8a6d3b] bg-clip-text text-transparent text-7xl md:text-8xl font-display mb-6 leading-none py-2"
-                                    style={{ fontFamily: "'Noto Serif SC', serif", fontWeight: 510 }}
+                                    style={{ fontWeight: 510 }}
                                 >
-                                    艺成
+                                    {content['philosophy_heading'] || "艺成"}
                                 </motion.h3>
 
                                 <motion.p variants={revealVariants} className="text-navy-deep text-xl font-light mb-12 leading-relaxed">
-                                    Based on the Mandarin <span className="font-bold">“yi cheng”</span> and Hokkien <span className="font-bold">“geseng”</span>, which means <span className="font-bold">“perfection for art”</span>
+                                    {content['philosophy_meaning'] || "Based on the Mandarin “yi cheng” and Hokkien “geseng”, which means “perfection for art”"}
                                 </motion.p>
 
                                 <motion.h4 variants={revealVariants} className="text-navy-deep text-2xl md:text-3xl font-display font-light mb-14 leading-[1.4] max-w-xl border-l-2 border-[#BA9B32]/30 pl-8">
-                                    Gesit is a name chosen to represent our vision for <span className="font-bold">strategic resourcefulness</span> and <span className="font-bold">passionate energy</span> in our business endeavors.
+                                    {content['philosophy_subheading'] || "Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors."}
                                 </motion.h4>
 
-                                <div className="space-y-8 text-slate-600 font-light text-base md:text-lg leading-relaxed max-w-lg">
-                                    {[
-                                        "Over the years, the Gesit Companies continue to capture opportunities to grow its business portfolio amidst changes in economy and increased competition – part of this by being resourceful, agile and competitive.",
-                                        "Our businesses are managed and operated by a team of professionals, headquartered in Jakarta.",
-                                        "As the Gesit Companies continue to grow, we also believe in investing in our human capital and other areas to build competitive advantages. Likewise, we believe in creating positive contributions towards the environment and communities in which we operate in and will continue to invest in these areas."
-                                    ].map((paragraph, i) => (
-                                        <motion.p key={i} variants={revealVariants}>
-                                            {paragraph}
-                                        </motion.p>
-                                    ))}
+                                <div className="space-y-8 text-slate-600 font-light text-base md:text-lg leading-relaxed max-w-lg whitespace-pre-line">
+                                    <motion.p variants={revealVariants}>
+                                        {content['philosophy_description'] || "Over the years, the Gesit Companies continue to capture opportunities to grow its business portfolio amidst changes in economy and increased competition – part of this by being resourceful, agile and competitive. Our businesses are managed and operated by a team of professionals, headquartered in Jakarta. As the Gesit Companies continue to grow, we also believe in investing in our human capital and other areas to build competitive advantages."}
+                                    </motion.p>
+
                                     <motion.p variants={revealVariants} className="font-bold text-navy-deep text-xl mt-12 pt-8 border-t border-slate-100 flex items-center gap-4">
                                         <span className="w-12 h-[1px] bg-[#BA9B32]"></span>
-                                        We are committed to Indonesia.
+                                        {content['philosophy_closing'] || "We are committed to Indonesia."}
                                     </motion.p>
                                 </div>
                             </motion.div>
@@ -245,14 +278,14 @@ const AboutPage = () => {
                             <motion.div variants={revealVariants}>
                                 <span className="text-[#BA9B32] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Vision</span>
                                 <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light">
-                                    To be a Group of Companies that are Recognized by Stakeholders as Strategic First Choice Business Partner
+                                    {content['vision_statement'] || "To be a Group of Companies that are Recognized by Stakeholders as Strategic First Choice Business Partner"}
                                 </h3>
                             </motion.div>
 
                             <motion.div variants={revealVariants}>
                                 <span className="text-[#BA9B32] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Mission</span>
                                 <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light">
-                                    To Establish Resourceful Business Entities that Deliver Sustainable Value to Stakeholders
+                                    {content['mission_statement'] || "To Establish Resourceful Business Entities that Deliver Sustainable Value to Stakeholders"}
                                 </h3>
                             </motion.div>
                         </motion.div>

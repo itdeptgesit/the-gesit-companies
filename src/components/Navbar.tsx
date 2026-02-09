@@ -105,7 +105,7 @@ const Navbar = () => {
                         loading="eager"
                         decoding="async"
                     />
-                    <div className={`flex flex-col uppercase tracking-[.15em] font-black text-[13px] sm:text-[16px] transition-all duration-500 ${isScrolled ? "text-navy-deep" : "text-white drop-shadow-md"}`}>
+                    <div className={`flex flex-col uppercase tracking-[.15em] font-body font-black text-[13px] sm:text-[16px] transition-all duration-500 ${isScrolled ? "text-navy-deep" : "text-white drop-shadow-md"}`}>
                         <span>THE GESIT COMPANIES</span>
                     </div>
                 </Link>
@@ -220,7 +220,7 @@ const Navbar = () => {
                                             loading="eager"
                                             decoding="async"
                                         />
-                                        <div className="flex flex-col uppercase tracking-[.15em] font-black text-[13px] text-navy-deep">
+                                        <div className="flex flex-col uppercase tracking-[.15em] font-body font-black text-[13px] text-navy-deep">
                                             <span>THE GESIT COMPANIES</span>
                                         </div>
                                     </div>

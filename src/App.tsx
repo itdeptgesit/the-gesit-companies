@@ -51,6 +51,23 @@ const AppContent = () => {
     }
   }, [settings.maintenanceMode, isAdmin, isMaintenancePage, loading]);
 
+  // Apply selected fonts to the website
+  useEffect(() => {
+    if (!loading) {
+      const root = document.documentElement;
+
+      // Apply heading font
+      if (settings.headingFont) {
+        root.style.setProperty('--font-heading', settings.headingFont);
+      }
+
+      // Apply body font
+      if (settings.bodyFont) {
+        root.style.setProperty('--font-body', settings.bodyFont);
+      }
+    }
+  }, [settings.headingFont, settings.bodyFont, loading]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);

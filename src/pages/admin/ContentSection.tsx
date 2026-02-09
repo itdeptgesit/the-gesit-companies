@@ -11,6 +11,14 @@ import {
 import { useNews, type NewsItem } from "../../context/NewsContext";
 import { uploadImage } from "../../lib/supabase";
 
+// Loading fallback component
+const SectionLoader = () => (
+    <div className="flex flex-col items-center justify-center min-vh-50 gap-4 py-20">
+        <div className="w-8 h-8 border-4 border-[#BA9B32] border-t-transparent rounded-full animate-spin"></div>
+        <p className="text-[9px] font-bold uppercase tracking-[.3em] text-slate-300">Synchronizing...</p>
+    </div>
+);
+
 export const NewsModal = ({
     isOpen,
     onClose,
@@ -101,290 +109,201 @@ export const NewsModal = ({
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 backdrop-blur-sm bg-black/40">
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-navy-deep/20 backdrop-blur-sm">
             <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-white rounded-card w-full max-w-2xl overflow-hidden shadow-2xl"
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className="bg-white rounded-[2rem] w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 flex flex-col relative"
             >
-                <div className="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50 text-left">
-                    <h3 className="text-2xl font-display">{initialData ? 'Edit Story' : 'New Story'}</h3>
-                    <button onClick={onClose} className="p-2 hover:bg-slate-200 rounded-full transition-colors">
+                <div className="p-8 border-b border-slate-100 flex justify-between items-center bg-white relative z-10">
+                    <div className="text-left">
+                        <h3 className="text-2xl font-black text-navy-deep tracking-tight">{initialData ? 'Refine Entry' : 'New Publication'}</h3>
+                        <p className="text-slate-400 text-[10px] font-bold uppercase tracking-widest mt-2 flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                            Archival Management Node
+                        </p>
+                    </div>
+                    <button
+                        onClick={onClose}
+                        className="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-navy-deep hover:bg-slate-50 rounded-xl transition-all active:scale-95"
+                    >
                         <X size={20} />
                     </button>
                 </div>
-                <div className="p-10 space-y-6 max-h-[70vh] overflow-y-auto text-left">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Headline Title</label>
+
+                <div className="p-10 space-y-10 max-h-[70vh] overflow-y-auto custom-scrollbar text-left scroll-smooth pb-20 relative z-10 bg-white">
+                    <div className="space-y-3">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Title</label>
                         <input
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
-                            placeholder="Enter article title..."
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 px-6 focus:outline-none focus:border-navy-deep/20 focus:bg-white text-navy-deep font-bold text-base transition-all"
+                            placeholder="Enter publication title..."
                         />
                     </div>
 
-                    <div className="space-y-4 pt-4 border-t border-slate-100">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Media Type</label>
-                        <div className="flex gap-4">
-                            <button
-                                onClick={() => setFormData({ ...formData, media_type: 'image' })}
-                                className={`flex-1 py-3 px-4 rounded-input text-xs font-bold uppercase tracking-widest transition-all ${formData.media_type !== 'video' ? 'bg-navy-deep text-white shadow-lg' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
-                            >
-                                Image
-                            </button>
-                            <button
-                                onClick={() => setFormData({ ...formData, media_type: 'video' })}
-                                className={`flex-1 py-3 px-4 rounded-input text-xs font-bold uppercase tracking-widest transition-all ${formData.media_type === 'video' ? 'bg-[#BA9B32] text-white shadow-lg' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}
-                            >
-                                Video
-                            </button>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="space-y-4">
+                            <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Format</label>
+                            <div className="flex bg-slate-50 p-1 rounded-xl border border-slate-200">
+                                <button
+                                    onClick={() => setFormData({ ...formData, media_type: 'image' })}
+                                    className={`flex-1 py-2.5 px-4 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${formData.media_type !== 'video' ? 'bg-navy-deep text-white shadow-md' : 'text-slate-400 hover:text-navy-deep'}`}
+                                >
+                                    Image
+                                </button>
+                                <button
+                                    onClick={() => setFormData({ ...formData, media_type: 'video' })}
+                                    className={`flex-1 py-2.5 px-4 rounded-lg text-[9px] font-black uppercase tracking-widest transition-all ${formData.media_type === 'video' ? 'bg-navy-deep text-white shadow-md' : 'text-slate-400 hover:text-navy-deep'}`}
+                                >
+                                    Video
+                                </button>
+                            </div>
                         </div>
 
-                        {formData.media_type === 'video' && (
-                            <div className="space-y-2 animate-fadeIn">
-                                <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Video URL (YouTube/Vimeo)</label>
-                                <div className="flex gap-2">
-                                    <input
-                                        type="text"
-                                        value={formData.video_url || ''}
-                                        onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
-                                        className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
-                                        placeholder="https://www.youtube.com/watch?v=..."
-                                    />
-                                    {formData.video_url && (
-                                        <button
-                                            onClick={() => {
-                                                const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-                                                const match = formData.video_url?.match(youtubeRegex);
-                                                if (match && match[4]) {
-                                                    const thumbUrl = `https://img.youtube.com/vi/${match[4]}/maxresdefault.jpg`;
-                                                    setFormData({ ...formData, image: thumbUrl });
-                                                }
-                                            }}
-                                            className="px-6 bg-slate-100 text-slate-500 rounded-input hover:bg-[#BA9B32] hover:text-white transition-colors text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 whitespace-nowrap"
-                                            title="Auto-fetch Thumbnail from YouTube"
-                                        >
-                                            <Camera size={16} /> <span>Get Thumb</span>
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
-                        )}
+                        <div className={`space-y-3 transition-all ${formData.media_type === 'video' ? 'opacity-100' : 'opacity-30 pointer-events-none'}`}>
+                            <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">Video Resource</label>
+                            <input
+                                type="text"
+                                value={formData.video_url || ''}
+                                onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                                className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 px-6 focus:outline-none focus:border-navy-deep/20 focus:bg-white text-[10px] font-black text-navy-deep transition-all"
+                                placeholder="Enter stream URL..."
+                            />
+                        </div>
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                            {formData.media_type === 'video' ? 'Cover Image (Thumbnail)' : 'Article Image'}
-                        </label>
-                        <div className="flex flex-col gap-4">
-                            <div
-                                onClick={() => fileInputRef.current?.click()}
-                                className="w-full aspect-video bg-slate-50 border-2 border-dashed border-slate-200 rounded-card-sm flex flex-col items-center justify-center gap-4 cursor-pointer hover:border-[#BA9B32] transition-colors overflow-hidden relative group"
-                            >
-                                {formData.image ? (
-                                    <>
-                                        <img src={formData.image} className="w-full h-full object-cover" alt="Preview" />
-                                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                            <p className="text-white font-bold text-[10px] uppercase tracking-widest">Change Image</p>
+                    <div className="space-y-4">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Visualization</label>
+                        <div
+                            onClick={() => fileInputRef.current?.click()}
+                            className="w-full aspect-[21/10] bg-slate-50 border-2 border-dashed border-slate-200 rounded-[2rem] flex flex-col items-center justify-center gap-4 cursor-pointer hover:bg-slate-100/50 transition-all overflow-hidden relative group/hero"
+                        >
+                            {formData.image ? (
+                                <>
+                                    <img src={formData.image} className="w-full h-full object-cover transition-transform duration-700 group-hover/hero:scale-105" alt="Preview" />
+                                    <div className="absolute inset-0 bg-navy-deep/60 opacity-0 group-hover/hero:opacity-100 transition-all duration-300 flex flex-col items-center justify-center gap-3 backdrop-blur-sm">
+                                        <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white border border-white/20">
+                                            <Camera size={20} />
                                         </div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
-                                            <Camera className="text-[#BA9B32]" size={20} />
-                                        </div>
-                                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                                            {formData.media_type === 'video' ? 'Upload video thumbnail' : 'Click to upload image'}
-                                        </p>
-                                    </>
-                                )}
-                                {uploading && (
-                                    <div className="absolute inset-0 bg-white/80 flex flex-col items-center justify-center gap-3">
-                                        <div className="w-6 h-6 border-2 border-[#BA9B32] border-t-transparent rounded-full animate-spin"></div>
-                                        <p className="text-[9px] font-bold uppercase tracking-[.2em] text-[#BA9B32]">Uploading...</p>
+                                        <p className="text-white font-black text-[9px] uppercase tracking-widest">Update Resource</p>
                                     </div>
-                                )}
-                            </div>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={handleFileChange}
-                                className="hidden"
-                                accept="image/*"
-                            />
-                            <div className="flex gap-2 items-center">
+                                </>
+                            ) : (
+                                <div className="flex flex-col items-center gap-3 text-center">
+                                    <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center text-slate-400 shadow-sm border border-slate-100 group-hover/hero:scale-105 transition-transform">
+                                        <Camera size={24} />
+                                    </div>
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Initialize Visual</p>
+                                </div>
+                            )}
+                            {uploading && (
+                                <div className="absolute inset-0 bg-white/95 flex flex-col items-center justify-center gap-4 z-20">
+                                    <div className="w-8 h-8 border-3 border-navy-deep border-t-amber-500 rounded-full animate-spin"></div>
+                                    <p className="text-[10px] font-black uppercase tracking-widest text-navy-deep">Transferring...</p>
+                                </div>
+                            )}
+                        </div>
+                        <input type="file" ref={fileInputRef} onChange={handleFileChange} className="hidden" accept="image/*" />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        {[
+                            { label: 'Date', key: 'date' },
+                            { label: 'Archive', key: 'category' },
+                            { label: 'Operator', key: 'author' }
+                        ].map(field => (
+                            <div key={field.key} className="space-y-3">
+                                <label className="text-[9px] font-black uppercase tracking-widest text-slate-400 ml-1">{field.label}</label>
                                 <input
                                     type="text"
-                                    value={formData.image}
-                                    onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                                    className="flex-1 bg-slate-50 border border-slate-100 rounded-input py-2 px-4 text-[10px] focus:outline-none text-slate-400"
-                                    placeholder="Or paste URL here..."
+                                    value={(formData as any)[field.key]}
+                                    onChange={(e) => setFormData({ ...formData, [field.key]: e.target.value })}
+                                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-4 px-5 focus:outline-none focus:border-navy-deep/20 focus:bg-white text-[10px] font-black text-navy-deep transition-all"
                                 />
                             </div>
-                        </div>
+                        ))}
                     </div>
 
-                    <div className="grid grid-cols-3 gap-6">
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Publication Date</label>
-                            <input
-                                type="text"
-                                value={formData.date}
-                                onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
-                                placeholder="15 Jan 2026"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Category</label>
-                            <input
-                                type="text"
-                                value={formData.category}
-                                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Author</label>
-                            <input
-                                type="text"
-                                value={formData.author}
-                                onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                                className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
-                            />
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Excerpt / Summary</label>
+                    <div className="space-y-3">
+                        <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Summary</label>
                         <textarea
                             value={formData.excerpt}
                             onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-24 resize-none"
-                            placeholder="Brief summary for cards..."
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Tags</label>
-                        <input
-                            type="text"
-                            value={formData.tags || ''}
-                            onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
-                            placeholder="Example: news, corporate, 2026"
-                        />
-                        <div className="flex flex-wrap gap-2 pt-2">
-                            {formData.tags && formData.tags.split(',').filter(tag => tag.trim() !== "").map((tag, idx) => (
-                                <span key={idx} className="bg-[#BA9B32]/10 text-[#BA9B32] px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-[#BA9B32]/20">
-                                    #{tag.trim()}
-                                </span>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Pull Quote (Optional)</label>
-                        <textarea
-                            value={formData.quote || ''}
-                            onChange={(e) => setFormData({ ...formData, quote: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20 h-24 resize-none"
-                            placeholder="Enter a highlight quote..."
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Quote Author (Optional)</label>
-                        <input
-                            type="text"
-                            value={formData.quote_author || ''}
-                            onChange={(e) => setFormData({ ...formData, quote_author: e.target.value })}
-                            className="w-full bg-slate-50 border border-slate-100 rounded-input py-4 px-6 focus:outline-none focus:ring-2 focus:ring-[#BA9B32]/20"
-                            placeholder="e.g. Gesit Foundation Executive Board"
+                            className="w-full bg-slate-50 border border-slate-200 rounded-xl py-5 px-6 focus:outline-none focus:border-navy-deep/20 focus:bg-white text-[11px] font-medium text-navy-deep h-24 resize-none leading-relaxed transition-all"
+                            placeholder="Brief digest for archival stream..."
                         />
                     </div>
 
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Full Content</label>
-                        <div className="border border-slate-100 rounded-card-sm overflow-hidden bg-slate-50 focus-within:ring-2 focus-within:ring-[#BA9B32]/20">
-                            <div className="flex items-center gap-1 p-2 border-b border-slate-200 bg-slate-100/50">
-                                <button
-                                    onClick={() => {
-                                        const textarea = document.getElementById('content-textarea') as HTMLTextAreaElement;
-                                        const start = textarea.selectionStart;
-                                        const end = textarea.selectionEnd;
-                                        const text = formData.content || '';
-                                        const before = text.substring(0, start);
-                                        const selected = text.substring(start, end);
-                                        const after = text.substring(end);
-                                        const newText = `${before}<b>${selected}</b>${after}`;
-                                        setFormData({ ...formData, content: newText });
-                                    }}
-                                    className="p-2 hover:bg-white rounded hover:shadow-sm text-slate-500 transition-all font-bold"
-                                    title="Bold"
-                                >
-                                    B
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        const textarea = document.getElementById('content-textarea') as HTMLTextAreaElement;
-                                        const start = textarea.selectionStart;
-                                        const end = textarea.selectionEnd;
-                                        const text = formData.content || '';
-                                        const before = text.substring(0, start);
-                                        const selected = text.substring(start, end);
-                                        const after = text.substring(end);
-                                        const newText = `${before}<i>${selected}</i>${after}`;
-                                        setFormData({ ...formData, content: newText });
-                                    }}
-                                    className="p-2 hover:bg-white rounded hover:shadow-sm text-slate-500 transition-all italic"
-                                    title="Italic"
-                                >
-                                    I
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        const textarea = document.getElementById('content-textarea') as HTMLTextAreaElement;
-                                        const start = textarea.selectionStart;
-                                        const end = textarea.selectionEnd;
-                                        const text = formData.content || '';
-                                        const before = text.substring(0, start);
-                                        const selected = text.substring(start, end);
-                                        const after = text.substring(end);
-                                        const newText = `${before}<u>${selected}</u>${after}`;
-                                        setFormData({ ...formData, content: newText });
-                                    }}
-                                    className="p-2 hover:bg-white rounded hover:shadow-sm text-slate-500 transition-all underline"
-                                    title="Underline"
-                                >
-                                    U
-                                </button>
+                    <div className="space-y-4">
+                        <div className="flex items-center justify-between">
+                            <label className="text-[10px] font-black uppercase tracking-widest text-slate-400 ml-1">Full Logistics</label>
+                            <div className="flex bg-slate-100 p-1 rounded-lg">
+                                {['B', 'I'].map(btn => (
+                                    <button
+                                        key={btn}
+                                        type="button"
+                                        onClick={() => {
+                                            const textarea = document.getElementById('content-textarea') as HTMLTextAreaElement;
+                                            const start = textarea.selectionStart;
+                                            const end = textarea.selectionEnd;
+                                            const tag = btn.toLowerCase();
+                                            const text = formData.content || '';
+                                            const newText = `${text.substring(0, start)}<${tag}>${text.substring(start, end)}</${tag}>${text.substring(end)}`;
+                                            setFormData({ ...formData, content: newText });
+                                        }}
+                                        className="w-8 h-8 rounded hover:bg-white text-[10px] font-black transition-all flex items-center justify-center text-navy-deep"
+                                    >
+                                        {btn}
+                                    </button>
+                                ))}
                             </div>
-                            <textarea
-                                id="content-textarea"
-                                value={formData.content}
-                                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                className="w-full bg-slate-50 py-4 px-6 focus:outline-none h-64 resize-none font-mono text-sm"
-                                placeholder="Full article content... Use toolbar for formatting."
-                            />
                         </div>
-                    </div>
-                    <div className="flex items-center gap-4 py-2">
-                        <input
-                            type="checkbox"
-                            checked={formData.featured}
-                            onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                            className="w-5 h-5 rounded border-slate-300 text-[#BA9B32] focus:ring-[#BA9B32]"
+                        <textarea
+                            id="content-textarea"
+                            value={formData.content}
+                            onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                            className="w-full bg-slate-50 border border-slate-200 rounded-2xl py-6 px-8 focus:outline-none focus:border-navy-deep/20 focus:bg-white text-[11px] font-medium text-navy-deep h-80 resize-none leading-[1.8] font-mono transition-all"
+                            placeholder="Specify archival node content..."
                         />
-                        <label className="text-sm font-bold text-slate-700">Set as Featured Article</label>
+                    </div>
+
+                    <div className={`rounded-[2rem] p-6 flex items-center justify-between transition-all ${formData.featured ? 'bg-amber-500 border border-amber-600' : 'bg-slate-50 border border-slate-200'}`}>
+                        <div className="flex items-center gap-4">
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all ${formData.featured ? 'bg-white text-amber-500' : 'bg-white text-slate-300 border border-slate-100'}`}>
+                                <Plus size={18} className={formData.featured ? 'rotate-45 transition-transform' : ''} />
+                            </div>
+                            <div className="text-left">
+                                <h4 className={`text-xs font-black tracking-tight ${formData.featured ? 'text-white' : 'text-navy-deep'}`}>Promoted Node</h4>
+                                <p className={`text-[9px] font-bold uppercase tracking-widest mt-1 ${formData.featured ? 'text-white/70' : 'text-slate-400'}`}>Highlight in global grid</p>
+                            </div>
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => setFormData({ ...formData, featured: !formData.featured })}
+                            className={`w-12 h-6 rounded-full relative transition-all ${formData.featured ? 'bg-white/20' : 'bg-slate-200'}`}
+                        >
+                            <div className={`absolute top-1 w-4 h-4 rounded-full transition-all ${formData.featured ? 'left-7 bg-white' : 'left-1 bg-white'}`} />
+                        </button>
                     </div>
                 </div>
-                <div className="p-10 bg-slate-50 border-t border-slate-100 flex justify-end gap-4">
-                    <button onClick={onClose} className="px-8 py-4 font-bold text-[10px] uppercase tracking-widest text-slate-500 hover:text-navy-deep transition-colors">Cancel</button>
+
+                <div className="p-8 border-t border-slate-100 bg-slate-50 flex justify-end gap-6 items-center relative z-20">
+                    <button
+                        onClick={onClose}
+                        className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-navy-deep transition-colors"
+                    >
+                        Abort
+                    </button>
                     <button
                         onClick={() => onSave(formData)}
                         disabled={uploading}
-                        className={`px-8 py-4 rounded-full font-bold text-[10px] uppercase tracking-[.3em] transition-all shadow-xl ${uploading ? 'bg-slate-300 cursor-not-allowed' : 'bg-navy-deep text-white hover:bg-[#BA9B32] shadow-navy-deep/20'}`}
+                        className="px-10 py-4 bg-navy-deep text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-amber-500 transition-all disabled:opacity-50 shadow-lg shadow-navy-deep/20"
                     >
-                        {uploading ? 'Uploading...' : 'Save Publication'}
+                        {uploading ? "Executing..." : "Save Publication"}
                     </button>
                 </div>
             </motion.div >
@@ -423,84 +342,88 @@ const ContentSection = () => {
     };
 
     return (
-        <div className="space-y-6 md:space-y-8">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-6">
-                <div className="flex flex-col md:flex-row items-start md:items-center gap-4 flex-1 w-full max-w-2xl">
-                    <div className="relative w-full">
-                        <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300" size={16} />
-                        <input
-                            type="text"
-                            placeholder="Filter articles..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="w-full pl-12 pr-4 py-3 bg-white border border-slate-100 rounded-full font-bold text-[10px] uppercase tracking-widest text-[#103065] placeholder:text-slate-300 focus:ring-2 focus:ring-[#BA9B32]/20 outline-none shadow-sm transition-all"
-                        />
-                    </div>
-                    <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest whitespace-nowrap px-2">Found {filteredItems.length} items</span>
+        <div className="space-y-10">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-4">
+                <div className="relative group flex-1 w-full max-w-sm">
+                    <Filter className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-navy-deep transition-colors" size={14} />
+                    <input
+                        type="text"
+                        placeholder="Search publications..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="w-full pl-14 pr-8 py-3.5 bg-white border border-slate-200 rounded-xl text-[11px] font-black text-navy-deep placeholder:text-slate-300 outline-none shadow-sm transition-all focus:border-navy-deep/20"
+                    />
                 </div>
                 <button
                     onClick={() => { setEditingItem(null); setIsSliderOpen(true); }}
-                    className="flex items-center gap-3 w-full md:w-auto px-8 py-4 bg-[#BA9B32] text-white rounded-full font-bold text-[10px] uppercase tracking-[.3em] hover:bg-navy-deep shadow-xl shadow-[#BA9B32]/20 transition-all hover:scale-105 justify-center"
+                    className="group flex items-center gap-3 px-8 py-3.5 bg-navy-deep text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-amber-500 transition-all shadow-lg shadow-navy-deep/10 active:scale-95 shrink-0"
                 >
-                    <Plus size={20} /> <span>Create New Story</span>
+                    <Plus size={16} className="transition-transform group-hover:rotate-90" />
+                    <span>New Publication</span>
                 </button>
             </div>
 
-            <div className="mb-2">
-                <h3 className="text-lg font-display font-bold text-navy-deep uppercase tracking-widest text-left">News Database</h3>
+            <div className="hidden md:flex items-center gap-2.5 px-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Archive Index: {filteredItems.length} Entries</span>
             </div>
 
-            {/* Desktop View */}
-            <div className="hidden md:block bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden min-h-[400px]">
-                <table className="w-full text-left">
+            <div className="hidden md:block bg-white rounded-[1.5rem] border border-slate-200 shadow-sm overflow-hidden min-h-[400px]">
+                <table className="w-full text-left border-collapse">
                     <thead>
-                        <tr className="bg-slate-50 border-b border-slate-100">
-                            <th className="px-10 py-6 text-[10px] font-bold uppercase tracking-[.3em] text-slate-400">Article Details</th>
-                            <th className="px-10 py-6 text-[10px] font-bold uppercase tracking-[.3em] text-slate-400 text-right">Published</th>
-                            <th className="px-10 py-6 text-[10px] font-bold uppercase tracking-[.3em] text-slate-400 text-right">Actions</th>
+                        <tr className="bg-slate-50/50 border-b border-slate-100">
+                            <th className="px-10 py-6 text-[9px] font-black uppercase tracking-widest text-slate-400">Publication</th>
+                            <th className="px-10 py-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-right">Commit Date</th>
+                            <th className="px-10 py-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-50">
+                    <tbody className="divide-y divide-slate-100">
                         {loading ? (
                             <tr>
-                                <td colSpan={3} className="px-10 py-20 text-center">
-                                    <div className="flex flex-col items-center gap-4">
-                                        <div className="w-8 h-8 border-4 border-[#BA9B32] border-t-transparent rounded-full animate-spin"></div>
-                                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Syncing with Supabase...</p>
-                                    </div>
+                                <td colSpan={3} className="px-10 py-32 text-center">
+                                    <SectionLoader />
                                 </td>
                             </tr>
                         ) : (
                             currentItems.map((item) => (
-                                <tr key={item.id} className="hover:bg-slate-50/50 transition-colors group">
-                                    <td className="px-10 py-8">
+                                <tr key={item.id} className="hover:bg-slate-50/50 transition-all group">
+                                    <td className="px-10 py-6">
                                         <div className="flex items-center gap-6">
-                                            <div className="w-20 h-14 bg-slate-100 rounded-card-sm overflow-hidden shadow-sm group-hover:scale-105 transition-transform shrink-0">
-                                                <img src={item.image} className="w-full h-full object-cover grayscale" alt="Thumb" />
+                                            <div className="w-20 h-14 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 shadow-sm shrink-0">
+                                                <img src={item.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all" alt="Thumb" />
                                             </div>
                                             <div className="min-w-0 text-left">
-                                                <p className="font-bold text-sm mb-1 line-clamp-1">{item.title}</p>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="px-3 py-1 bg-slate-100 text-slate-400 rounded-full text-[8px] font-bold uppercase tracking-widest">{item.category}</span>
-                                                    {item.featured && <span className="text-[8px] font-bold text-[#BA9B32] uppercase tracking-widest">★ Featured</span>}
+                                                <p className="font-bold text-navy-deep text-sm mb-1.5 line-clamp-1 tracking-tight group-hover:text-amber-600 transition-colors">{item.title}</p>
+                                                <div className="flex items-center gap-3">
+                                                    <span className="px-2 py-0.5 bg-slate-100 rounded-full text-[8px] font-black text-slate-400 uppercase tracking-widest">{item.category}</span>
+                                                    {item.featured && (
+                                                        <div className="flex items-center gap-1.5 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-100">
+                                                            <div className="w-1 h-1 rounded-full bg-amber-500" />
+                                                            <span className="text-[8px] font-black text-amber-600 uppercase tracking-widest">Featured</span>
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td className="px-10 py-8 text-xs text-slate-500 font-medium text-right">{item.date}</td>
-                                    <td className="px-10 py-8 text-right">
-                                        <div className="flex items-center justify-end gap-3">
+                                    <td className="px-10 py-6">
+                                        <div className="text-right">
+                                            <p className="text-[10px] text-navy-deep font-black uppercase tracking-widest">{item.date}</p>
+                                        </div>
+                                    </td>
+                                    <td className="px-10 py-6 text-right">
+                                        <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all">
                                             <button
                                                 onClick={() => { setEditingItem(item); setIsSliderOpen(true); }}
-                                                className="p-3 bg-slate-100 text-slate-400 hover:bg-[#BA9B32]/10 hover:text-[#BA9B32] rounded-card-sm transition-all"
+                                                className="w-9 h-9 flex items-center justify-center bg-white text-navy-deep rounded-lg shadow-sm border border-slate-200 hover:border-amber-500 hover:text-amber-500 transition-all"
                                             >
-                                                <Edit2 size={16} />
+                                                <Edit2 size={14} />
                                             </button>
                                             <button
                                                 onClick={() => deleteNews(item.id)}
-                                                className="p-3 bg-slate-100 text-slate-400 hover:bg-red-50 hover:text-red-500 rounded-card-sm transition-all"
+                                                className="w-9 h-9 flex items-center justify-center bg-white text-red-400 rounded-lg shadow-sm border border-slate-200 hover:border-red-500 hover:text-red-500 transition-all"
                                             >
-                                                <Trash2 size={16} />
+                                                <Trash2 size={14} />
                                             </button>
                                         </div>
                                     </td>
@@ -514,37 +437,36 @@ const ContentSection = () => {
             {/* Mobile View */}
             <div className="md:hidden space-y-4">
                 {loading ? (
-                    <div className="bg-white p-12 rounded-xl border border-slate-100 shadow-sm flex flex-col items-center gap-4">
-                        <div className="w-8 h-8 border-4 border-[#BA9B32] border-t-transparent rounded-full animate-spin"></div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Syncing...</p>
+                    <div className="bg-white p-12 rounded-3xl border border-slate-200 flex flex-col items-center">
+                        <SectionLoader />
                     </div>
                 ) : (
                     currentItems.map((item) => (
-                        <div key={item.id} className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-4 text-left">
-                            <div className="flex gap-4">
-                                <div className="w-24 h-16 bg-slate-100 rounded-card-sm overflow-hidden shadow-sm shrink-0">
-                                    <img src={item.image} className="w-full h-full object-cover grayscale" alt="Thumb" />
+                        <div key={item.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-5 text-left group">
+                            <div className="flex gap-5">
+                                <div className="w-24 h-16 bg-slate-100 rounded-lg overflow-hidden border border-slate-200">
+                                    <img src={item.image} className="w-full h-full object-cover opacity-80" alt="Thumb" />
                                 </div>
                                 <div className="min-w-0 flex-1">
-                                    <p className="font-bold text-sm mb-1 line-clamp-2">{item.title}</p>
+                                    <p className="font-bold text-navy-deep text-sm mb-1.5 line-clamp-2 tracking-tight leading-snug">{item.title}</p>
                                     <div className="flex flex-wrap items-center gap-2">
-                                        <span className="px-2 py-0.5 bg-slate-100 text-slate-400 rounded-full text-[7px] font-bold uppercase tracking-widest">{item.category}</span>
-                                        {item.featured && <span className="text-[7px] font-bold text-[#BA9B32] uppercase tracking-widest">★ Featured</span>}
+                                        <span className="px-2 py-0.5 bg-slate-50 border border-slate-100 text-slate-400 rounded-full text-[7px] font-black uppercase tracking-widest">{item.category}</span>
+                                        {item.featured && <span className="px-2 py-0.5 bg-amber-50 text-amber-600 border border-amber-100 rounded-full text-[7px] font-black uppercase tracking-widest">Featured</span>}
                                     </div>
                                 </div>
                             </div>
                             <div className="flex items-center justify-between pt-4 border-t border-slate-50">
-                                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{item.date}</span>
-                                <div className="flex gap-2">
+                                <span className="text-[10px] text-navy-deep font-black uppercase tracking-widest">{item.date}</span>
+                                <div className="flex gap-2.5">
                                     <button
                                         onClick={() => { setEditingItem(item); setIsSliderOpen(true); }}
-                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-lg"
+                                        className="w-9 h-9 bg-white text-navy-deep border border-slate-100 rounded-lg shadow-sm flex items-center justify-center active:scale-95"
                                     >
                                         <Edit2 size={14} />
                                     </button>
                                     <button
                                         onClick={() => deleteNews(item.id)}
-                                        className="p-2.5 bg-slate-50 text-slate-400 rounded-lg text-red-400"
+                                        className="w-9 h-9 bg-white text-red-400 border border-slate-100 rounded-lg shadow-sm flex items-center justify-center active:scale-95"
                                     >
                                         <Trash2 size={14} />
                                     </button>
@@ -555,29 +477,40 @@ const ContentSection = () => {
                 )}
             </div>
 
-            {!loading && filteredItems.length > 0 && (
-                <div className="mt-8 flex items-center justify-between px-2">
-                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                        Page {currentPage} of {totalPages}
-                    </p>
-                    <div className="flex items-center gap-2">
-                        <button
-                            disabled={currentPage === 1}
-                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                            className="px-4 py-3 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-white transition-all text-slate-500"
-                        >
-                            Prev
-                        </button>
-                        <button
-                            disabled={currentPage === totalPages}
-                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                            className="px-4 py-3 rounded-lg border border-slate-200 text-[10px] font-bold uppercase tracking-widest disabled:opacity-30 hover:bg-white transition-all text-slate-500"
-                        >
-                            Next
-                        </button>
+            {
+                !loading && filteredItems.length > 0 && (
+                    <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 px-1">
+                        <div className="flex items-center gap-4">
+                            <div className="w-10 h-1 bg-slate-200 rounded-full overflow-hidden">
+                                <motion.div
+                                    className="h-full bg-navy-deep"
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${(currentPage / totalPages) * 100}%` }}
+                                />
+                            </div>
+                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                                Page {currentPage} <span className="mx-2 opacity-30">/</span> {totalPages}
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <button
+                                disabled={currentPage === 1}
+                                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                                className="px-6 py-2.5 rounded-xl border border-slate-200 bg-white text-[10px] font-black uppercase tracking-widest disabled:opacity-30 hover:bg-slate-50 transition-all text-navy-deep active:scale-95 shadow-sm"
+                            >
+                                Back
+                            </button>
+                            <button
+                                disabled={currentPage === totalPages}
+                                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                                className="px-6 py-2.5 rounded-xl border border-slate-200 bg-white text-[10px] font-black uppercase tracking-widest disabled:opacity-30 hover:bg-slate-50 transition-all text-navy-deep active:scale-95 shadow-sm"
+                            >
+                                Next
+                            </button>
+                        </div>
                     </div>
-                </div>
-            )}
+                )
+            }
 
             <NewsModal
                 isOpen={isSliderOpen}

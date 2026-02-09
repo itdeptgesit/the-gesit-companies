@@ -3,9 +3,10 @@ import {
     Eye,
     Newspaper,
     Users,
+    ChevronRight,
     TrendingUp,
-    Clock,
-    ChevronRight
+    Zap,
+    Sparkles
 } from "lucide-react";
 import { useNews } from "../../context/NewsContext";
 import { useCareer } from "../../context/CareerContext";
@@ -19,82 +20,178 @@ const OverviewSection = ({ visitorCount }: { visitorCount: number }) => {
     }, []);
 
     const stats = [
-        { label: "Total Visitors", value: visitorCount.toLocaleString(), icon: <Eye />, trend: "Real-time" },
-        { label: "Active News", value: newsLoading ? "..." : newsItems.filter(i => i.type === 'news').length.toString(), icon: <Newspaper />, trend: "Official" },
-        { label: "New Applications", value: careerLoading ? "..." : applications.length.toString(), icon: <Users />, trend: "Career Portal" },
+        {
+            label: "Global Traffic",
+            value: visitorCount && !isNaN(visitorCount) ? visitorCount.toLocaleString() : "0",
+            icon: <Eye size={20} />,
+            trend: "Live Feed",
+            iconColor: "text-blue-600",
+            bgColor: "bg-blue-50"
+        },
+        {
+            label: "Media Assets",
+            value: newsLoading ? "..." : newsItems.filter(i => i.type === 'news').length.toString(),
+            icon: <Newspaper size={20} />,
+            trend: "Vault",
+            iconColor: "text-amber-600",
+            bgColor: "bg-amber-50"
+        },
+        {
+            label: "Talent Intake",
+            value: careerLoading ? "..." : applications.length.toString(),
+            icon: <Users size={20} />,
+            trend: "Active",
+            iconColor: "text-emerald-600",
+            bgColor: "bg-emerald-50"
+        },
     ];
 
-    const recentApps = applications.slice(0, 3);
+    const recentApps = applications.slice(0, 4);
 
     return (
-        <div className="space-y-8 md:space-y-12">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                {stats.map((stat, idx) => (
-                    <div key={idx} className="bg-white p-6 md:p-8 rounded-card border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-500 overflow-hidden relative group text-left">
-                        <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-20 transition-opacity whitespace-nowrap overflow-hidden text-navy-deep">
-                            {stat.icon}
+        <div className="space-y-8 pb-10">
+            {/* Beneficial Summary / Smart Insight */}
+            <div className="bg-navy-deep rounded-[2.5rem] p-8 md:p-10 text-white relative overflow-hidden shadow-xl shadow-navy-deep/10">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 blur-[100px] rounded-full -mr-32 -mt-32" />
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+                    <div className="space-y-4 max-w-2xl">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/40">
+                                <Sparkles size={16} className="text-white" />
+                            </div>
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500">Smart Operational Insight</span>
                         </div>
-                        <p className="text-[10px] font-bold uppercase tracking-[.2em] text-slate-400 mb-2 md:mb-4">{stat.label}</p>
-                        <div className="text-3xl md:text-4xl font-display mb-2 md:mb-4">{stat.value}</div>
-                        <div className="flex items-center gap-2 text-[10px] font-bold text-[#BA9B32] uppercase tracking-widest">
-                            {idx < 2 ? <TrendingUp size={12} /> : null} {stat.trend}
+                        <h2 className="text-3xl font-black tracking-tight leading-tight">
+                            Welcome back. You have <span className="text-amber-500">{careerLoading ? '...' : applications.length}</span> candidates in the pipeline.
+                        </h2>
+                        <p className="text-white/60 text-sm font-medium leading-relaxed">
+                            Your ecosystem is currently stable. In the last cycle, {newsLoading ? '...' : newsItems.length} media assets were managed and platform traffic remains at {visitorCount.toLocaleString()} global interactions.
+                        </p>
+                    </div>
+                    <div className="flex shrink-0 gap-4">
+                        <div className="px-6 py-4 bg-white/5 rounded-2xl border border-white/10 flex flex-col gap-1 items-start min-w-[140px]">
+                            <TrendingUp size={16} className="text-emerald-400 mb-1" />
+                            <span className="text-2xl font-black">Stable</span>
+                            <span className="text-[8px] font-black uppercase tracking-widest text-white/40">Hub Status</span>
+                        </div>
+                        <div className="px-6 py-4 bg-white/5 rounded-2xl border border-white/10 flex flex-col gap-1 items-start min-w-[140px]">
+                            <Zap size={16} className="text-amber-400 mb-1" />
+                            <span className="text-2xl font-black">{newsItems.length}</span>
+                            <span className="text-[8px] font-black uppercase tracking-widest text-white/40">Active Assets</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {stats.map((stat, idx) => (
+                    <div key={idx} className="p-8 bg-white rounded-[2rem] border border-slate-200 shadow-sm transition-all duration-300 hover:shadow-md group relative">
+                        <div className="flex justify-between items-start mb-6">
+                            <div className={`w-12 h-12 rounded-2xl ${stat.bgColor} flex items-center justify-center ${stat.iconColor} transition-transform duration-500 group-hover:scale-110`}>
+                                {stat.icon}
+                            </div>
+                            <div className="flex flex-col items-end">
+                                <span className={`text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full ${stat.bgColor} ${stat.iconColor} border border-transparent group-hover:border-current/10 transition-colors`}>
+                                    {stat.trend}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="space-y-1 text-left">
+                            <h3 className="text-3xl font-black text-navy-deep tracking-tight">{stat.value}</h3>
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mt-2">
+                                {stat.label}
+                            </p>
                         </div>
                     </div>
                 ))}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-                <div className="lg:col-span-2 bg-white rounded-card-sm p-6 md:p-10 border border-slate-100 shadow-sm text-left">
-                    <h3 className="text-xl font-display mb-6 md:mb-8">Recent Activity</h3>
-                    <div className="space-y-4 md:space-y-6">
-                        {recentApps.length > 0 ? (
-                            recentApps.map((app) => (
-                                <div key={app.id} className="flex items-center justify-between py-4 border-b border-slate-50 last:border-0 hover:bg-slate-50 transition-colors rounded-card-sm px-4 -mx-4 group">
-                                    <div className="flex items-center gap-4 md:gap-6 text-left min-w-0">
-                                        <div className="w-10 h-10 md:w-12 md:h-12 rounded-card-sm bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[#BA9B32] group-hover:text-white transition-all shrink-0">
-                                            <Clock size={18} className="md:w-5 md:h-5" />
-                                        </div>
-                                        <div className="min-w-0">
-                                            <p className="font-bold text-sm truncate">New Career Application: {app.position}</p>
-                                            <p className="text-[10px] text-slate-400 uppercase tracking-widest mt-1 truncate">
-                                                {app.full_name} • {new Date(app.created_at).toLocaleDateString()}
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <button className="p-2 text-[#BA9B32] hover:bg-[#BA9B32]/10 rounded-card-sm transition-all shrink-0">
-                                        <ChevronRight size={18} />
-                                    </button>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="text-center py-12 text-slate-400">
-                                <p className="text-sm font-light uppercase tracking-widest italic">No recent activity found</p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                <div className="bg-navy-deep rounded-card-sm p-6 md:p-10 text-white relative overflow-hidden shadow-2xl text-left">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#BA9B32]/20 to-transparent"></div>
-                    <div className="relative z-10">
-                        <h3 className="text-xl font-display mb-6">System Status</h3>
-                        <p className="text-white/40 text-[10px] uppercase font-bold tracking-[.3em] mb-8 md:mb-10">All Modules Operational</p>
-                        <div className="space-y-4 md:space-y-6">
-                            {[
-                                { name: "Database", status: "Live" },
-                                { name: "Media Server", status: "Live" },
-                                { name: "Application API", status: "Live" }
-                            ].map((service) => (
-                                <div key={service.name} className="flex items-center justify-between bg-white/5 p-4 rounded-card-sm hover:bg-white/10 transition-colors">
-                                    <span className="text-xs font-bold uppercase tracking-widest">{service.name}</span>
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-2 h-2 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
-                                        <span className="text-[9px] font-bold text-green-500 uppercase tracking-tighter">{service.status}</span>
-                                    </div>
-                                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                {/* Performance Chart / Heatmap style placeholder */}
+                <div className="lg:col-span-3 bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm text-left relative group">
+                    <div className="flex items-center justify-between mb-10">
+                        <div>
+                            <h3 className="text-xl font-black text-navy-deep tracking-tight">System Diagnostic</h3>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">Operational load distribution</p>
+                        </div>
+                        <div className="flex gap-2">
+                            {['24H', '7D', '30D'].map(p => (
+                                <button key={p} className={`px-4 py-2 text-[9px] font-black uppercase tracking-widest rounded-xl transition-all ${p === '7D' ? 'bg-navy-deep text-white' : 'bg-slate-50 text-slate-400 hover:bg-slate-100'}`}>
+                                    {p}
+                                </button>
                             ))}
                         </div>
                     </div>
+
+                    <div className="grid grid-cols-7 sm:grid-cols-14 gap-2.5">
+                        {Array.from({ length: 56 }).map((_, i) => (
+                            <div
+                                key={i}
+                                className={`aspect-square rounded-[4px] transition-all duration-500 hover:scale-110 ${i % 7 === 0 ? 'bg-amber-400/30' :
+                                    i % 4 === 0 ? 'bg-navy-deep/5' :
+                                        i % 3 === 0 ? 'bg-blue-400/20' : 'bg-slate-50'
+                                    }`}
+                            />
+                        ))}
+                    </div>
+
+                    <div className="mt-10 flex items-center justify-between border-t border-slate-100 pt-8">
+                        <div className="flex items-center gap-6">
+                            <div className="flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                                <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Peak Activity</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-slate-200" />
+                                <span className="text-[8px] font-black text-slate-400 uppercase tracking-widest">Baseline</span>
+                            </div>
+                        </div>
+                        <span className="text-[8px] font-black text-slate-300 uppercase tracking-widest">Status: Nominal</span>
+                    </div>
+                </div>
+
+                {/* Recent Activity */}
+                <div className="lg:col-span-2 bg-white rounded-[2.5rem] p-10 border border-slate-200 shadow-sm text-left relative group">
+                    <div className="flex items-center justify-between mb-10">
+                        <div>
+                            <h3 className="text-xl font-black text-navy-deep tracking-tight">Latest Inbound</h3>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">Global data stream</p>
+                        </div>
+                        <button className="w-10 h-10 bg-slate-50 hover:bg-slate-100 rounded-xl flex items-center justify-center text-navy-deep transition-all">
+                            <ChevronRight size={18} />
+                        </button>
+                    </div>
+
+                    <div className="space-y-4">
+                        {recentApps.length > 0 ? (
+                            recentApps.map((app) => (
+                                <div key={app.id} className="flex items-center justify-between p-4 rounded-2xl transition-all hover:bg-slate-50 border border-transparent hover:border-slate-100 group/item">
+                                    <div className="flex items-center gap-4 text-left min-w-0">
+                                        <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center overflow-hidden border border-slate-200">
+                                            <img src={`https://ui-avatars.com/api/?name=${app.full_name}&background=103065&color=fff&bold=true`} className="w-full h-full object-cover" alt="" />
+                                        </div>
+                                        <div className="min-w-0">
+                                            <p className="font-bold text-sm text-navy-deep truncate tracking-tight">{app.full_name}</p>
+                                            <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-1 group-hover/item:text-navy-deep transition-colors">{app.position || 'External'}</p>
+                                        </div>
+                                    </div>
+                                    <div className="text-right shrink-0">
+                                        <p className="text-[8px] font-black text-slate-300 uppercase tracking-tighter">{new Date(app.created_at).toLocaleDateString()}</p>
+                                    </div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="py-16 text-center bg-slate-50 rounded-[2rem] border border-dashed border-slate-200">
+                                <p className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-300">No activity detected</p>
+                            </div>
+                        )}
+                    </div>
+
+                    <button className="w-full mt-10 py-4 border border-slate-100 bg-slate-50/50 text-navy-deep rounded-xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white hover:border-slate-200 hover:shadow-sm transition-all active:scale-[0.98]">
+                        Full Pipeline Access
+                    </button>
                 </div>
             </div>
         </div>
