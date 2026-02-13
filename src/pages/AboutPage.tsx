@@ -12,7 +12,9 @@ const AboutPage = () => {
     const containerRef = useRef<HTMLDivElement>(null);
     const videoRef = useRef<HTMLVideoElement>(null);
     const [content, setContent] = useState<any>({});
-    // Default static values as fallback
+
+
+    // Default static values for Core Values as fallback
     const defaultCoreValues = [
         {
             id: "01",
@@ -40,6 +42,7 @@ const AboutPage = () => {
         }
     ];
     const [coreValues, setCoreValues] = useState<any[]>(defaultCoreValues);
+
 
     const revealVariants: Variants = {
         hidden: { opacity: 0, y: 25 },
@@ -82,6 +85,9 @@ const AboutPage = () => {
                     return acc;
                 }, {});
                 setContent(map);
+
+                // Parse business segments if available
+
             }
 
             // Fetch core values
@@ -98,12 +104,13 @@ const AboutPage = () => {
                     image: v.image_url
                 })));
             }
+
         };
         fetchData();
     }, []);
 
     return (
-        <div ref={containerRef} className="bg-white font-body selection:bg-[#BA9B32] selection:text-white">
+        <div ref={containerRef} className="bg-white font-body selection:bg-[#BC9C33] selection:text-white">
             {/* 1. Hero */}
             <section className="relative h-screen flex items-end justify-start overflow-hidden bg-navy-deep">
                 <div className="absolute inset-0 z-0">
@@ -131,7 +138,7 @@ const AboutPage = () => {
                         className="max-w-6xl"
                     >
                         <h1 className="text-white text-[10vw] md:text-8xl font-display leading-[1] mb-0 uppercase tracking-tight drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]">
-                            About <span className="text-[#BA9B32]">Us</span>
+                            About <span className="text-[#BC9C33]">Us</span>
                         </h1>
                     </motion.div>
                 </div>
@@ -185,7 +192,7 @@ const AboutPage = () => {
                                         hidden: { opacity: 0, filter: "blur(20px)", y: 20 },
                                         visible: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] } as any }
                                     }}
-                                    className="bg-gradient-to-br from-[#BA9B32] via-[#e2c15a] to-[#8a6d3b] bg-clip-text text-transparent text-7xl md:text-8xl font-display mb-6 leading-none py-2"
+                                    className="bg-gradient-to-br from-[#BC9C33] via-[#e2c15a] to-[#8a6d3b] bg-clip-text text-transparent text-7xl md:text-8xl font-display mb-6 leading-none py-2"
                                     style={{ fontWeight: 510 }}
                                 >
                                     {content['philosophy_heading'] || "艺成"}
@@ -195,7 +202,7 @@ const AboutPage = () => {
                                     {content['philosophy_meaning'] || "Based on the Mandarin “yi cheng” and Hokkien “geseng”, which means “perfection for art”"}
                                 </motion.p>
 
-                                <motion.h4 variants={revealVariants} className="text-navy-deep text-2xl md:text-3xl font-display font-light mb-14 leading-[1.4] max-w-xl border-l-2 border-[#BA9B32]/30 pl-8">
+                                <motion.h4 variants={revealVariants} className="text-navy-deep text-2xl md:text-3xl font-display font-light mb-14 leading-[1.4] max-w-xl border-l-2 border-[#BC9C33]/30 pl-8">
                                     {content['philosophy_subheading'] || "Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors."}
                                 </motion.h4>
 
@@ -205,7 +212,7 @@ const AboutPage = () => {
                                     </motion.p>
 
                                     <motion.p variants={revealVariants} className="font-bold text-navy-deep text-xl mt-12 pt-8 border-t border-slate-100 flex items-center gap-4">
-                                        <span className="w-12 h-[1px] bg-[#BA9B32]"></span>
+                                        <span className="w-12 h-[1px] bg-[#BC9C33]"></span>
                                         {content['philosophy_closing'] || "We are committed to Indonesia."}
                                     </motion.p>
                                 </div>
@@ -233,7 +240,7 @@ const AboutPage = () => {
                                     className="absolute -bottom-12 md:-bottom-20 -left-8 md:-left-20 w-3/4 aspect-square rounded-card-sm md:rounded-card overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white z-20 hidden md:block"
                                 >
                                     <img src="/about/resources.jpeg" className="w-full h-full object-cover" alt="Context" loading="lazy" />
-                                    <div className="absolute inset-0 bg-[#BA9B32]/10"></div>
+                                    <div className="absolute inset-0 bg-[#BC9C33]/10"></div>
                                 </motion.div>
                             </motion.div>
                         </div>
@@ -276,14 +283,14 @@ const AboutPage = () => {
                             className="space-y-16"
                         >
                             <motion.div variants={revealVariants}>
-                                <span className="text-[#BA9B32] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Vision</span>
+                                <span className="text-[#BC9C33] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Vision</span>
                                 <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light">
                                     {content['vision_statement'] || "To be a Group of Companies that are Recognized by Stakeholders as Strategic First Choice Business Partner"}
                                 </h3>
                             </motion.div>
 
                             <motion.div variants={revealVariants}>
-                                <span className="text-[#BA9B32] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Mission</span>
+                                <span className="text-[#BC9C33] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Mission</span>
                                 <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light">
                                     {content['mission_statement'] || "To Establish Resourceful Business Entities that Deliver Sustainable Value to Stakeholders"}
                                 </h3>
@@ -293,8 +300,11 @@ const AboutPage = () => {
                 </div>
             </section>
 
-            {/* 5. Core Values */}
-            <section className="py-24 md:py-40 bg-white">
+            {/* 5. Our Business */}
+
+
+            {/* 6. Core Values (Restored) */}
+            <section className="py-24 md:py-40 bg-slate-50">
                 <div className="container mx-auto px-6 mb-20 md:mb-32 flex flex-col items-center text-center">
                     <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
                         <h2 className="text-navy-deep text-5xl md:text-6xl font-display">Our Core Values.</h2>
@@ -317,7 +327,7 @@ const AboutPage = () => {
                                     <div className="absolute inset-0 bg-navy-deep/10"></div>
                                 </div>
                                 <div className="w-[1.5px] h-10 bg-slate-200 shrink-0"></div>
-                                <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-card relative group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
+                                <div className="w-full bg-[#BC9C33] p-8 text-center shadow-lg rounded-card relative group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
                                     <h4 className="text-white text-2xl font-display mb-6 tracking-wide">{value.title}</h4>
                                     <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
                                     <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide">{value.desc}</p>

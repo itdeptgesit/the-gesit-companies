@@ -23,12 +23,12 @@ const MaintenancePage = () => {
                 className="space-y-6 mb-16"
             >
                 <div className="flex justify-center mb-8">
-                    <div className="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center text-[#BA9B32]">
+                    <div className="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center text-[#BC9C33]">
                         <Settings size={40} className="animate-spin-slow" />
                     </div>
                 </div>
                 <h1 className="text-3xl md:text-4xl font-display text-navy-deep font-bold leading-tight uppercase tracking-tight">
-                    Under <span className="text-[#BA9B32]">Maintenance</span>
+                    Under <span className="text-[#BC9C33]">Maintenance</span>
                 </h1>
                 <p className="text-slate-400 text-base max-w-md mx-auto font-light leading-relaxed">
                     Our digital workspace is currently being refined to provide a better experience. We'll be back online shortly.
@@ -42,12 +42,12 @@ const MaintenancePage = () => {
                 className="mt-16 flex flex-col md:flex-row gap-8 items-center"
             >
                 <div className="flex items-center gap-3 text-navy-deep font-medium">
-                    <Mail size={18} className="text-[#BA9B32]" />
-                    <a href="mailto:contact@gesit.co.id" className="hover:text-[#BA9B32] transition-colors uppercase tracking-widest text-[11px] font-bold">contact@gesit.co.id</a>
+                    <Mail size={18} className="text-[#BC9C33]" />
+                    <a href="mailto:contact@gesit.co.id" className="hover:text-[#BC9C33] transition-colors uppercase tracking-widest text-[11px] font-bold">contact@gesit.co.id</a>
                 </div>
                 <div className="flex items-center gap-3 text-navy-deep font-medium">
-                    <Phone size={18} className="text-[#BA9B32]" />
-                    <a href="tel:+62213101601" className="hover:text-[#BA9B32] transition-colors uppercase tracking-widest text-[11px] font-bold">+62 21 3101 601</a>
+                    <Phone size={18} className="text-[#BC9C33]" />
+                    <a href="tel:+62213101601" className="hover:text-[#BC9C33] transition-colors uppercase tracking-widest text-[11px] font-bold">+62 21 3101 601</a>
                 </div>
             </motion.div>
 

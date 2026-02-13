@@ -23,7 +23,7 @@ const NotFoundPage = () => {
                 transition={{ duration: 0.8 }}
                 className="space-y-4 mb-16"
             >
-                <h1 className="text-[70px] md:text-[80px] font-display font-bold leading-none text-[#BA9B32]">
+                <h1 className="text-[70px] md:text-[80px] font-display font-bold leading-none text-[#BC9C33]">
                     404
                 </h1>
                 <h2 className="text-2xl md:text-3xl font-display text-navy-deep font-bold">

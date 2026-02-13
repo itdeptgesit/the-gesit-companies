@@ -156,7 +156,7 @@ const CSRPage = () => {
                             initial={{ width: 0 }}
                             animate={{ width: "100%" }}
                             transition={{ duration: 5, ease: "linear" }}
-                            className="h-full bg-[#BA9B32] shadow-[0_0_10px_rgba(186,155,50,0.5)]"
+                            className="h-full bg-[#BC9C33] shadow-[0_0_10px_rgba(188,156,51,0.5)]"
                         />
                     </div>
 
@@ -182,10 +182,10 @@ const CSRPage = () => {
 
                             {/* Navigation Buttons */}
                             <div className="flex gap-4 z-30">
-                                <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                 </button>
-                                <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
                                 </button>
                             </div>
@@ -237,7 +237,7 @@ const CSRPage = () => {
                             ></motion.div>
 
                             {/* Bottom Info Box */}
-                            <div className="w-full bg-[#BA9B32] p-8 text-center shadow-lg rounded-card relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
+                            <div className="w-full bg-[#BC9C33] p-8 text-center shadow-lg rounded-card relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
                                 <h3 className="text-white text-2xl font-display mb-4 tracking-wide">{area.title}</h3>
                                 <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
                                 <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide px-2">
@@ -268,7 +268,7 @@ const CSRPage = () => {
                                     className="w-full px-8 py-6 flex justify-between items-center hover:bg-slate-50 transition-colors"
                                 >
                                     <span className="text-xl font-display text-navy-deep">{initiative.title}</span>
-                                    <div className={`p-2 rounded-full transition-all duration-300 ${openInitiative === initiative.title ? "bg-[#BA9B32] text-white rotate-180" : "bg-slate-100 text-slate-400"}`}>
+                                    <div className={`p-2 rounded-full transition-all duration-300 ${openInitiative === initiative.title ? "bg-[#BC9C33] text-white rotate-180" : "bg-slate-100 text-slate-400"}`}>
                                         <ChevronDown size={20} />
                                     </div>
                                 </button>
@@ -285,7 +285,7 @@ const CSRPage = () => {
                                             <div className="px-8 pb-8 pt-4">
                                                 {initiative.content.map(block => (
                                                     <div key={block.subtitle} className="mb-6 last:mb-0">
-                                                        <h4 className="text-xs uppercase font-bold tracking-widest text-[#BA9B32] mb-4">
+                                                        <h4 className="text-xs uppercase font-bold tracking-widest text-[#BC9C33] mb-4">
                                                             {block.subtitle}
                                                         </h4>
                                                         <ul className="space-y-3">
@@ -311,7 +311,7 @@ const CSRPage = () => {
             {/* ================= SMOOTH INFINITE SCROLL GALLERY ================= */}
             <section className="py-24 bg-white overflow-hidden">
                 <div className="text-center mb-16">
-                    <span className="text-[#BA9B32] font-bold uppercase tracking-[.3em] text-xs mb-3 block">From the Ground</span>
+                    <span className="text-[#BC9C33] font-bold uppercase tracking-[.3em] text-xs mb-3 block">From the Ground</span>
                     <h2 className="text-4xl font-display text-navy-deep">Gallery of Impact</h2>
                 </div>
 
@@ -330,7 +330,7 @@ const CSRPage = () => {
                             {[...csrGalleryImages, ...csrGalleryImages].map((src, index) => (
                                 <div
                                     key={index}
-                                    className="w-[450px] h-[300px] shrink-0 rounded-card-sm overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-[#BA9B32]/40 group relative"
+                                    className="w-[450px] h-[300px] shrink-0 rounded-card-sm overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-[#BC9C33]/40 group relative"
                                 >
                                     <img
                                         src={src}

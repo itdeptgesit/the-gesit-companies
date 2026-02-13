@@ -68,7 +68,7 @@ const BackToTop = () => {
                                 cx="50"
                                 cy="50"
                                 r="46"
-                                className="stroke-[#BA9B32] fill-transparent"
+                                className="stroke-[#BC9C33] fill-transparent"
                                 strokeWidth="6"
                                 strokeLinecap="round"
                                 style={{
@@ -78,7 +78,7 @@ const BackToTop = () => {
                         </svg>
 
                         {/* Interactive Icon Layer */}
-                        <div className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:bg-[#BA9B32] group-hover:text-white text-navy-deep">
+                        <div className="relative z-10 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-500 group-hover:bg-[#BC9C33] group-hover:text-white text-navy-deep">
                             <ChevronUp size={20} className="group-hover:-translate-y-1 transition-transform duration-300" />
 
                             {/* Hover Tooltip/Label */}
@@ -89,7 +89,7 @@ const BackToTop = () => {
                     </button>
 
                     {/* Subtle Glow Effect */}
-                    <div className="absolute inset-0 bg-[#BA9B32]/10 rounded-full blur-[15px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute inset-0 bg-[#BC9C33]/10 rounded-full blur-[15px] -z-10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </motion.div>
             )}
         </AnimatePresence>

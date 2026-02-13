@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
 import { motion, AnimatePresence } from 'framer-motion';
 // @ts-ignore
-import { supabase } from '../lib/supabase';
+import { supabase, getOptimizedNewsImage } from '../lib/supabase';
 
 import 'swiper/css';
 import 'swiper/css/effect-fade';
@@ -26,7 +26,7 @@ const HeroSlider = () => {
                 // Transform data keys to match component expectations if needed, 
                 // but our schema uses image_url, title, subtitle which matches closely
                 setSlides(data.map(s => ({
-                    image: s.image_url,
+                    image: getOptimizedNewsImage(s.image_url, 1920, 85),
                     title: s.title,
                     subtitle: s.subtitle
                 })));
@@ -46,7 +46,7 @@ const HeroSlider = () => {
     }, []);
 
     if (isLoading) return <div className="h-screen w-full bg-navy-deep flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-12 h-12 border-4 border-[#BC9C33] border-t-transparent rounded-full animate-spin" />
     </div>;
 
     return (

@@ -103,7 +103,7 @@ const TradingServicePage = () => {
                             initial={{ width: 0 }}
                             animate={{ width: "100%" }}
                             transition={{ duration: 5, ease: "linear" }}
-                            className="h-full bg-[#BA9B32] shadow-[0_0_10px_rgba(186,155,50,0.5)]"
+                            className="h-full bg-[#BC9C33] shadow-[0_0_10px_rgba(188,156,51,0.5)]"
                         />
                     </div>
 
@@ -134,10 +134,10 @@ const TradingServicePage = () => {
 
                                 {/* Navigation Buttons */}
                                 <div className="flex gap-4 z-30">
-                                    <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                    <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                         <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                     </button>
-                                    <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                    <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                         <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
                                     </button>
                                 </div>
@@ -153,7 +153,7 @@ const TradingServicePage = () => {
             </section>
 
             {/* 2. High-Impact Gold Introduction Section */}
-            <section className="bg-[#BA9B32] py-24 md:py-32 relative overflow-hidden">
+            <section className="bg-[#BC9C33] py-24 md:py-32 relative overflow-hidden">
                 <div className="container mx-auto px-6 max-w-6xl relative z-10">
                     <motion.div {...fadeIn} className="text-white">
                         <h2 className="text-2xl md:text-5xl font-display leading-[1.3] mb-10 max-w-4xl font-light">
@@ -181,7 +181,7 @@ const TradingServicePage = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
                             <div className="order-2 lg:order-1">
                                 <motion.div {...fadeIn}>
-                                    <h3 className="text-[#BA9B32] text-5xl md:text-7xl font-display mb-10 leading-tight">Trading</h3>
+                                    <h3 className="text-[#BC9C33] text-5xl md:text-7xl font-display mb-10 leading-tight">Trading</h3>
                                     <div className="space-y-8 text-slate-600 font-light text-lg leading-relaxed">
                                         <p>
                                             The Gesit Companies has been in this business for over 30 years. We source and deliver a variety of products including Bauxite, Alumina, Calcined Petroleum Coke, Aluminum Ingots, to domestic and international markets - Indonesia, China, South America and the Middle East.
@@ -199,7 +199,7 @@ const TradingServicePage = () => {
                                     <div className="aspect-[4/3] rounded-card overflow-hidden shadow-2xl relative z-10 bg-slate-50">
                                         <ImageSlideshow images={["/trading/trading1.png", "/trading/trading2.png"]} />
                                     </div>
-                                    <div className="absolute -top-10 -right-10 w-2/3 aspect-square rounded-full border border-[#BA9B32]/20 -z-10 animate-spin-slow"></div>
+                                    <div className="absolute -top-10 -right-10 w-2/3 aspect-square rounded-full border border-[#BC9C33]/20 -z-10 animate-spin-slow"></div>
                                 </motion.div>
                             </div>
                         </div>
@@ -218,7 +218,7 @@ const TradingServicePage = () => {
                             </motion.div>
                             <div>
                                 <motion.div {...fadeIn}>
-                                    <h3 className="text-[#BA9B32] text-5xl md:text-7xl font-display mb-10 leading-tight">Agency <br /> Services</h3>
+                                    <h3 className="text-[#BC9C33] text-5xl md:text-7xl font-display mb-10 leading-tight">Agency <br /> Services</h3>
                                     <div className="space-y-8 text-slate-600 font-light text-lg leading-relaxed">
                                         <p>
                                             For over two decades, this division has provided its agency services to support the supply and distribution of products and technology used by banks and other consumers. Representative products include special currency paper and coins, high security technology to identify brand and documents, and disposal machines.

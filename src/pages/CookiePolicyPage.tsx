@@ -11,7 +11,7 @@ const CookiePolicyPage = () => {
                     className="bg-white rounded-card border border-slate-100 shadow-sm p-8 md:p-12"
                 >
                     <div className="flex items-center gap-4 mb-8">
-                        <div className="w-12 h-12 rounded-full bg-[#BA9B32]/10 flex items-center justify-center text-[#BA9B32]">
+                        <div className="w-12 h-12 rounded-full bg-[#BC9C33]/10 flex items-center justify-center text-[#BC9C33]">
                             <Cookie size={24} />
                         </div>
                         <h1 className="text-3xl md:text-4xl font-display font-bold text-navy-deep">Cookie Policy</h1>
@@ -27,7 +27,7 @@ const CookiePolicyPage = () => {
                         <div className="space-y-8">
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <Info size={20} className="text-[#BA9B32]" />
+                                    <Info size={20} className="text-[#BC9C33]" />
                                     What are cookies?
                                 </h3>
                                 <p>
@@ -37,7 +37,7 @@ const CookiePolicyPage = () => {
 
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <Shield size={20} className="text-[#BA9B32]" />
+                                    <Shield size={20} className="text-[#BC9C33]" />
                                     Why do we use cookies?
                                 </h3>
                                 <p className="mb-4">We use cookies for several reasons:</p>
@@ -49,7 +49,7 @@ const CookiePolicyPage = () => {
 
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <Settings size={20} className="text-[#BA9B32]" />
+                                    <Settings size={20} className="text-[#BC9C33]" />
                                     How can I control cookies?
                                 </h3>
                                 <p className="mb-4">
@@ -66,7 +66,7 @@ const CookiePolicyPage = () => {
                                             localStorage.removeItem('cookie_consent');
                                             window.location.reload();
                                         }}
-                                        className="px-6 py-2 bg-navy-deep text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-[#BA9B32] transition-colors"
+                                        className="px-6 py-2 bg-navy-deep text-white text-xs font-bold uppercase tracking-widest rounded-full hover:bg-[#BC9C33] transition-colors"
                                     >
                                         Reset Cookie Consent
                                     </button>

@@ -118,7 +118,7 @@ const NaturalResourcesPage = () => {
                             initial={{ width: 0 }}
                             animate={{ width: "100%" }}
                             transition={{ duration: 5, ease: "linear" }}
-                            className="h-full bg-[#BA9B32] shadow-[0_0_10px_rgba(186,155,50,0.5)]"
+                            className="h-full bg-[#BC9C33] shadow-[0_0_10px_rgba(188,156,51,0.5)]"
                         />
                     </div>
 
@@ -150,10 +150,10 @@ const NaturalResourcesPage = () => {
 
                                 {/* Navigation Buttons */}
                                 <div className="flex gap-4 z-30">
-                                    <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                    <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                         <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                     </button>
-                                    <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                    <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                         <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
                                     </button>
                                 </div>
@@ -173,7 +173,7 @@ const NaturalResourcesPage = () => {
                 <div className="container mx-auto px-6 max-w-6xl relative z-10">
                     <motion.div {...fadeIn} className="text-white text-center">
                         <h2 className="text-2xl md:text-5xl font-display leading-[1.3] mb-0 max-w-5xl mx-auto font-light">
-                            Developing Indonesia's vast <span className="text-[#BA9B32] font-bold">natural resources</span> and continually expanding to other types of minerals and resources.
+                            Developing Indonesia's vast <span className="text-[#BC9C33] font-bold">natural resources</span> and continually expanding to other types of minerals and resources.
                         </h2>
                     </motion.div>
                 </div>
@@ -196,8 +196,8 @@ const NaturalResourcesPage = () => {
                                     </p>
                                 </div>
                                 <div className="mt-12 flex items-center gap-4">
-                                    <div className="w-12 h-[1px] bg-[#BA9B32]"></div>
-                                    <p className="text-[#BA9B32] font-semibold tracking-widest uppercase text-sm">Location : West Kalimantan, Indonesia</p>
+                                    <div className="w-12 h-[1px] bg-[#BC9C33]"></div>
+                                    <p className="text-[#BC9C33] font-semibold tracking-widest uppercase text-sm">Location : West Kalimantan, Indonesia</p>
                                 </div>
                             </motion.div>
                         </div>
@@ -224,7 +224,7 @@ const NaturalResourcesPage = () => {
                 <div className="container mx-auto px-6 relative z-10">
                     <motion.div {...fadeIn} className="text-center mb-24">
                         <h2 className="text-navy-deep text-4xl md:text-7xl font-display">New Business Development</h2>
-                        <div className="w-24 h-1 bg-[#BA9B32] mx-auto mt-8"></div>
+                        <div className="w-24 h-1 bg-[#BC9C33] mx-auto mt-8"></div>
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">

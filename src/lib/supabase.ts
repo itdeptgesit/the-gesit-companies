@@ -29,22 +29,8 @@ export const uploadImage = async (file: File) => {
     return data.publicUrl;
 };
 
-/**
- * Transforms a standard Supabase storage URL into an optimized rendering URL.
- * Uses Supabase Image Transformation (requires Pro/Paid plan or specific configuration).
- * Falls back to original URL if transformation fails or is not supported.
- */
-export const getOptimizedNewsImage = (url: string, _width = 600) => {
-    // NOTE: Supabase Image Transformation requires a Pro plan.
-    // To enable, uncomment the logic below and ensure your project supports it.
-
-    /*
-    if (!url || !url.includes('supabase.co') || !url.includes('/storage/v1/object/public/')) {
-        return url;
-    }
-    const optimizedUrl = url.replace('/storage/v1/object/public/', '/storage/v1/render/image/public/');
-    return `${optimizedUrl}?width=${_width}&quality=80&format=webp`;
-    */
-
+export const getOptimizedNewsImage = (url: string, _width = 800, _quality = 80) => {
+    // Reverting to original URL as the transformation service requires a Supabase Pro plan.
+    // Keeping the helper function so component code doesn't break.
     return url;
 };

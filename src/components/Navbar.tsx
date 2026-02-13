@@ -60,7 +60,7 @@ const Navbar = () => {
     };
 
     const navTextColor = isScrolled ? "text-navy-deep" : "text-white";
-    const navHoverColor = "hover:text-[#BA9B32]";
+    const navHoverColor = "hover:text-[#BC9C33]";
 
     const menuVariants = {
         closed: {
@@ -122,19 +122,19 @@ const Navbar = () => {
                             >
                                 <div className="flex items-center gap-1 cursor-pointer py-2 relative">
                                     {link.subMenu ? (
-                                        <span className={`${navHoverColor} transition-colors flex items-center gap-1 ${isBusinessActive() ? "text-[#BA9B32]" : ""}`}>
+                                        <span className={`${navHoverColor} transition-colors flex items-center gap-1 ${isBusinessActive() ? "text-[#BC9C33]" : ""}`}>
                                             {link.name}
                                         </span>
                                     ) : (
                                         <Link
                                             to={link.href}
-                                            className={`${navHoverColor} transition-colors ${isLinkActive(link.href) ? "text-[#BA9B32]" : ""}`}
+                                            className={`${navHoverColor} transition-colors ${isLinkActive(link.href) ? "text-[#BC9C33]" : ""}`}
                                         >
                                             {link.name}
                                         </Link>
                                     )}
                                     {link.subMenu && (
-                                        <ChevronDown size={14} className={`transition-transform duration-300 ${isHoveredMenu === link.name ? "rotate-180 text-[#BA9B32]" : ""}`} />
+                                        <ChevronDown size={14} className={`transition-transform duration-300 ${isHoveredMenu === link.name ? "rotate-180 text-[#BC9C33]" : ""}`} />
                                     )}
 
                                     {/* Underline Indicator */}
@@ -142,7 +142,7 @@ const Navbar = () => {
                                         {(isLinkActive(link.href) || (link.name === "Our Business" && isBusinessActive())) && (
                                             <motion.span
                                                 layoutId="navUnderline"
-                                                className="absolute bottom-0 left-0 w-full h-0.5 bg-[#BA9B32]"
+                                                className="absolute bottom-0 left-0 w-full h-0.5 bg-[#BC9C33]"
                                                 initial={{ scaleX: 0 }}
                                                 animate={{ scaleX: 1 }}
                                                 exit={{ scaleX: 0 }}
@@ -164,7 +164,7 @@ const Navbar = () => {
                                                     <Link
                                                         key={sub.name}
                                                         to={sub.href}
-                                                        className="block px-8 py-3 text-[11px] text-navy-deep hover:bg-slate-50 hover:text-[#BA9B32] transition-all uppercase tracking-widest font-bold"
+                                                        className="block px-8 py-3 text-[11px] text-navy-deep hover:bg-slate-50 hover:text-[#BC9C33] transition-all uppercase tracking-widest font-bold"
                                                     >
                                                         {sub.name}
                                                     </Link>
@@ -246,7 +246,7 @@ const Navbar = () => {
                                                     <div className="w-full">
                                                         <button
                                                             onClick={() => setActiveSubMenu(activeSubMenu === link.name ? null : link.name)}
-                                                            className={`flex items-center justify-between w-full py-4 text-[14px] font-black uppercase tracking-widest transition-colors ${activeSubMenu === link.name ? "text-[#BA9B32]" : (isLinkActive(link.href) ? "text-[#BA9B32]" : "text-navy-deep")}`}
+                                                            className={`flex items-center justify-between w-full py-4 text-[14px] font-black uppercase tracking-widest transition-colors ${activeSubMenu === link.name ? "text-[#BC9C33]" : (isLinkActive(link.href) ? "text-[#BC9C33]" : "text-navy-deep")}`}
                                                             aria-label={`Toggle ${link.name} submenu`}
                                                             aria-expanded={activeSubMenu === link.name}
                                                         >
@@ -264,15 +264,15 @@ const Navbar = () => {
                                                                     exit={{ height: 0, opacity: 0 }}
                                                                     className="overflow-hidden"
                                                                 >
-                                                                    <div className="flex flex-col gap-1 pb-6 pt-1 pl-4 border-l-2 border-[#BA9B32]/20 ml-1">
+                                                                    <div className="flex flex-col gap-1 pb-6 pt-1 pl-4 border-l-2 border-[#BC9C33]/20 ml-1">
                                                                         {link.subMenu.map((sub) => (
                                                                             <Link
                                                                                 key={sub.name}
                                                                                 to={sub.href}
                                                                                 onClick={() => setIsMobileMenuOpen(false)}
-                                                                                className="py-3 text-slate-500 text-[12px] uppercase tracking-widest font-bold flex items-center gap-3 active:text-[#BA9B32]"
+                                                                                className="py-3 text-slate-500 text-[12px] uppercase tracking-widest font-bold flex items-center gap-3 active:text-[#BC9C33]"
                                                                             >
-                                                                                <span className="w-1 h-1 rounded-full bg-[#BA9B32]/40" />
+                                                                                <span className="w-1 h-1 rounded-full bg-[#BC9C33]/40" />
                                                                                 {sub.name}
                                                                             </Link>
                                                                         ))}
@@ -285,10 +285,10 @@ const Navbar = () => {
                                                     <Link
                                                         to={link.href}
                                                         onClick={() => setIsMobileMenuOpen(false)}
-                                                        className={`flex items-center justify-between w-full py-4 text-[14px] font-black uppercase tracking-widest transition-colors ${isLinkActive(link.href) ? "text-[#BA9B32]" : "text-navy-deep"}`}
+                                                        className={`flex items-center justify-between w-full py-4 text-[14px] font-black uppercase tracking-widest transition-colors ${isLinkActive(link.href) ? "text-[#BC9C33]" : "text-navy-deep"}`}
                                                     >
                                                         <span>{link.name}</span>
-                                                        {isLinkActive(link.href) && <div className="w-1.5 h-1.5 rounded-full bg-[#BA9B32]" />}
+                                                        {isLinkActive(link.href) && <div className="w-1.5 h-1.5 rounded-full bg-[#BC9C33]" />}
                                                     </Link>
                                                 )}
                                             </div>

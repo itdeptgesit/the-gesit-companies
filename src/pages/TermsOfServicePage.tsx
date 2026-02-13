@@ -11,7 +11,7 @@ const TermsOfServicePage = () => {
                     className="bg-white rounded-card border border-slate-100 shadow-sm p-8 md:p-12"
                 >
                     <div className="flex items-center gap-4 mb-8">
-                        <div className="w-12 h-12 rounded-full bg-[#BA9B32]/10 flex items-center justify-center text-[#BA9B32]">
+                        <div className="w-12 h-12 rounded-full bg-[#BC9C33]/10 flex items-center justify-center text-[#BC9C33]">
                             <FileText size={24} />
                         </div>
                         <h1 className="text-3xl md:text-4xl font-display font-bold text-navy-deep">Terms of Service</h1>
@@ -27,7 +27,7 @@ const TermsOfServicePage = () => {
                         <div className="space-y-8">
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <CheckCircle size={20} className="text-[#BA9B32]" />
+                                    <CheckCircle size={20} className="text-[#BC9C33]" />
                                     Use License
                                 </h3>
                                 <p className="mb-4">Permission is granted to temporarily download one copy of the materials (information or software) on The Gesit Companies' website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
@@ -43,7 +43,7 @@ const TermsOfServicePage = () => {
 
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <AlertTriangle size={20} className="text-[#BA9B32]" />
+                                    <AlertTriangle size={20} className="text-[#BC9C33]" />
                                     Disclaimer
                                 </h3>
                                 <p className="mb-4">The materials on The Gesit Companies' website are provided on an 'as is' basis. The Gesit Companies makes no warranties, expressed or implied, and hereby disclaims and negates all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
@@ -52,7 +52,7 @@ const TermsOfServicePage = () => {
 
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <XCircle size={20} className="text-[#BA9B32]" />
+                                    <XCircle size={20} className="text-[#BC9C33]" />
                                     Limitations
                                 </h3>
                                 <p>

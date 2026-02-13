@@ -107,7 +107,7 @@ const ManufacturingPage = () => {
                             initial={{ width: 0 }}
                             animate={{ width: "100%" }}
                             transition={{ duration: 5, ease: "linear" }}
-                            className="h-full bg-[#BA9B32] shadow-[0_0_10px_rgba(186,155,50,0.5)]"
+                            className="h-full bg-[#BC9C33] shadow-[0_0_10px_rgba(188,156,51,0.5)]"
                         />
                     </div>
 
@@ -139,10 +139,10 @@ const ManufacturingPage = () => {
 
                                 {/* Navigation Buttons */}
                                 <div className="flex gap-4 z-30">
-                                    <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                    <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                         <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                     </button>
-                                    <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                    <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                         <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
                                     </button>
                                 </div>
@@ -158,7 +158,7 @@ const ManufacturingPage = () => {
             </section>
 
             {/* 2. High-Impact Gold Introduction Section */}
-            <section className="bg-[#BA9B32] py-28 md:py-40 relative overflow-hidden">
+            <section className="bg-[#BC9C33] py-28 md:py-40 relative overflow-hidden">
                 {/* Background Industrial Accents */}
                 <div className="absolute inset-0 opacity-[0.03] pointer-events-none select-none overflow-hidden">
                     <div className="absolute top-10 left-10 text-[10px] font-mono tracking-widest uppercase">COORD: 6.2088° S, 106.8456° E</div>
@@ -214,7 +214,7 @@ const ManufacturingPage = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
                         <div className="order-2 lg:order-1">
                             <motion.div {...fadeIn}>
-                                <h3 className="text-[#BA9B32] text-5xl md:text-7xl font-display mb-10 leading-tight">Aluminum <br /> Fabrication</h3>
+                                <h3 className="text-[#BC9C33] text-5xl md:text-7xl font-display mb-10 leading-tight">Aluminum <br /> Fabrication</h3>
                                 <div className="space-y-8 text-slate-600 font-light text-lg leading-relaxed">
                                     <p>
                                         The Gesit Companies invests and manages its aluminum fabrication company — Alakasa Andalan Mitra Sejati (AAMS). Since its inception in 1972, the focus of aluminum fabrication company has specialized in the industrial sector (e.g., building materials, automotive, other industrial products) to serve the local and international markets.
@@ -245,7 +245,7 @@ const ManufacturingPage = () => {
                                 <div className="aspect-[4/3] rounded-card overflow-hidden shadow-2xl relative z-10 bg-slate-50">
                                     <ImageSlideshow images={["/manufacturing/aluminum1.jpeg", "/manufacturing/aluminum2.jpeg", "/manufacturing/aluminum3.jpeg"]} />
                                 </div>
-                                <div className="absolute -top-10 -right-10 w-2/3 aspect-square rounded-full border border-[#BA9B32]/20 -z-10 animate-spin-slow"></div>
+                                <div className="absolute -top-10 -right-10 w-2/3 aspect-square rounded-full border border-[#BC9C33]/20 -z-10 animate-spin-slow"></div>
                             </motion.div>
                         </div>
                     </div>
@@ -268,7 +268,7 @@ const ManufacturingPage = () => {
                         </motion.div>
                         <div>
                             <motion.div {...fadeIn}>
-                                <h3 className="text-[#BA9B32] text-5xl md:text-7xl font-display mb-10 leading-tight">Steel & Plastic <br /> Packaging</h3>
+                                <h3 className="text-[#BC9C33] text-5xl md:text-7xl font-display mb-10 leading-tight">Steel & Plastic <br /> Packaging</h3>
                                 <div className="space-y-8 text-slate-600 font-light text-lg leading-relaxed">
                                     <p>
                                         The Gesit Companies invests and manages a packaging company — Rheem Indonesia, which was established by Rheem Australia in 1968. The focus is to build packaging company that specializes in industrial packaging products such as steel and plastic drums with various capacities.
@@ -292,7 +292,7 @@ const ManufacturingPage = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center">
                         <div className="order-2 lg:order-1">
                             <motion.div {...fadeIn}>
-                                <h3 className="text-[#BA9B32] text-5xl md:text-7xl font-display mb-10 leading-tight">Alumina Refinery & <br /> Aluminum Smelter <br /> Development</h3>
+                                <h3 className="text-[#BC9C33] text-5xl md:text-7xl font-display mb-10 leading-tight">Alumina Refinery & <br /> Aluminum Smelter <br /> Development</h3>
                                 <div className="space-y-8 text-slate-600 font-light text-lg leading-relaxed">
                                     <p>
                                         We believe the Alumina and Aluminum industries can be competitively developed to service domestic and global clients due to redundant rich natural resources and logistical advantages.

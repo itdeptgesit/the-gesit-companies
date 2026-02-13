@@ -14,7 +14,7 @@ import { uploadImage } from "../../lib/supabase";
 // Loading fallback component
 const SectionLoader = () => (
     <div className="flex flex-col items-center justify-center min-vh-50 gap-4 py-20">
-        <div className="w-8 h-8 border-4 border-[#BA9B32] border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-8 h-8 border-4 border-[#BC9C33] border-t-transparent rounded-full animate-spin"></div>
         <p className="text-[9px] font-bold uppercase tracking-[.3em] text-slate-300">Synchronizing...</p>
     </div>
 );
@@ -342,175 +342,159 @@ const ContentSection = () => {
     };
 
     return (
-        <div className="space-y-10">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-4">
-                <div className="relative group flex-1 w-full max-w-sm">
-                    <Filter className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-navy-deep transition-colors" size={14} />
+        <div className="space-y-12">
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+                <div className="relative group w-full max-w-lg">
+                    <Filter className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#BC9C33] transition-colors" size={14} />
                     <input
                         type="text"
-                        placeholder="Search publications..."
+                        placeholder="Filter publications..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-14 pr-8 py-3.5 bg-white border border-slate-200 rounded-xl text-[11px] font-black text-navy-deep placeholder:text-slate-300 outline-none shadow-sm transition-all focus:border-navy-deep/20"
+                        className="w-full pl-14 pr-8 py-4 bg-white border border-slate-100 rounded-[20px] text-[11px] font-bold text-navy-deep placeholder:text-slate-300 outline-none shadow-sm transition-all focus:border-slate-300 focus:bg-white"
                     />
                 </div>
                 <button
                     onClick={() => { setEditingItem(null); setIsSliderOpen(true); }}
-                    className="group flex items-center gap-3 px-8 py-3.5 bg-navy-deep text-white rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-amber-500 transition-all shadow-lg shadow-navy-deep/10 active:scale-95 shrink-0"
+                    className="group flex items-center gap-3 px-8 py-4 bg-navy-deep text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-[#BC9C33] transition-all shadow-xl shadow-navy-deep/5 active:scale-95 shrink-0"
                 >
-                    <Plus size={16} className="transition-transform group-hover:rotate-90" />
-                    <span>New Publication</span>
+                    <Plus size={16} />
+                    <span>Post Publication</span>
                 </button>
             </div>
 
-            <div className="hidden md:flex items-center gap-2.5 px-1">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Archive Index: {filteredItems.length} Entries</span>
+            <div className="flex items-center gap-3 px-2">
+                <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Live Database: {filteredItems.length} Entries</span>
             </div>
 
-            <div className="hidden md:block bg-white rounded-[1.5rem] border border-slate-200 shadow-sm overflow-hidden min-h-[400px]">
-                <table className="w-full text-left border-collapse">
-                    <thead>
-                        <tr className="bg-slate-50/50 border-b border-slate-100">
-                            <th className="px-10 py-6 text-[9px] font-black uppercase tracking-widest text-slate-400">Publication</th>
-                            <th className="px-10 py-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-right">Commit Date</th>
-                            <th className="px-10 py-6 text-[9px] font-black uppercase tracking-widest text-slate-400 text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                        {loading ? (
-                            <tr>
-                                <td colSpan={3} className="px-10 py-32 text-center">
-                                    <SectionLoader />
-                                </td>
+            <div className="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden min-h-[500px]">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left">
+                        <thead>
+                            <tr className="bg-slate-50/50 border-b border-slate-100">
+                                <th className="px-10 py-8 text-[9px] font-black uppercase tracking-[0.3em] text-slate-400">Content Entry</th>
+                                <th className="px-10 py-8 text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 text-right">Commit Date</th>
+                                <th className="px-10 py-8 text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 text-right">Actions</th>
                             </tr>
-                        ) : (
-                            currentItems.map((item) => (
-                                <tr key={item.id} className="hover:bg-slate-50/50 transition-all group">
-                                    <td className="px-10 py-6">
-                                        <div className="flex items-center gap-6">
-                                            <div className="w-20 h-14 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 shadow-sm shrink-0">
-                                                <img src={item.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all" alt="Thumb" />
-                                            </div>
-                                            <div className="min-w-0 text-left">
-                                                <p className="font-bold text-navy-deep text-sm mb-1.5 line-clamp-1 tracking-tight group-hover:text-amber-600 transition-colors">{item.title}</p>
-                                                <div className="flex items-center gap-3">
-                                                    <span className="px-2 py-0.5 bg-slate-100 rounded-full text-[8px] font-black text-slate-400 uppercase tracking-widest">{item.category}</span>
-                                                    {item.featured && (
-                                                        <div className="flex items-center gap-1.5 px-2 py-0.5 bg-amber-50 rounded-full border border-amber-100">
-                                                            <div className="w-1 h-1 rounded-full bg-amber-500" />
-                                                            <span className="text-[8px] font-black text-amber-600 uppercase tracking-widest">Featured</span>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td className="px-10 py-6">
-                                        <div className="text-right">
-                                            <p className="text-[10px] text-navy-deep font-black uppercase tracking-widest">{item.date}</p>
-                                        </div>
-                                    </td>
-                                    <td className="px-10 py-6 text-right">
-                                        <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all">
-                                            <button
-                                                onClick={() => { setEditingItem(item); setIsSliderOpen(true); }}
-                                                className="w-9 h-9 flex items-center justify-center bg-white text-navy-deep rounded-lg shadow-sm border border-slate-200 hover:border-amber-500 hover:text-amber-500 transition-all"
-                                            >
-                                                <Edit2 size={14} />
-                                            </button>
-                                            <button
-                                                onClick={() => deleteNews(item.id)}
-                                                className="w-9 h-9 flex items-center justify-center bg-white text-red-400 rounded-lg shadow-sm border border-slate-200 hover:border-red-500 hover:text-red-500 transition-all"
-                                            >
-                                                <Trash2 size={14} />
-                                            </button>
-                                        </div>
+                        </thead>
+                        <tbody className="divide-y divide-slate-50">
+                            {loading ? (
+                                <tr>
+                                    <td colSpan={3} className="px-10 py-48 text-center">
+                                        <SectionLoader />
                                     </td>
                                 </tr>
-                            ))
-                        )}
-                    </tbody>
-                </table>
+                            ) : (
+                                currentItems.map((item) => (
+                                    <tr key={item.id} className="hover:bg-slate-50/40 transition-all group">
+                                        <td className="px-10 py-8">
+                                            <div className="flex items-center gap-8">
+                                                <div className="w-24 h-16 bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm shrink-0 p-0.5">
+                                                    <img src={item.image} className="w-full h-full object-cover rounded-xl grayscale group-hover:grayscale-0 transition-all duration-700" alt="Thumb" />
+                                                </div>
+                                                <div className="min-w-0">
+                                                    <p className="font-black text-navy-deep text-lg mb-2 line-clamp-1 tracking-tight font-display group-hover:text-[#BC9C33] transition-all duration-500">{item.title}</p>
+                                                    <div className="flex items-center gap-4">
+                                                        <span className="px-3 py-1 bg-slate-100 rounded-full text-[8px] font-black text-slate-400 uppercase tracking-widest">{item.category}</span>
+                                                        {item.featured && (
+                                                            <div className="flex items-center gap-2">
+                                                                <div className="w-1.5 h-1.5 rounded-full bg-[#BC9C33] shadow-[0_0_8px_rgba(188,156,51,0.5)]" />
+                                                                <span className="text-[8px] font-black text-[#BC9C33] uppercase tracking-widest">Featured Node</span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-10 py-8 text-right">
+                                            <p className="text-[10px] text-navy-deep font-black uppercase tracking-widest opacity-40">{item.date}</p>
+                                        </td>
+                                        <td className="px-10 py-8 text-right">
+                                            <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 pr-2">
+                                                <button
+                                                    onClick={() => { setEditingItem(item); setIsSliderOpen(true); }}
+                                                    className="w-11 h-11 flex items-center justify-center bg-white text-navy-deep rounded-xl shadow-sm border border-slate-100 hover:border-navy-deep transition-all duration-500"
+                                                >
+                                                    <Edit2 size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => deleteNews(item.id)}
+                                                    className="w-11 h-11 flex items-center justify-center bg-white text-red-400 rounded-xl shadow-sm border border-slate-100 hover:border-red-500 hover:text-red-500 transition-all duration-500"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            {/* Mobile View */}
+            {/* Mobile Cards (Hidden on desktop) */}
             <div className="md:hidden space-y-4">
-                {loading ? (
-                    <div className="bg-white p-12 rounded-3xl border border-slate-200 flex flex-col items-center">
-                        <SectionLoader />
-                    </div>
-                ) : (
-                    currentItems.map((item) => (
-                        <div key={item.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col gap-5 text-left group">
-                            <div className="flex gap-5">
-                                <div className="w-24 h-16 bg-slate-100 rounded-lg overflow-hidden border border-slate-200">
-                                    <img src={item.image} className="w-full h-full object-cover opacity-80" alt="Thumb" />
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                    <p className="font-bold text-navy-deep text-sm mb-1.5 line-clamp-2 tracking-tight leading-snug">{item.title}</p>
-                                    <div className="flex flex-wrap items-center gap-2">
-                                        <span className="px-2 py-0.5 bg-slate-50 border border-slate-100 text-slate-400 rounded-full text-[7px] font-black uppercase tracking-widest">{item.category}</span>
-                                        {item.featured && <span className="px-2 py-0.5 bg-amber-50 text-amber-600 border border-amber-100 rounded-full text-[7px] font-black uppercase tracking-widest">Featured</span>}
-                                    </div>
-                                </div>
+                {currentItems.map((item) => (
+                    <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        className="bg-white p-6 rounded-3xl border border-slate-100 text-left space-y-6"
+                    >
+                        <div className="flex gap-6">
+                            <div className="w-24 h-16 bg-slate-50 rounded-xl overflow-hidden border border-slate-100">
+                                <img src={item.image} className="w-full h-full object-cover" alt="" />
                             </div>
-                            <div className="flex items-center justify-between pt-4 border-t border-slate-50">
-                                <span className="text-[10px] text-navy-deep font-black uppercase tracking-widest">{item.date}</span>
-                                <div className="flex gap-2.5">
-                                    <button
-                                        onClick={() => { setEditingItem(item); setIsSliderOpen(true); }}
-                                        className="w-9 h-9 bg-white text-navy-deep border border-slate-100 rounded-lg shadow-sm flex items-center justify-center active:scale-95"
-                                    >
-                                        <Edit2 size={14} />
-                                    </button>
-                                    <button
-                                        onClick={() => deleteNews(item.id)}
-                                        className="w-9 h-9 bg-white text-red-400 border border-slate-100 rounded-lg shadow-sm flex items-center justify-center active:scale-95"
-                                    >
-                                        <Trash2 size={14} />
-                                    </button>
-                                </div>
+                            <div className="min-w-0 flex-1">
+                                <p className="font-black text-navy-deep text-base mb-2 line-clamp-2 tracking-tight leading-none font-display">{item.title}</p>
+                                <span className="px-2.5 py-1 bg-slate-50 text-slate-400 rounded-lg text-[7px] font-black uppercase tracking-widest">{item.category}</span>
                             </div>
                         </div>
-                    ))
-                )}
+                        <div className="flex items-center justify-between pt-4 border-t border-slate-50">
+                            <span className="text-[10px] text-slate-300 font-black uppercase tracking-widest">{item.date}</span>
+                            <div className="flex gap-3">
+                                <button onClick={() => { setEditingItem(item); setIsSliderOpen(true); }} className="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-navy-deep"><Edit2 size={14} /></button>
+                                <button onClick={() => deleteNews(item.id)} className="w-10 h-10 bg-white border border-slate-100 rounded-xl flex items-center justify-center text-red-400"><Trash2 size={14} /></button>
+                            </div>
+                        </div>
+                    </motion.div>
+                ))}
             </div>
 
-            {
-                !loading && filteredItems.length > 0 && (
-                    <div className="mt-12 flex flex-col sm:flex-row items-center justify-between gap-6 px-1">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-1 bg-slate-200 rounded-full overflow-hidden">
-                                <motion.div
-                                    className="h-full bg-navy-deep"
-                                    initial={{ width: 0 }}
-                                    animate={{ width: `${(currentPage / totalPages) * 100}%` }}
-                                />
-                            </div>
-                            <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                                Page {currentPage} <span className="mx-2 opacity-30">/</span> {totalPages}
-                            </p>
+            {!loading && filteredItems.length > 0 && (
+                <div className="mt-16 flex flex-col sm:flex-row items-center justify-between gap-8 px-4">
+                    <div className="flex items-center gap-6">
+                        <div className="w-16 h-1 bg-slate-100 rounded-full overflow-hidden">
+                            <motion.div
+                                className="h-full bg-navy-deep"
+                                initial={{ width: 0 }}
+                                animate={{ width: `${(currentPage / totalPages) * 100}%` }}
+                            />
                         </div>
-                        <div className="flex items-center gap-3">
-                            <button
-                                disabled={currentPage === 1}
-                                onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                                className="px-6 py-2.5 rounded-xl border border-slate-200 bg-white text-[10px] font-black uppercase tracking-widest disabled:opacity-30 hover:bg-slate-50 transition-all text-navy-deep active:scale-95 shadow-sm"
-                            >
-                                Back
-                            </button>
-                            <button
-                                disabled={currentPage === totalPages}
-                                onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                                className="px-6 py-2.5 rounded-xl border border-slate-200 bg-white text-[10px] font-black uppercase tracking-widest disabled:opacity-30 hover:bg-slate-50 transition-all text-navy-deep active:scale-95 shadow-sm"
-                            >
-                                Next
-                            </button>
-                        </div>
+                        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                            Node {currentPage} <span className="mx-2 opacity-10">/</span> {totalPages}
+                        </p>
                     </div>
-                )
-            }
+                    <div className="flex items-center gap-4">
+                        <button
+                            disabled={currentPage === 1}
+                            onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                            className="px-8 py-3 rounded-2xl border border-slate-100 bg-white text-[10px] font-black uppercase tracking-widest disabled:opacity-20 hover:border-slate-300 transition-all text-navy-deep active:scale-95 shadow-sm"
+                        >
+                            Previous
+                        </button>
+                        <button
+                            disabled={currentPage === totalPages}
+                            onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                            className="px-8 py-3 rounded-2xl border border-slate-100 bg-white text-[10px] font-black uppercase tracking-widest disabled:opacity-20 hover:border-slate-300 transition-all text-navy-deep active:scale-95 shadow-sm"
+                        >
+                            Execute Next
+                        </button>
+                    </div>
+                </div>
+            )}
 
             <NewsModal
                 isOpen={isSliderOpen}

@@ -10,16 +10,160 @@ import {
     Phone,
     Globe,
     ExternalLink,
-    Type
+    Type,
+    Users,
+    Trash2,
+    Plus
 } from "lucide-react";
 import { useSettings } from "../../context/SettingsContext";
+import { supabase } from "../../lib/supabase";
+
+const TeamManager = () => {
+    const [admins, setAdmins] = useState<any[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [newEmail, setNewEmail] = useState("");
+    const [isAdding, setIsAdding] = useState(false);
+
+    // Initial fetch
+    useState(() => {
+        fetchAdmins();
+    });
+
+    async function fetchAdmins() {
+        setIsLoading(true);
+        const { data } = await supabase
+            .from('admins')
+            .select('*')
+            .order('created_at', { ascending: true });
+
+        if (data) setAdmins(data);
+        setIsLoading(false);
+    }
+
+    const handleAdd = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!newEmail) return;
+        setIsAdding(true);
+
+        const { error } = await supabase
+            .from('admins')
+            .insert([{ email: newEmail.toLowerCase() }]);
+
+        if (error) {
+            alert("Error adding admin: " + error.message);
+        } else {
+            setNewEmail("");
+            fetchAdmins();
+        }
+        setIsAdding(false);
+    };
+
+    const handleDelete = async (id: string, email: string) => {
+        if (!confirm(`Are you sure you want to remove access for ${email}?`)) return;
+
+        const { error } = await supabase
+            .from('admins')
+            .delete()
+            .eq('id', id);
+
+        if (error) {
+            alert("Error removing admin: " + error.message);
+        } else {
+            fetchAdmins();
+        }
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="space-y-10 relative z-10"
+        >
+            <div className="bg-navy-deep rounded-[2rem] p-10 text-white relative overflow-hidden shadow-xl">
+                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div className="flex items-center gap-2.5 mb-6">
+                            <div className="w-1 h-5 bg-amber-500 rounded-full" />
+                            <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Access Control</p>
+                        </div>
+                        <h2 className="text-3xl font-display font-black tracking-tight leading-tight mb-4">
+                            Manage Team<br />Access
+                        </h2>
+                        <p className="text-white/60 text-sm font-medium max-w-md">
+                            Control who has access to the admin dashboard. Admins listed here have full read/write access to the platform.
+                        </p>
+                    </div>
+                    <form onSubmit={handleAdd} className="bg-white/10 backdrop-blur-sm p-6 rounded-2xl border border-white/10">
+                        <label className="block text-[10px] font-black uppercase tracking-widest text-white/60 mb-3">Invite New Admin</label>
+                        <div className="flex gap-2">
+                            <input
+                                type="email"
+                                value={newEmail}
+                                onChange={(e) => setNewEmail(e.target.value)}
+                                placeholder="colleague@gesit.co.id"
+                                className="flex-1 bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 focus:bg-white focus:text-navy-deep transition-all outline-none"
+                            />
+                            <button
+                                type="submit"
+                                disabled={isAdding || !newEmail}
+                                className="px-4 py-3 bg-amber-500 text-white rounded-xl font-bold hover:bg-amber-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                {isAdding ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : <Plus size={20} />}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div className="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-sm">
+                <h3 className="text-lg font-black text-navy-deep mb-6 flex items-center gap-3">
+                    <Users size={20} className="text-slate-400" />
+                    Authorized Administrators
+                </h3>
+
+                <div className="space-y-3">
+                    {isLoading ? (
+                        <div className="p-8 text-center text-slate-400 text-xs font-bold uppercase tracking-widest animate-pulse">Loading team...</div>
+                    ) : admins.length === 0 ? (
+                        <div className="p-8 text-center text-slate-400 text-xs font-bold uppercase tracking-widest">No admins found.</div>
+                    ) : (
+                        admins.map((admin) => (
+                            <div key={admin.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-100 group hover:border-slate-200 transition-all">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 rounded-full bg-navy-deep text-white flex items-center justify-center font-bold text-xs">
+                                        {admin.email.substring(0, 2).toUpperCase()}
+                                    </div>
+                                    <div>
+                                        <p className="text-sm font-bold text-navy-deep">{admin.email}</p>
+                                        <p className="text-[10px] text-slate-400 uppercase tracking-wider font-bold mt-0.5">
+                                            {admin.role || 'Admin'} • Added {new Date(admin.created_at).toLocaleDateString()}
+                                        </p>
+                                    </div>
+                                </div>
+                                <button
+                                    onClick={() => handleDelete(admin.id, admin.email)}
+                                    className="p-2 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
+                                    title="Revoke Access"
+                                >
+                                    <Trash2 size={16} />
+                                </button>
+                            </div>
+                        ))
+                    )}
+                </div>
+            </div>
+        </motion.div>
+    );
+};
 
 const SettingsSection = () => {
     const { settings, loading, updateSettings } = useSettings();
     const [localSettings, setLocalSettings] = useState(settings);
     const [isSaving, setIsSaving] = useState(false);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
-    const [activeSubTab, setActiveSubTab] = useState<'general' | 'seo'>('general');
+    const [activeSubTab, setActiveSubTab] = useState<'general' | 'seo' | 'team'>('general');
 
     const handleChange = (key: keyof typeof settings, value: string | boolean) => {
         setLocalSettings(prev => ({ ...prev, [key]: value }));
@@ -45,7 +189,7 @@ const SettingsSection = () => {
     if (loading) {
         return (
             <div className="min-h-[400px] flex items-center justify-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#BA9B32]"></div>
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#BC9C33]"></div>
             </div>
         );
     }
@@ -117,6 +261,12 @@ const SettingsSection = () => {
                             className={`px-8 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeSubTab === 'seo' ? 'bg-navy-deep text-white shadow-md' : 'text-slate-400 hover:text-navy-deep'}`}
                         >
                             Traffic & SEO
+                        </button>
+                        <button
+                            onClick={() => setActiveSubTab('team')}
+                            className={`px-8 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeSubTab === 'team' ? 'bg-navy-deep text-white shadow-md' : 'text-slate-400 hover:text-navy-deep'}`}
+                        >
+                            Team & Access
                         </button>
                     </div>
 
@@ -324,7 +474,7 @@ const SettingsSection = () => {
                                 ))}
                             </div>
                         </motion.div>
-                    ) : (
+                    ) : activeSubTab === 'seo' ? (
                         <motion.div
                             key="seo"
                             initial={{ opacity: 0, y: 20 }}
@@ -429,6 +579,8 @@ const SettingsSection = () => {
                                 </div>
                             </div>
                         </motion.div>
+                    ) : (
+                        <TeamManager />
                     )}
                 </AnimatePresence>
             </div>

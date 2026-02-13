@@ -22,13 +22,15 @@ import "swiper/css/navigation";
  */
 
 import { useNews } from "../context/NewsContext";
+// @ts-ignore
+import { getOptimizedNewsImage } from "../lib/supabase";
 import Skeleton from "../components/Skeleton";
 
 const NewsPage = () => {
     const { newsItems, loading, error } = useNews();
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const newsOnly = newsItems.filter(item => item.type === "news");
+    const allArticles = newsItems.filter(item => item.type === "news" || item.type === "csr");
 
     const fadeIn = {
         initial: { opacity: 0, y: 30 },
@@ -82,7 +84,7 @@ const NewsPage = () => {
         );
     }
 
-    if (newsOnly.length === 0) {
+    if (allArticles.length === 0) {
         return (
             <div className="bg-white min-h-screen pt-40 text-center px-6">
                 <p className="text-slate-400 font-bold uppercase tracking-widest">
@@ -92,13 +94,13 @@ const NewsPage = () => {
         );
     }
 
-    const heroImages = newsOnly.slice(0, 3).map(item => item.image);
+    const heroImages = allArticles.slice(0, 5).map(item => getOptimizedNewsImage(item.image, 1920, 85));
 
     const featuredArticle =
-        newsOnly.find(item => item.featured) || newsOnly[0];
-    const otherArticles = newsOnly.filter(
+        allArticles.find(item => item.featured) || allArticles[0];
+    const otherArticles = allArticles.filter(
         item => item.id !== featuredArticle.id
-    ).slice(0, 3);
+    );
 
     return (
         <div className="bg-white min-h-screen text-navy-deep font-body">
@@ -147,7 +149,7 @@ const NewsPage = () => {
                             initial={{ width: 0 }}
                             animate={{ width: "100%" }}
                             transition={{ duration: 5, ease: "linear" }}
-                            className="h-full bg-[#BA9B32] shadow-[0_0_10px_rgba(186,155,50,0.5)]"
+                            className="h-full bg-[#BC9C33] shadow-[0_0_10px_rgba(188,156,51,0.5)]"
                         />
                     </div>
 
@@ -166,7 +168,7 @@ const NewsPage = () => {
                                         transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
                                         className="inline-block"
                                     >
-                                        Insights & <span className="text-[#BA9B32]">Updates.</span>
+                                        Insights & <span className="text-[#BC9C33]">Updates.</span>
                                     </motion.span>
                                 </h1>
 
@@ -176,16 +178,16 @@ const NewsPage = () => {
                                     transition={{ duration: 0.8, delay: 0.7 }}
                                     className="text-white/60 text-xs md:text-sm font-bold uppercase tracking-[.4em] flex items-center gap-4 drop-shadow-sm mt-4"
                                 >
-                                    Archive <ChevronRight size={14} className="text-[#BA9B32]" /> Latest Stories
+                                    Archive <ChevronRight size={14} className="text-[#BC9C33]" /> Latest Stories
                                 </motion.p>
                             </div>
 
                             {/* Navigation Buttons */}
                             <div className="flex gap-4 z-30">
-                                <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                 </button>
-                                <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BA9B32] hover:border-[#BA9B32] transition-all duration-300 group">
+                                <button className="hero-next w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronRight size={20} className="md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
                                 </button>
                             </div>
@@ -203,7 +205,7 @@ const NewsPage = () => {
                         <motion.div {...fadeIn} className="lg:col-span-7">
                             <div className="relative group overflow-hidden rounded-card shadow-2xl">
                                 <img
-                                    src={featuredArticle.image}
+                                    src={getOptimizedNewsImage(featuredArticle.image, 1600, 80)}
                                     alt={featuredArticle.title}
                                     className="w-full aspect-[16/10] object-cover group-hover:scale-105 transition duration-1000"
                                     width="1600"
@@ -212,7 +214,7 @@ const NewsPage = () => {
                                     decoding="async"
                                 />
                                 <div className="absolute top-8 left-8">
-                                    <span className="bg-[#BA9B32] text-white text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full">
+                                    <span className="bg-[#BC9C33] text-white text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full">
                                         Featured Article
                                     </span>
                                 </div>
@@ -221,7 +223,7 @@ const NewsPage = () => {
 
                         <motion.div {...fadeIn} transition={{ delay: 0.2 }} className="lg:col-span-5">
                             <div className="space-y-8">
-                                <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#BA9B32]">
+                                <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-[#BC9C33]">
                                     <Bookmark size={14} /> {featuredArticle.category}
                                 </div>
 
@@ -263,7 +265,7 @@ const NewsPage = () => {
             <section className="py-32 bg-slate-50">
                 <div className="container mx-auto px-6 max-w-7xl">
                     <div className="mb-24">
-                        <span className="text-[#BA9B32] font-bold uppercase tracking-[.4em] text-xs mb-4 block">
+                        <span className="text-[#BC9C33] font-bold uppercase tracking-[.4em] text-xs mb-4 block">
                             Archive
                         </span>
                         <h3 className="text-4xl md:text-5xl font-display">
@@ -282,7 +284,7 @@ const NewsPage = () => {
                                 <Link to={`/news/${item.id}`}>
                                     <div className="relative aspect-[4/3] overflow-hidden rounded-card-sm mb-10 shadow-xl">
                                         <img
-                                            src={item.image}
+                                            src={getOptimizedNewsImage(item.image, 800, 75)}
                                             alt={item.title}
                                             className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                                             width="800"
@@ -295,7 +297,7 @@ const NewsPage = () => {
                                                 {item.category}
                                             </span>
                                             {item.media_type === 'video' && (
-                                                <span className="bg-[#BA9B32] text-white w-8 h-8 flex items-center justify-center rounded-full shadow-lg">
+                                                <span className="bg-[#BC9C33] text-white w-8 h-8 flex items-center justify-center rounded-full shadow-lg">
                                                     <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-1"></div>
                                                 </span>
                                             )}
@@ -310,7 +312,7 @@ const NewsPage = () => {
                                             <span>BY {item.author}</span>
                                         </div>
 
-                                        <h4 className="text-2xl font-display leading-tight group-hover:text-[#BA9B32] transition line-clamp-2">
+                                        <h4 className="text-2xl font-display leading-tight group-hover:text-[#BC9C33] transition line-clamp-2">
                                             {item.title}
                                         </h4>
 

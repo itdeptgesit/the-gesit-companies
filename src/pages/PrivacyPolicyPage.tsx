@@ -11,7 +11,7 @@ const PrivacyPolicyPage = () => {
                     className="bg-white rounded-card border border-slate-100 shadow-sm p-8 md:p-12"
                 >
                     <div className="flex items-center gap-4 mb-8">
-                        <div className="w-12 h-12 rounded-full bg-[#BA9B32]/10 flex items-center justify-center text-[#BA9B32]">
+                        <div className="w-12 h-12 rounded-full bg-[#BC9C33]/10 flex items-center justify-center text-[#BC9C33]">
                             <Shield size={24} />
                         </div>
                         <h1 className="text-3xl md:text-4xl font-display font-bold text-navy-deep">Privacy Policy</h1>
@@ -27,7 +27,7 @@ const PrivacyPolicyPage = () => {
                         <div className="space-y-8">
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <Eye size={20} className="text-[#BA9B32]" />
+                                    <Eye size={20} className="text-[#BC9C33]" />
                                     Information We Collect
                                 </h3>
                                 <p className="mb-4">We may collect information about you in a variety of ways. The information we may collect on the website includes:</p>
@@ -40,7 +40,7 @@ const PrivacyPolicyPage = () => {
 
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <Lock size={20} className="text-[#BA9B32]" />
+                                    <Lock size={20} className="text-[#BC9C33]" />
                                     Use of Your Information
                                 </h3>
                                 <p className="mb-4">Having accurate information about you permits us to provide you with a smooth, efficient, and customized experience. Specifically, we may use information collected about you via the website to:</p>
@@ -62,7 +62,7 @@ const PrivacyPolicyPage = () => {
 
                             <section>
                                 <h3 className="flex items-center gap-3 text-xl font-bold text-navy-deep mb-4">
-                                    <FileText size={20} className="text-[#BA9B32]" />
+                                    <FileText size={20} className="text-[#BC9C33]" />
                                     Disclosure of Your Information
                                 </h3>
                                 <p className="mb-4">We may share information we have collected about you in certain situations. Your information may be disclosed as follows:</p>

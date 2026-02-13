@@ -100,7 +100,7 @@ const BusinessSection = () => {
                                     </div>
 
                                     {/* Bottom Info Box */}
-                                    <div className="w-full bg-[#BA9B32] p-6 text-center shadow-lg rounded-[2rem] relative z-10 group-hover:-translate-y-2 group-hover:shadow-2xl transition-all duration-500 flex-1 flex flex-col justify-center min-h-[200px]">
+                                    <div className="w-full bg-[#BC9C33] p-6 text-center shadow-lg rounded-[2rem] relative z-10 group-hover:-translate-y-2 group-hover:shadow-2xl transition-all duration-500 flex-1 flex flex-col justify-center min-h-[200px]">
                                         {/* Cinematic Background Glow */}
                                         <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2rem]"></div>
 
