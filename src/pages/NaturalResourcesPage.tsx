@@ -177,10 +177,6 @@ const NaturalResourcesPage = () => {
                         </h2>
                     </motion.div>
                 </div>
-                {/* Abstract decoration */}
-                <div className="absolute -bottom-20 -right-20 text-[20vw] font-display text-white/5 select-none pointer-events-none">
-                    GESIT
-                </div>
             </section>
 
             {/* 3. Bauxite Mining Section (Editorial Staggered) */}

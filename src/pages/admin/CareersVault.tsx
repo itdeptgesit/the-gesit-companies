@@ -77,12 +77,12 @@ export const JobModal = ({
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="bg-white rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-100 flex flex-col relative"
             >
-                <div className="p-10 border-b border-slate-50 flex justify-between items-center bg-white relative z-10 text-left">
+                <div className="p-8 border-b border-slate-50 flex justify-between items-center bg-white relative z-10 text-left">
                     <div>
-                        <h3 className="text-3xl font-black text-navy-deep tracking-tight font-display">{initialData ? 'Refine Posting' : 'New Opening'}</h3>
-                        <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] mt-3 flex items-center gap-3">
+                        <h3 className="text-2xl font-black text-navy-deep tracking-tight font-display">{initialData ? 'Edit Job' : 'New Job'}</h3>
+                        <p className="text-slate-400 text-[9px] font-black uppercase tracking-[0.2em] mt-2 flex items-center gap-2.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-[#BC9C33] shadow-[0_0_8px_rgba(188,156,51,0.5)]" />
-                            Career Parameters
+                            Job Details
                         </p>
                     </div>
                     <button
@@ -93,38 +93,38 @@ export const JobModal = ({
                     </button>
                 </div>
 
-                <div className="p-10 space-y-10 max-h-[70vh] overflow-y-auto custom-scrollbar text-left scroll-smooth pb-20 relative z-10 bg-white">
+                <div className="p-8 space-y-8 max-h-[65vh] overflow-y-auto custom-scrollbar text-left scroll-smooth pb-12 relative z-10 bg-white">
                     <div className="space-y-4">
                         <label className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-300 ml-1">Job Title</label>
                         <input
                             type="text"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            className="w-full bg-slate-50/50 border border-slate-100 rounded-2xl py-4.5 px-8 focus:outline-none focus:border-slate-300 focus:bg-white text-navy-deep font-black text-lg transition-all placeholder:text-slate-200"
+                            className="w-full bg-slate-50/50 border border-slate-100 rounded-xl py-4 px-6 focus:outline-none focus:border-slate-300 focus:bg-white text-navy-deep font-black text-base transition-all placeholder:text-slate-200"
                             placeholder="e.g. Project Manager"
                         />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div className="space-y-4">
-                            <label className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-300 ml-1">Branch / Group</label>
+                            <label className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-300 ml-1">Department</label>
                             <input
                                 type="text"
                                 value={formData.department}
                                 onChange={(e) => setFormData({ ...formData, department: e.target.value })}
-                                className="w-full bg-slate-50/50 border border-slate-100 rounded-2xl py-4 px-8 focus:outline-none focus:border-slate-300 focus:bg-white text-[11px] font-black uppercase tracking-widest text-navy-deep transition-all placeholder:text-slate-200"
+                                className="w-full bg-slate-50/50 border border-slate-100 rounded-xl py-3.5 px-6 focus:outline-none focus:border-slate-300 focus:bg-white text-[10px] font-black uppercase tracking-widest text-navy-deep transition-all placeholder:text-slate-200"
                                 placeholder="Core Operations"
                             />
                         </div>
                         <div className="space-y-4">
-                            <label className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-300 ml-1">Location Zone</label>
+                            <label className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-300 ml-1">Location</label>
                             <div className="relative group">
                                 <MapPin size={14} className="absolute left-7 top-1/2 -translate-y-1/2 text-slate-200 group-focus-within:text-[#BC9C33] transition-colors" />
                                 <input
                                     type="text"
                                     value={formData.location}
                                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                                    className="w-full bg-slate-50/50 border border-slate-100 rounded-2xl py-4 pl-16 pr-8 focus:outline-none focus:border-slate-300 focus:bg-white text-[11px] font-black uppercase tracking-widest text-navy-deep transition-all placeholder:text-slate-200"
+                                    className="w-full bg-slate-50/50 border border-slate-100 rounded-xl py-3.5 pl-14 pr-6 focus:outline-none focus:border-slate-300 focus:bg-white text-[10px] font-black uppercase tracking-widest text-navy-deep transition-all placeholder:text-slate-200"
                                     placeholder="Jakarta, Indonesia"
                                 />
                             </div>
@@ -132,11 +132,11 @@ export const JobModal = ({
                     </div>
 
                     <div className="space-y-4">
-                        <label className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-300 ml-1">Primary Summary</label>
+                        <label className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-300 ml-1">Job Description</label>
                         <textarea
                             value={formData.description}
                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                            className="w-full bg-slate-50/50 border border-slate-100 rounded-[2rem] py-8 px-10 focus:outline-none focus:border-slate-300 focus:bg-white text-[13px] font-medium text-navy-deep/80 h-48 resize-none leading-relaxed transition-all placeholder:text-slate-200"
+                            className="w-full bg-slate-50/50 border border-slate-100 rounded-2xl py-6 px-8 focus:outline-none focus:border-slate-300 focus:bg-white text-[12px] font-medium text-navy-deep/80 h-32 resize-none leading-relaxed transition-all placeholder:text-slate-200"
                             placeholder="Specify role parameters..."
                         />
                     </div>
@@ -146,7 +146,7 @@ export const JobModal = ({
                         <textarea
                             value={formData.requirements}
                             onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
-                            className="w-full bg-slate-50/50 border border-slate-100 rounded-[2rem] py-8 px-10 focus:outline-none focus:border-slate-300 focus:bg-white text-[13px] font-medium text-navy-deep/80 h-48 resize-none leading-relaxed transition-all placeholder:text-slate-200"
+                            className="w-full bg-slate-50/50 border border-slate-100 rounded-2xl py-6 px-8 focus:outline-none focus:border-slate-300 focus:bg-white text-[12px] font-medium text-navy-deep/80 h-32 resize-none leading-relaxed transition-all placeholder:text-slate-200"
                             placeholder="Detail candidate requirements..."
                         />
                     </div>
@@ -158,7 +158,7 @@ export const JobModal = ({
                                 type="text"
                                 value={formData.linkedin_url}
                                 onChange={(e) => setFormData({ ...formData, linkedin_url: e.target.value })}
-                                className="w-full bg-slate-50/50 border border-slate-100 rounded-2xl py-4 px-8 focus:outline-none focus:border-slate-300 focus:bg-white text-[11px] font-black text-[#BC9C33] transition-all placeholder:text-slate-200"
+                                className="w-full bg-slate-50/50 border border-slate-100 rounded-xl py-3.5 px-6 focus:outline-none focus:border-slate-300 focus:bg-white text-[10px] font-black text-[#BC9C33] transition-all placeholder:text-slate-200"
                                 placeholder="https://linkedin.com/jobs/..."
                             />
                         </div>
@@ -168,19 +168,19 @@ export const JobModal = ({
                                 type="date"
                                 value={formData.expires_at}
                                 onChange={(e) => setFormData({ ...formData, expires_at: e.target.value })}
-                                className="w-full bg-slate-50/50 border border-slate-100 rounded-2xl py-4 px-8 focus:outline-none focus:border-slate-300 focus:bg-white text-[11px] font-black uppercase tracking-widest text-navy-deep transition-all"
+                                className="w-full bg-slate-50/50 border border-slate-100 rounded-xl py-3.5 px-6 focus:outline-none focus:border-slate-300 focus:bg-white text-[10px] font-black uppercase tracking-widest text-navy-deep transition-all"
                             />
                         </div>
                     </div>
 
-                    <div className={`rounded-[2.5rem] p-8 flex items-center justify-between transition-all group ${formData.is_active ? 'bg-navy-deep shadow-2xl shadow-navy-deep/20 border border-navy-deep' : 'bg-slate-50/50 border border-slate-100'}`}>
-                        <div className="flex items-center gap-6">
-                            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all duration-700 ${formData.is_active ? 'bg-white/10 text-[#BC9C33]' : 'bg-white text-slate-200 border border-slate-50'}`}>
-                                <Briefcase size={24} />
+                    <div className={`rounded-3xl p-6 flex items-center justify-between transition-all group ${formData.is_active ? 'bg-navy-deep shadow-xl shadow-navy-deep/20 border border-navy-deep' : 'bg-slate-50/50 border border-slate-100'}`}>
+                        <div className="flex items-center gap-5">
+                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-700 ${formData.is_active ? 'bg-white/10 text-[#BC9C33]' : 'bg-white text-slate-200 border border-slate-50 shadow-sm'}`}>
+                                <Briefcase size={20} />
                             </div>
                             <div className="text-left">
-                                <h4 className={`text-lg font-black tracking-tight font-display ${formData.is_active ? 'text-white' : 'text-navy-deep opacity-60'}`}>Live Availability</h4>
-                                <p className={`text-[10px] font-black uppercase tracking-[0.2em] mt-1.5 ${formData.is_active ? 'text-white/40' : 'text-slate-300'}`}>System visibility toggle</p>
+                                <h4 className={`text-base font-black tracking-tight ${formData.is_active ? 'text-white' : 'text-navy-deep opacity-60'}`}>Active Status</h4>
+                                <p className={`text-[9px] font-black uppercase tracking-[0.2em] mt-1 ${formData.is_active ? 'text-white/40' : 'text-slate-300'}`}>Show on website</p>
                             </div>
                         </div>
                         <button
@@ -196,18 +196,18 @@ export const JobModal = ({
                     </div>
                 </div>
 
-                <div className="p-10 border-t border-slate-50 bg-slate-50/50 flex justify-end gap-8 items-center relative z-20">
+                <div className="p-8 border-t border-slate-50 bg-slate-50/50 flex justify-end gap-6 items-center relative z-20">
                     <button
                         onClick={onClose}
-                        className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-300 hover:text-navy-deep transition-colors"
+                        className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-400 hover:text-navy-deep transition-colors"
                     >
-                        Abort
+                        Cancel
                     </button>
                     <button
                         onClick={() => onSave(formData)}
-                        className="px-12 py-4.5 bg-navy-deep text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-[#BC9C33] transition-all shadow-xl shadow-navy-deep/10 active:scale-95"
+                        className="px-10 py-4 bg-navy-deep text-white rounded-xl font-black text-[9px] uppercase tracking-[0.2em] hover:bg-[#BC9C33] transition-all shadow-xl shadow-navy-deep/10 active:scale-95"
                     >
-                        Commit Position
+                        Save Changes
                     </button>
                 </div>
             </motion.div>
@@ -315,7 +315,7 @@ const CareersVault = () => {
                         <Filter className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-[#BC9C33] transition-colors" size={14} />
                         <input
                             type="text"
-                            placeholder="Filter archives..."
+                            placeholder="Search records..."
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="w-full md:w-72 pl-14 pr-8 py-4 bg-white border border-slate-100 rounded-2xl text-[11px] font-bold text-navy-deep placeholder:text-slate-300 outline-none shadow-sm transition-all focus:border-slate-300"
@@ -327,7 +327,7 @@ const CareersVault = () => {
                             className="group flex items-center justify-center gap-3 w-full md:w-auto px-10 py-4 bg-navy-deep text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-[#BC9C33] transition-all shadow-xl shadow-navy-deep/10 active:scale-95 shrink-0"
                         >
                             <Plus size={16} className="transition-transform group-hover:rotate-90 duration-500" />
-                            <span>New Opening</span>
+                            <span>New Job</span>
                         </button>
                     )}
                 </div>
@@ -337,7 +337,7 @@ const CareersVault = () => {
                 <div className="flex items-center gap-3 mb-12 px-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
                     <span className="text-[10px] font-black text-navy-deep uppercase tracking-[0.3em]">
-                        {view === 'jobs' ? `Live Openings: ${filteredJobs.length}` : `Candidate Feed: ${filteredApplications.length}`}
+                        {view === 'jobs' ? `Active Jobs: ${filteredJobs.length}` : `Applicants List: ${filteredApplications.length}`}
                     </span>
                 </div>
 
@@ -379,8 +379,8 @@ const CareersVault = () => {
                                             isOpen: true,
                                             type: 'job',
                                             id: job.id,
-                                            title: 'Purge Position',
-                                            message: `This action will permanently remove "${job.title}" from the active database. Proceed?`
+                                            title: 'Remove Job',
+                                            message: `This action will permanently delete "${job.title}" from the list. Proceed?`
                                         })}
                                         className="w-12 h-12 flex items-center justify-center bg-white text-red-300 hover:text-red-500 rounded-2xl shadow-sm border border-slate-100 hover:bg-red-50 hover:border-red-100 transition-all duration-500"
                                     >
@@ -409,7 +409,7 @@ const CareersVault = () => {
                                         <div className="flex flex-wrap items-center gap-6">
                                             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 flex items-center gap-2">
                                                 <div className="w-1.5 h-1.5 rounded-full bg-[#BC9C33] shadow-[0_0_8px_rgba(188,156,51,0.5)]" />
-                                                Target: {app.position}
+                                                Applied for: {app.position}
                                             </span>
                                             <a href={`mailto:${app.email}`} className="text-[10px] font-black uppercase tracking-[0.2em] text-[#BC9C33] hover:text-navy-deep transition-colors bg-[#BC9C33]/5 px-3.5 py-1 rounded-full">{app.email}</a>
                                         </div>
@@ -422,7 +422,7 @@ const CareersVault = () => {
                                         rel="noopener noreferrer"
                                         className="px-8 py-3.5 bg-white text-navy-deep border border-slate-100 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] hover:bg-navy-deep hover:text-white transition-all shadow-sm"
                                     >
-                                        Inspect Resume
+                                        View Resume
                                     </a>
                                     <button
                                         onClick={() => setConfirmModal({
@@ -430,8 +430,8 @@ const CareersVault = () => {
                                             type: 'application',
                                             id: app.id,
                                             resumeUrl: app.resume_url,
-                                            title: 'Purge Application',
-                                            message: `Remove candidate "${app.full_name}" from the system records?`
+                                            title: 'Remove Application',
+                                            message: `Remove candidate "${app.full_name}" from the records?`
                                         })}
                                         className="w-12 h-12 flex items-center justify-center bg-white text-red-300 hover:text-red-500 hover:bg-red-50 rounded-2xl border border-slate-100 transition-all duration-500"
                                     >
@@ -446,7 +446,7 @@ const CareersVault = () => {
                 {(view === 'jobs' ? currentJobs : currentApplications).length === 0 && (
                     <div className="flex flex-col items-center justify-center py-56 opacity-20 grayscale">
                         <Briefcase size={80} strokeWidth={1} className="mb-8 text-navy-deep" />
-                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-navy-deep">Terminal Empty</p>
+                        <p className="text-[11px] font-black uppercase tracking-[0.5em] text-navy-deep">No Records Found</p>
                     </div>
                 )}
             </div>
@@ -461,7 +461,7 @@ const CareersVault = () => {
                         />
                     </div>
                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">
-                        Index {currentPage} <span className="mx-2 opacity-10">/</span> {Math.ceil((view === 'jobs' ? filteredJobs.length : filteredApplications.length) / itemsPerPage) || 1}
+                        Page {currentPage} <span className="mx-2 opacity-10">/</span> {Math.ceil((view === 'jobs' ? filteredJobs.length : filteredApplications.length) / itemsPerPage) || 1}
                     </p>
                 </div>
                 <div className="flex items-center gap-4">

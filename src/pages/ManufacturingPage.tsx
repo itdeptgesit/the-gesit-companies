@@ -201,11 +201,6 @@ const ManufacturingPage = () => {
                         </div>
                     </motion.div>
                 </div>
-
-                {/* Abstract decoration */}
-                <div className="absolute -bottom-20 -right-20 text-[25vw] font-display text-white/5 select-none pointer-events-none leading-none tracking-tighter">
-                    MFG
-                </div>
             </section>
 
             {/* 3. Aluminum Fabrication Section (Editorial Staggered) */}

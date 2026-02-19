@@ -9,9 +9,9 @@ const Footer = () => {
     return (
         <footer className="bg-navy-deep pt-24 pb-12 text-white border-t border-[#BC9C33]/20">
             <div className="container mx-auto px-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 mb-20 items-start">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-20 items-start">
                     {/* Logo & Description */}
-                    <div>
+                    <div className="lg:col-span-4">
                         <Link to="/" className="flex items-center gap-4 mb-8 group/logo">
                             <img
                                 alt={settings.siteTitle || "Gesit Logo"}
@@ -28,7 +28,7 @@ const Footer = () => {
                     </div>
 
                     {/* Quick Links */}
-                    <div>
+                    <div className="lg:col-span-2">
                         <h3 className="text-[#BC9C33] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
                             Quick Links
                         </h3>
@@ -43,7 +43,7 @@ const Footer = () => {
                     </div>
 
                     {/* Our Business */}
-                    <div>
+                    <div className="lg:col-span-2">
                         <h3 className="text-[#BC9C33] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
                             Our Business
                         </h3>
@@ -56,7 +56,7 @@ const Footer = () => {
                     </div>
 
                     {/* Find Us */}
-                    <div>
+                    <div className="lg:col-span-2">
                         <h3 className="text-[#BC9C33] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
                             Find Us
                         </h3>
@@ -83,7 +83,7 @@ const Footer = () => {
                     </div>
 
                     {/* Legal */}
-                    <div>
+                    <div className="lg:col-span-2">
                         <h3 className="text-[#BC9C33] font-display text-sm mb-10 uppercase tracking-[0.3em] font-extrabold">
                             Legal
                         </h3>

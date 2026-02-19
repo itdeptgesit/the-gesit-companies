@@ -210,7 +210,7 @@ const SettingsSection = () => {
                         </div>
                         <div>
                             <h4 className="text-sm font-black text-navy-deep tracking-tight">Sync Complete</h4>
-                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Global configuration updated</p>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-0.5">Settings updated successfully</p>
                         </div>
                     </motion.div>
                 )}
@@ -221,9 +221,9 @@ const SettingsSection = () => {
                     <div>
                         <div className="flex items-center gap-3 mb-2">
                             <div className="w-2 h-5 bg-amber-500 rounded-full" />
-                            <h2 className="text-2xl font-black text-navy-deep tracking-tighter">System Config</h2>
+                            <h2 className="text-2xl font-black text-navy-deep tracking-tighter">System Settings</h2>
                         </div>
-                        <p className="text-slate-400 text-[9px] font-black uppercase tracking-[0.25em] ml-5">Global platform environment</p>
+                        <p className="text-slate-400 text-[9px] font-black uppercase tracking-[0.25em] ml-5">Global website configuration</p>
                     </div>
                 </div>
             </div>
@@ -260,7 +260,7 @@ const SettingsSection = () => {
                             onClick={() => setActiveSubTab('seo')}
                             className={`px-8 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all ${activeSubTab === 'seo' ? 'bg-navy-deep text-white shadow-md' : 'text-slate-400 hover:text-navy-deep'}`}
                         >
-                            Traffic & SEO
+                            SEO & Analytics
                         </button>
                         <button
                             onClick={() => setActiveSubTab('team')}
@@ -296,7 +296,7 @@ const SettingsSection = () => {
                                         <h4 className={`text-base font-black tracking-tight flex items-center gap-2 ${localSettings.maintenanceMode ? 'text-white' : 'text-navy-deep'}`}>
                                             Maintenance Mode
                                         </h4>
-                                        <p className={`text-[10px] font-bold uppercase tracking-widest mt-0.5 ${localSettings.maintenanceMode ? 'text-white/70' : 'text-slate-400'}`}>Restrict public availability of the platform</p>
+                                        <p className={`text-[10px] font-bold uppercase tracking-widest mt-0.5 ${localSettings.maintenanceMode ? 'text-white/70' : 'text-slate-400'}`}>Disable public access to the website</p>
                                     </div>
                                 </div>
                                 <button
@@ -314,8 +314,8 @@ const SettingsSection = () => {
                                         <Type size={24} />
                                     </div>
                                     <div>
-                                        <h4 className="font-black text-navy-deep text-lg tracking-tighter">Text Archetypes</h4>
-                                        <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Configure global font families</p>
+                                        <h4 className="font-black text-navy-deep text-lg tracking-tighter">Typography Settings</h4>
+                                        <p className="text-[9px] text-slate-400 font-bold uppercase tracking-widest mt-1">Configure global website fonts</p>
                                     </div>
                                 </div>
 
@@ -323,7 +323,7 @@ const SettingsSection = () => {
                                 <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
                                     <div className="space-y-4">
                                         <h5 className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                                            Heading Engine
+                                            Heading Font
                                         </h5>
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                             {[
@@ -351,7 +351,7 @@ const SettingsSection = () => {
 
                                     <div className="space-y-4">
                                         <h5 className="text-[10px] font-black uppercase tracking-widest text-slate-400 flex items-center gap-2">
-                                            Content Engine
+                                            Body Content Font
                                         </h5>
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                             {[
@@ -460,7 +460,7 @@ const SettingsSection = () => {
                                             ))}
                                             {i === 1 && (
                                                 <div className="relative">
-                                                    <label className="block text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2.5 ml-1">Physical Node</label>
+                                                    <label className="block text-[9px] font-black uppercase tracking-widest text-slate-400 mb-2.5 ml-1">Office Address</label>
                                                     <textarea
                                                         value={localSettings.officeAddress}
                                                         onChange={(e) => handleChange('officeAddress', e.target.value)}
@@ -488,7 +488,7 @@ const SettingsSection = () => {
                                 <div className="relative z-10">
                                     <div className="flex items-center gap-2.5 mb-8">
                                         <div className="w-1 h-5 bg-amber-500 rounded-full" />
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Search Proxy Preview</p>
+                                        <p className="text-[10px] font-black uppercase tracking-widest text-white/40">Search Result Preview</p>
                                     </div>
                                     <div className="bg-white rounded-2xl p-8 max-w-2xl shadow-2xl relative overflow-hidden">
                                         <div className="absolute top-0 left-0 w-1.5 h-full bg-amber-500" />
@@ -517,7 +517,7 @@ const SettingsSection = () => {
                                         <div className="w-10 h-10 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center text-navy-deep">
                                             <CheckCircle2 size={18} />
                                         </div>
-                                        <h4 className="font-black text-navy-deep text-xs uppercase tracking-widest">Metadata Hub</h4>
+                                        <h4 className="font-black text-navy-deep text-xs uppercase tracking-widest">Metadata Settings</h4>
                                     </div>
                                     <div className="space-y-6">
                                         <div className="relative">
@@ -531,7 +531,7 @@ const SettingsSection = () => {
                                             />
                                         </div>
                                         <div className="relative">
-                                            <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2.5 ml-1">Neural Keywords</label>
+                                            <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2.5 ml-1">Search Keywords</label>
                                             <textarea
                                                 value={localSettings.keywords}
                                                 onChange={(e) => handleChange('keywords', e.target.value)}
@@ -547,7 +547,7 @@ const SettingsSection = () => {
                                         <div className="w-10 h-10 bg-white border border-slate-200 rounded-xl shadow-sm flex items-center justify-center text-navy-deep">
                                             <Search size={18} />
                                         </div>
-                                        <h4 className="font-black text-navy-deep text-xs uppercase tracking-widest">Description Forge</h4>
+                                        <h4 className="font-black text-navy-deep text-xs uppercase tracking-widest">Site Description</h4>
                                     </div>
                                     <div className="relative flex-grow flex flex-col">
                                         <label className="block text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2.5 ml-1">Snippet Configuration</label>

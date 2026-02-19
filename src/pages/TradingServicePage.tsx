@@ -167,10 +167,6 @@ const TradingServicePage = () => {
                         </div>
                     </motion.div>
                 </div>
-                {/* Abstract decoration */}
-                <div className="absolute -bottom-20 -right-20 text-[20vw] font-display text-white/5 select-none pointer-events-none">
-                    GESIT
-                </div>
             </section>
 
             {/* Services Showcase */}
@@ -235,4 +231,3 @@ const TradingServicePage = () => {
 };
 
 export default TradingServicePage;
-

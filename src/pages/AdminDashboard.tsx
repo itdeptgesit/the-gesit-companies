@@ -220,7 +220,7 @@ const AdminDashboard = () => {
                         <div className="flex flex-col">
                             <span className="text-[15px] font-display font-black text-navy-deep tracking-tight leading-none">The Gesit</span>
                             <span className="text-[15px] font-display font-black text-[#BC9C33] tracking-tight leading-none mt-1">Companies</span>
-                            <span className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em] mt-3">Admin Portal</span>
+                            <span className="text-[9px] font-bold text-slate-300 uppercase tracking-[0.3em] mt-3">Admin Dashboard</span>
                         </div>
                     </div>
 
@@ -270,7 +270,7 @@ const AdminDashboard = () => {
                             </h2>
                             <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-2.5 flex items-center gap-2">
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                                System Online
+                                Online
                             </p>
                         </div>
 
@@ -281,7 +281,7 @@ const AdminDashboard = () => {
                                 </div>
                                 <input
                                     type="text"
-                                    placeholder="Execute search..."
+                                    placeholder="Search entries..."
                                     className="w-full bg-slate-50 border border-transparent rounded-xl py-2.5 pl-10 pr-5 text-[10px] font-bold outline-none focus:bg-white focus:border-slate-200 transition-all font-body text-navy-deep placeholder:text-slate-300"
                                 />
                             </div>
@@ -301,8 +301,8 @@ const AdminDashboard = () => {
                                 <div className="h-6 w-px bg-slate-100" />
                                 <div className="flex items-center gap-3 group/profile cursor-pointer">
                                     <div className="text-right hidden sm:block">
-                                        <p className="text-[11px] font-black text-navy-deep leading-none">Admin Hub</p>
-                                        <p className="text-[8px] font-bold text-slate-300 uppercase tracking-widest mt-1">System Live</p>
+                                        <p className="text-[11px] font-black text-navy-deep leading-none">Administrator</p>
+                                        <p className="text-[8px] font-bold text-slate-300 uppercase tracking-widest mt-1">System Active</p>
                                     </div>
                                     <div className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center p-0.5 overflow-hidden transition-all group-hover/profile:ring-2 group-hover/profile:ring-[#BC9C33]/20">
                                         <div className="w-full h-full bg-navy-deep rounded-[10px] flex items-center justify-center text-white text-[10px] font-black uppercase">

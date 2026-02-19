@@ -353,8 +353,8 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 className="group flex flex-col items-center h-full"
                             >
-                                {/* Top Image Section (Landscape) */}
-                                <div className="relative w-full aspect-video rounded-[1.5rem] overflow-hidden shadow-xl mb-4 shrink-0">
+                                {/* Top Image Section (Increased height for balance) */}
+                                <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden shadow-xl mb-4 shrink-0">
                                     <img
                                         src={value.image}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
@@ -366,16 +366,16 @@ const AboutPage = () => {
                                 {/* Connecting Line */}
                                 <motion.div
                                     initial={{ height: 0 }}
-                                    whileInView={{ height: 40 }}
+                                    whileInView={{ height: 32 }}
                                     transition={{ duration: 0.8, delay: 0.5 + (idx * 0.1) }}
                                     className="w-[1.5px] bg-slate-200 shrink-0"
                                 ></motion.div>
 
-                                {/* Bottom Info Box (Gold) */}
-                                <div className="w-full bg-[#BC9C33] p-8 text-center shadow-lg rounded-[2rem] relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
-                                    <h4 className="text-white text-xl md:text-2xl font-display mb-4 tracking-wide">{value.title}</h4>
-                                    <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
-                                    <p className="text-white/90 text-[13px] font-medium leading-relaxed px-2">
+                                {/* Bottom Info Box (Gold - Equalized Height) */}
+                                <div className="w-full bg-[#BC9C33] p-6 md:p-8 text-center shadow-md rounded-[1.5rem] relative z-10 group-hover:-translate-y-1 transition-transform duration-500 flex-1 flex flex-col justify-center min-h-[180px]">
+                                    <h4 className="text-white text-xl md:text-2xl font-display mb-3 tracking-wide">{value.title}</h4>
+                                    <div className="w-10 h-[1px] bg-white/30 mx-auto mb-4 shrink-0"></div>
+                                    <p className="text-white/95 text-[13px] md:text-sm font-medium leading-relaxed px-2">
                                         {value.desc}
                                     </p>
                                 </div>

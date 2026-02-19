@@ -26,13 +26,13 @@ const OverviewSection = ({ visitorCount, onNavigate }: { visitorCount: number, o
                     onClick={() => onNavigate('news')}
                     className="flex items-center gap-3 px-8 py-3.5 bg-navy-deep text-white rounded-2xl font-bold text-[11px] uppercase tracking-widest hover:bg-navy-deep/90 transition-all active:scale-95 group shadow-lg shadow-navy-deep/5"
                 >
-                    <Plus size={16} /> Create News
+                    <Plus size={16} /> New Article
                 </button>
                 <button
                     onClick={() => onNavigate('careers')}
                     className="flex items-center gap-3 px-8 py-3.5 bg-white border border-slate-200 text-navy-deep rounded-2xl font-bold text-[11px] uppercase tracking-widest hover:border-navy-deep transition-all shadow-sm active:scale-95"
                 >
-                    <Plus size={16} /> Post Career
+                    <Plus size={16} /> New Job Post
                 </button>
                 <div className="h-4 w-px bg-slate-200 mx-2 hidden sm:block" />
                 <a href="/" target="_blank" className="flex items-center gap-3 px-8 py-3.5 bg-white border border-slate-200 text-slate-400 rounded-2xl font-bold text-[11px] uppercase tracking-widest hover:text-navy-deep hover:border-slate-300 transition-all shadow-sm active:scale-95">
@@ -49,12 +49,12 @@ const OverviewSection = ({ visitorCount, onNavigate }: { visitorCount: number, o
                 <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     <div className="lg:col-span-8 space-y-8">
                         <div>
-                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#BC9C33] mb-4 block">System Logistics</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#BC9C33] mb-4 block">System Metrics</span>
                             <h2 className="text-4xl md:text-5xl font-black tracking-tight leading-none font-display">
-                                Status: <span className="text-white">Active</span>
+                                Dashboard <span className="text-white">Overview</span>
                             </h2>
                             <p className="text-white/40 text-lg md:text-xl font-medium tracking-normal mt-4 max-w-md">
-                                All core systems are synchronized and performing within optimal parameters.
+                                Overview of your website status and recent engagement data.
                             </p>
                         </div>
 
@@ -65,7 +65,7 @@ const OverviewSection = ({ visitorCount, onNavigate }: { visitorCount: number, o
                             </div>
                             <div className="w-px h-10 bg-white/10 hidden sm:block mt-2" />
                             <div className="space-y-2">
-                                <p className="text-[9px] font-black uppercase tracking-widest text-white/30">Articles</p>
+                                <p className="text-[9px] font-black uppercase tracking-widest text-white/30">News Posts</p>
                                 <p className="text-3xl font-black text-white">{newsLoading ? '...' : newsItems.length}</p>
                             </div>
                             <div className="w-px h-10 bg-white/10 hidden sm:block mt-2" />
@@ -97,15 +97,15 @@ const OverviewSection = ({ visitorCount, onNavigate }: { visitorCount: number, o
                         <div className="grid grid-cols-1 gap-4 w-full max-w-[260px]">
                             <div className="p-6 bg-white/[0.04] backdrop-blur-xl rounded-[24px] border border-white/10 flex items-center justify-between group hover:bg-white/[0.08] transition-all duration-500">
                                 <div className="space-y-1">
-                                    <p className="text-[8px] font-black uppercase tracking-widest text-white/40">Network Node</p>
-                                    <p className="text-lg font-black tracking-tight">Public Cloud</p>
+                                    <p className="text-[8px] font-black uppercase tracking-widest text-white/40">Environment</p>
+                                    <p className="text-lg font-black tracking-tight">Production</p>
                                 </div>
                                 <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
                             </div>
                             <div className="p-6 bg-white/[0.04] backdrop-blur-xl rounded-[24px] border border-white/10 flex items-center justify-between group hover:bg-white/[0.08] transition-all duration-500">
                                 <div className="space-y-1">
-                                    <p className="text-[8px] font-black uppercase tracking-widest text-white/40">Database Engine</p>
-                                    <p className="text-lg font-black tracking-tight">Synchronized</p>
+                                    <p className="text-[8px] font-black uppercase tracking-widest text-white/40">Data Connection</p>
+                                    <p className="text-lg font-black tracking-tight">Stable</p>
                                 </div>
                                 <div className="w-2.5 h-2.5 rounded-full bg-[#BC9C33] shadow-[0_0_15px_rgba(188,156,51,0.5)]" />
                             </div>
@@ -119,7 +119,7 @@ const OverviewSection = ({ visitorCount, onNavigate }: { visitorCount: number, o
                 <div className="flex items-center justify-between px-4">
                     <div className="flex items-center gap-3">
                         <div className="w-2 h-2 rounded-full bg-[#BC9C33]" />
-                        <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400">Activity stream</h3>
+                        <h3 className="text-[11px] font-black uppercase tracking-[0.3em] text-slate-400">Recent Activity</h3>
                     </div>
                     <button
                         onClick={() => onNavigate('careers')}
@@ -163,7 +163,7 @@ const OverviewSection = ({ visitorCount, onNavigate }: { visitorCount: number, o
                         ))
                     ) : (
                         <div className="py-24 text-center bg-white rounded-[2.5rem] border-2 border-dashed border-slate-100">
-                            <p className="text-[12px] font-black uppercase tracking-[0.4em] text-slate-200">Terminal Quiet</p>
+                            <p className="text-[12px] font-black uppercase tracking-[0.4em] text-slate-200">No recent activity</p>
                         </div>
                     )}
                 </div>

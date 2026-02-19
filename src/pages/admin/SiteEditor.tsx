@@ -62,7 +62,7 @@ const SiteEditor = () => {
         { id: "hero", label: "Banners", icon: <ImageIcon size={18} /> },
         { id: "home", label: "Page Content", icon: <Layout size={18} /> },
         { id: "business", label: "Business Units", icon: <Briefcase size={18} /> },
-        { id: "logs", label: "Recent Activity", icon: <History size={18} /> },
+        { id: "logs", label: "Activity Logs", icon: <History size={18} /> },
     ];
 
     return (
@@ -77,10 +77,10 @@ const SiteEditor = () => {
                         <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/40">
                             <Globe size={20} className="text-white" />
                         </div>
-                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500">Website Management System</span>
+                        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-500">Global Settings</span>
                     </div>
                     <h2 className="text-4xl font-black tracking-tight leading-tight mb-4 text-white">
-                        Global Site Editor
+                        Site Content Editor
                     </h2>
                     <p className="text-white/60 text-sm font-medium leading-relaxed">
                         Manage your company's digital storefront. Update hero banners, business segments, and mission statements in real-time across the platform.
@@ -189,7 +189,7 @@ const ActivityLogViewer = () => {
             <div className="flex items-center justify-between">
                 <div>
                     <h3 className="text-xl font-black text-navy-deep tracking-tight">System Activity Logs</h3>
-                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">Track recent changes and updates</p>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">Track recent updates and modifications</p>
                 </div>
                 <button
                     onClick={fetchLogs}
@@ -381,7 +381,7 @@ const HeroManager = () => {
             <div className="flex items-center justify-between">
                 <div>
                     <h3 className="text-xl font-black text-navy-deep tracking-tight">Homepage Banners</h3>
-                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">Manage high-impact visual banners</p>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-2">Manage visual banners for the landing page</p>
                 </div>
                 <button
                     onClick={() => { setEditingSlide({}); setIsFormOpen(true); }}

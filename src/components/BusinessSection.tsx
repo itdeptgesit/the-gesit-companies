@@ -89,8 +89,8 @@ const BusinessSection = () => {
                                     transition={{ duration: 1.2, delay: index * 0.15, ease: [0.22, 1, 0.36, 1] as any }}
                                     className="group flex flex-col items-center h-full"
                                 >
-                                    {/* Top Image Section - Aspect Video to match Core Values */}
-                                    <div className="relative w-full aspect-video rounded-[1.5rem] overflow-hidden shadow-xl mb-4 shrink-0">
+                                    {/* Top Image Section - Increased height to 4:3 for better balance */}
+                                    <div className="relative w-full aspect-[4/3] rounded-[2rem] overflow-hidden shadow-xl mb-4 shrink-0">
                                         <img
                                             src={biz.image}
                                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
@@ -106,21 +106,21 @@ const BusinessSection = () => {
                                     {/* Connecting Line - Match About Page Style */}
                                     <motion.div
                                         initial={{ height: 0 }}
-                                        whileInView={{ height: 32 }}
+                                        whileInView={{ height: 28 }}
                                         transition={{ duration: 0.8, delay: 0.5 + (index * 0.1) }}
                                         className="w-[1.5px] bg-slate-200 shrink-0"
                                     ></motion.div>
 
-                                    {/* Bottom Info Box - Match About Page P8 and rounded corners */}
-                                    <div className="w-full bg-[#BC9C33] p-8 text-center shadow-lg rounded-[2.5rem] relative z-10 group-hover:-translate-y-2 group-hover:shadow-2xl transition-all duration-500 flex-1 flex flex-col justify-center min-h-[220px]">
+                                    {/* Bottom Info Box - Equalized Height */}
+                                    <div className="w-full bg-[#BC9C33] p-6 text-center shadow-lg rounded-[1.5rem] relative z-10 group-hover:-translate-y-2 group-hover:shadow-2xl transition-all duration-500 flex-1 flex flex-col justify-center min-h-[220px]">
                                         {/* Cinematic Background Glow */}
-                                        <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[2.5rem]"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[1.5rem]"></div>
 
-                                        <h3 className="text-white text-2xl font-display mb-4 tracking-wide relative z-10">{biz.title}</h3>
+                                        <h3 className="text-white text-xl md:text-2xl font-display mb-3 tracking-wide relative z-10">{biz.title}</h3>
 
-                                        <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0 relative z-10 group-hover:w-16 transition-all duration-500"></div>
+                                        <div className="w-10 h-[1px] bg-white/40 mx-auto mb-4 shrink-0 relative z-10 group-hover:w-14 transition-all duration-500"></div>
 
-                                        <p className="text-white/90 text-[13px] font-medium leading-relaxed tracking-wide px-2 mb-6 line-clamp-3 relative z-10">
+                                        <p className="text-white/95 text-[13px] md:text-sm font-medium leading-relaxed tracking-wide px-2 mb-5 line-clamp-3 relative z-10">
                                             {biz.description}
                                         </p>
 
