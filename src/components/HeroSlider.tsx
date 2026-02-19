@@ -92,8 +92,8 @@ const HeroSlider = () => {
                                 decoding="async"
                             />
                             {/* Rich Overlay System */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/60" />
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/10 to-black/40" />
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.25)_100%)]" />
 
                             <div className="absolute inset-0 flex items-center justify-center text-center px-6">
                                 <div className="max-w-6xl">

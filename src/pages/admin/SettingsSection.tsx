@@ -328,7 +328,7 @@ const SettingsSection = () => {
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                             {[
                                                 'Playfair Display', 'Poppins', 'Space Grotesk',
-                                                'Outfit', 'Plus Jakarta Sans', 'Manrope'
+                                                'Outfit', 'Plus Jakarta Sans', 'Manrope', 'Georgia'
                                             ].map((font) => (
                                                 <button
                                                     key={font}
@@ -356,7 +356,7 @@ const SettingsSection = () => {
                                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                                             {[
                                                 'Open Sans', 'Inter', 'Lato',
-                                                'Nunito', 'Work Sans', 'Raleway'
+                                                'Nunito', 'Work Sans', 'Raleway', 'Source Sans Pro'
                                             ].map((font) => (
                                                 <button
                                                     key={font}

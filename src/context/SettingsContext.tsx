@@ -42,7 +42,7 @@ const defaultSettings: SettingsState = {
     faviconUrl: '',
     email: 'contact@gesit.co.id',
     googleMapsUrl: 'https://maps.app.goo.gl/tpHm5Hvy8LnV3ayu8',
-    googleAnalyticsId: '',
+    googleAnalyticsId: 'G-81BG495GZP',
     adminFontFamily: 'Inter',
     headingFont: 'Playfair Display',
     bodyFont: 'Open Sans'

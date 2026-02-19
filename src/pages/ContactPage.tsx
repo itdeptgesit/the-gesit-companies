@@ -29,8 +29,8 @@ const ContactPage = () => {
     const fadeIn = {
         initial: { opacity: 0, y: 30 },
         whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true },
-        transition: { duration: 0.8 }
+        viewport: { once: true, margin: "-100px" },
+        transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] as any }
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -165,7 +165,7 @@ const ContactPage = () => {
                     <motion.span
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1, delay: 0.2 }}
+                        transition={{ duration: 1.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
                         className="text-[#BA9B32] font-bold uppercase tracking-[.4em] text-[10px] md:text-sm mb-6 block"
                     >
                         Get In Touch
@@ -199,7 +199,7 @@ const ContactPage = () => {
                                     <motion.div
                                         initial={{ width: 0 }}
                                         whileInView={{ width: '100%' }}
-                                        transition={{ duration: 1, delay: 1 }}
+                                        transition={{ duration: 1.5, delay: 1, ease: [0.22, 1, 0.36, 1] }}
                                         className="absolute bottom-1 left-0 h-[2px] bg-[#BA9B32]/30"
                                     ></motion.div>
                                 </span>
@@ -290,7 +290,7 @@ const ContactPage = () => {
                         <motion.div
                             initial={{ opacity: 0, x: 30 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 1 }}
+                            transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] }}
                             className="bg-white/40 backdrop-blur-2xl rounded-card p-8 md:p-12 border border-white/50 shadow-2xl shadow-slate-200/30 h-full flex flex-col gap-10"
                         >
                             {/* Featured Image - Integrated into the pillar */}
@@ -314,7 +314,7 @@ const ContactPage = () => {
                                         rel={card.title === "Head Office" ? "noopener noreferrer" : undefined}
                                         initial={{ opacity: 0, y: 20 }}
                                         whileInView={{ opacity: 1, y: 0 }}
-                                        transition={{ delay: idx * 0.15 }}
+                                        transition={{ duration: 1.2, delay: idx * 0.15, ease: [0.22, 1, 0.36, 1] }}
                                         className="bg-white/60 p-6 rounded-card-sm border border-white hover:border-[#BA9B32]/30 hover:bg-white transition-all duration-500 group flex items-start gap-5"
                                     >
                                         <div className="w-12 h-12 bg-white text-[#BA9B32] rounded-card-sm flex items-center justify-center group-hover:bg-[#BA9B32] group-hover:text-white transition-all duration-500 shrink-0 shadow-sm border border-slate-100">

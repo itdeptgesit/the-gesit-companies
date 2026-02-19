@@ -163,7 +163,7 @@ const AboutPage = () => {
                             variants={containerVariants}
                             className="relative"
                         >
-                            <div className="space-y-12">                                <motion.p variants={revealVariants} className="text-white/80 text-xl md:text-3xl font-light leading-relaxed max-w-4xl">
+                            <div className="space-y-12">                                <motion.p variants={revealVariants} className="text-white/80 text-xl md:text-3xl font-light leading-relaxed max-w-4xl font-display">
                                 {content['intro_description'] || <>Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of <span className="text-white font-medium">Property</span>, <span className="text-white font-medium">Trading & Service</span>, <span className="text-white font-medium">Manufacturing</span>, and <span className="text-white font-medium">Natural Resources</span>.</>}
                             </motion.p>
                             </div>
@@ -172,130 +172,156 @@ const AboutPage = () => {
                 </div>
             </section>
 
-            {/* 3. Philosophy */}
-            <section className="pb-24 md:pb-40 relative overflow-hidden bg-white">
+            {/* 3. Philosophy Section - Aligned Split Layout */}
+            <section className="relative overflow-hidden bg-white border-y border-slate-50">
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-32 items-start">
-                        <div className="absolute top-0 right-0 text-[35vw] font-display text-slate-50 pointer-events-none -z-10 select-none leading-none translate-x-[10%]">
-                            艺成
-                        </div>
-
-                        <div className="lg:col-span-6 pt-10 md:pt-20">
-                            <motion.div
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true, margin: "-100px" }}
-                                variants={containerVariants}
-                            >
+                    <div className="grid grid-cols-1 lg:grid-cols-2 items-center min-h-[85vh]">
+                        <motion.div
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, margin: "-100px" }}
+                            variants={{
+                                hidden: { opacity: 0 },
+                                visible: {
+                                    opacity: 1,
+                                    transition: {
+                                        staggerChildren: 0.2,
+                                        ease: [0.22, 1, 0.36, 1]
+                                    }
+                                }
+                            }}
+                            className="py-24 lg:py-32 pr-0 lg:pr-20"
+                        >
+                            <div className="max-w-xl">
                                 <motion.h3
                                     variants={{
-                                        hidden: { opacity: 0, filter: "blur(20px)", y: 20 },
-                                        visible: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] } as any }
+                                        hidden: { opacity: 0, y: 30 },
+                                        visible: { opacity: 1, y: 0, transition: { duration: 1.8, ease: [0.22, 1, 0.36, 1] } }
                                     }}
-                                    className="bg-gradient-to-br from-[#BC9C33] via-[#e2c15a] to-[#8a6d3b] bg-clip-text text-transparent text-7xl md:text-8xl font-display mb-6 leading-none py-2"
-                                    style={{ fontWeight: 510 }}
+                                    className="bg-gradient-to-br from-[#BC9C33] via-[#e2c15a] to-[#8a6d3b] bg-clip-text text-transparent text-7xl md:text-8xl mb-10 leading-none"
+                                    style={{ fontWeight: 500, fontFamily: "'Noto Serif SC', serif" }}
                                 >
                                     {content['philosophy_heading'] || "艺成"}
                                 </motion.h3>
 
-                                <motion.p variants={revealVariants} className="text-navy-deep text-xl font-light mb-12 leading-relaxed">
-                                    {content['philosophy_meaning'] || "Based on the Mandarin “yi cheng” and Hokkien “geseng”, which means “perfection for art”"}
+                                <motion.p
+                                    variants={{
+                                        hidden: { opacity: 0, x: -30 },
+                                        visible: { opacity: 1, x: 0, transition: { duration: 1.8, ease: [0.22, 1, 0.36, 1] } }
+                                    }}
+                                    className="text-navy-deep text-lg md:text-xl font-light mb-12 leading-relaxed border-l-4 border-[#BC9C33] pl-8"
+                                >
+                                    {content['philosophy_meaning'] || <>Based on the Mandarin <span className="font-bold">“yi cheng”</span> and Hokkien <span className="font-bold">“geseng”</span>, which means <span className="font-bold">“perfection for art”</span></>}
                                 </motion.p>
 
-                                <motion.h4 variants={revealVariants} className="text-navy-deep text-2xl md:text-3xl font-display font-light mb-14 leading-[1.4] max-w-xl border-l-2 border-[#BC9C33]/30 pl-8">
+                                <motion.h4
+                                    variants={{
+                                        hidden: { opacity: 0, y: 20 },
+                                        visible: { opacity: 1, y: 0, transition: { duration: 1.8, ease: [0.22, 1, 0.36, 1] } }
+                                    }}
+                                    className="text-navy-deep text-2xl md:text-3xl font-display font-light mb-14 leading-relaxed italic text-slate-500"
+                                >
                                     {content['philosophy_subheading'] || "Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors."}
                                 </motion.h4>
 
-                                <div className="space-y-8 text-slate-600 font-light text-base md:text-lg leading-relaxed max-w-lg whitespace-pre-line">
-                                    <motion.p variants={revealVariants}>
-                                        {content['philosophy_description'] || "Over the years, the Gesit Companies continue to capture opportunities to grow its business portfolio amidst changes in economy and increased competition – part of this by being resourceful, agile and competitive. Our businesses are managed and operated by a team of professionals, headquartered in Jakarta. As the Gesit Companies continue to grow, we also believe in investing in our human capital and other areas to build competitive advantages."}
-                                    </motion.p>
-
-                                    <motion.p variants={revealVariants} className="font-bold text-navy-deep text-xl mt-12 pt-8 border-t border-slate-100 flex items-center gap-4">
-                                        <span className="w-12 h-[1px] bg-[#BC9C33]"></span>
-                                        {content['philosophy_closing'] || "We are committed to Indonesia."}
-                                    </motion.p>
-                                </div>
-                            </motion.div>
-                        </div>
-
-                        <div className="lg:col-span-6 relative pt-20 md:pt-32">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 1.05 }}
-                                whileInView={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] } as any}
-                                viewport={{ once: true }}
-                                className="relative"
-                            >
-                                <div className="aspect-[4/5] rounded-card-sm md:rounded-card overflow-hidden shadow-2xl relative z-10">
-                                    <img src="/about/property.jpeg" className="w-full h-full object-cover" alt="History" loading="lazy" />
-                                    <div className="absolute inset-0 bg-navy-deep/20"></div>
-                                </div>
-
                                 <motion.div
-                                    initial={{ opacity: 0, x: 30 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ duration: 1.5, delay: 0.4 }}
-                                    viewport={{ once: true }}
-                                    className="absolute -bottom-12 md:-bottom-20 -left-8 md:-left-20 w-3/4 aspect-square rounded-card-sm md:rounded-card overflow-hidden shadow-2xl border-[8px] md:border-[12px] border-white z-20 hidden md:block"
+                                    variants={{
+                                        hidden: { opacity: 0, y: 20 },
+                                        visible: { opacity: 1, y: 0, transition: { duration: 1.8, ease: [0.22, 1, 0.36, 1] } }
+                                    }}
+                                    className="space-y-8 text-slate-600 font-light text-base md:text-lg leading-relaxed"
                                 >
-                                    <img src="/about/resources.jpeg" className="w-full h-full object-cover" alt="Context" loading="lazy" />
-                                    <div className="absolute inset-0 bg-[#BC9C33]/10"></div>
+                                    <p>
+                                        {content['philosophy_description'] || "Over the years, the Gesit Companies continue to capture opportunities to grow its business portfolio amidst changes in economy and increased competition – part of this by being resourceful, agile and competitive. Our businesses are managed and operated by a team of professionals, headquartered in Jakarta. As the Gesit Companies continue to grow, we also believe in investing in our human capital and other areas to build competitive advantages."}
+                                    </p>
+
+                                    <div className="pt-10 flex items-center gap-6 group">
+                                        <motion.div
+                                            initial={{ width: 0 }}
+                                            whileInView={{ width: 64 }}
+                                            transition={{ duration: 1.5, delay: 1, ease: [0.22, 1, 0.36, 1] }}
+                                            viewport={{ once: true }}
+                                            className="h-px bg-[#BC9C33]"
+                                        ></motion.div>
+                                        <p className="font-bold text-navy-deep text-xl">
+                                            {content['philosophy_closing'] || "We are committed to Indonesia."}
+                                        </p>
+                                    </div>
                                 </motion.div>
-                            </motion.div>
-                        </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Right: Large Hero Image Area */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9, x: 50 }}
+                            whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                            transition={{ duration: 2.8, ease: [0.22, 1, 0.36, 1] }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            className="relative h-full py-24 lg:py-32 hidden lg:block"
+                        >
+                            <img
+                                src="/about/resources.jpeg"
+                                className="w-full h-full object-cover rounded-[2rem] shadow-xl"
+                                alt="Philosophy"
+                            />
+                            <div className="absolute inset-0 bg-navy-deep/5 pointer-events-none rounded-[2rem] my-24 lg:my-32"></div>
+                        </motion.div>
+
+                        {/* Mobile Image */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="w-full h-[400px] lg:hidden mb-12 relative rounded-[2rem] overflow-hidden"
+                        >
+                            <img src="/about/resources.jpeg" className="w-full h-full object-cover" alt="Philosophy" />
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* 4. Vision & Mission */}
-            <section className="py-24 md:py-40 bg-slate-50 overflow-hidden">
+            {/* 4. Vision & Mission - Refined Structure */}
+            <section className="py-24 md:py-40 bg-white">
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 items-center">
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1 }}
+                            initial={{ opacity: 0, x: -50, scale: 0.95 }}
+                            whileInView={{ opacity: 1, x: 0, scale: 1 }}
+                            transition={{ duration: 2.8, ease: [0.22, 1, 0.36, 1] }}
                             viewport={{ once: true }}
-                            className="relative group/vision"
+                            className="lg:col-span-7 relative rounded-[2.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
                         >
-
-                            <div className="relative aspect-video rounded-card-sm md:rounded-card shadow-2xl overflow-hidden bg-navy-deep">
-                                <video
-                                    autoPlay
-                                    loop
-                                    muted
-                                    playsInline
-                                    poster="/hero/property.png"
-                                    className="absolute inset-0 w-full h-full object-cover opacity-90"
-                                >
-                                    <source src="/video/about-us-video.mp4" type="video/mp4" />
-                                </video>
-                                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/60 via-transparent to-transparent"></div>
-                            </div>
+                            <video autoPlay loop muted playsInline className="w-full aspect-video object-cover">
+                                <source src="/video/about-us-video.mp4" type="video/mp4" />
+                            </video>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                         </motion.div>
 
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={containerVariants}
-                            className="space-y-16"
-                        >
-                            <motion.div variants={revealVariants}>
-                                <span className="text-[#BC9C33] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Vision</span>
-                                <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light">
+                        <div className="lg:col-span-5 space-y-16">
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1 }}
+                            >
+                                <span className="text-[#BC9C33] font-bold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Vision</span>
+                                <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light border-b border-slate-100 pb-10">
                                     {content['vision_statement'] || "To be a Group of Companies that are Recognized by Stakeholders as Strategic First Choice Business Partner"}
                                 </h3>
                             </motion.div>
 
-                            <motion.div variants={revealVariants}>
-                                <span className="text-[#BC9C33] font-semibold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Mission</span>
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, delay: 0.2 }}
+                            >
+                                <span className="text-[#BC9C33] font-bold uppercase tracking-[.4em] text-[11px] mb-4 block">Our Mission</span>
                                 <h3 className="text-navy-deep text-2xl md:text-3xl font-display leading-relaxed font-light">
                                     {content['mission_statement'] || "To Establish Resourceful Business Entities that Deliver Sustainable Value to Stakeholders"}
                                 </h3>
                             </motion.div>
-                        </motion.div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -303,16 +329,21 @@ const AboutPage = () => {
             {/* 5. Our Business */}
 
 
-            {/* 6. Core Values (Restored) */}
-            <section className="py-24 md:py-40 bg-slate-50">
-                <div className="container mx-auto px-6 mb-20 md:mb-32 flex flex-col items-center text-center">
-                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                        <h2 className="text-navy-deep text-5xl md:text-6xl font-display">Our Core Values.</h2>
+            {/* 6. Core Values - CSR Style Display */}
+            <section className="py-24 md:py-40 bg-white">
+                <div className="container mx-auto px-6 mb-24 text-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-navy-deep text-5xl md:text-6xl font-display tracking-tight">Our Core Values</h2>
+                        <div className="w-24 h-[2px] bg-[#BC9C33] mx-auto mt-8"></div>
                     </motion.div>
                 </div>
 
                 <div className="container mx-auto px-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                         {coreValues.map((value, idx) => (
                             <motion.div
                                 key={value.title}
@@ -322,22 +353,38 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 className="group flex flex-col items-center h-full"
                             >
-                                <div className="relative w-full aspect-video rounded-card-sm overflow-hidden shadow-xl mb-4 shrink-0">
-                                    <img src={value.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]" alt={value.title} loading="lazy" />
-                                    <div className="absolute inset-0 bg-navy-deep/10"></div>
+                                {/* Top Image Section (Landscape) */}
+                                <div className="relative w-full aspect-video rounded-[1.5rem] overflow-hidden shadow-xl mb-4 shrink-0">
+                                    <img
+                                        src={value.image}
+                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s]"
+                                        alt={value.title}
+                                    />
+                                    <div className="absolute inset-0 bg-navy-deep/10 group-hover:bg-transparent transition-colors"></div>
                                 </div>
-                                <div className="w-[1.5px] h-10 bg-slate-200 shrink-0"></div>
-                                <div className="w-full bg-[#BC9C33] p-8 text-center shadow-lg rounded-card relative group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
-                                    <h4 className="text-white text-2xl font-display mb-6 tracking-wide">{value.title}</h4>
+
+                                {/* Connecting Line */}
+                                <motion.div
+                                    initial={{ height: 0 }}
+                                    whileInView={{ height: 40 }}
+                                    transition={{ duration: 0.8, delay: 0.5 + (idx * 0.1) }}
+                                    className="w-[1.5px] bg-slate-200 shrink-0"
+                                ></motion.div>
+
+                                {/* Bottom Info Box (Gold) */}
+                                <div className="w-full bg-[#BC9C33] p-8 text-center shadow-lg rounded-[2rem] relative z-10 group-hover:-translate-y-2 transition-transform duration-500 flex-1 flex flex-col justify-center">
+                                    <h4 className="text-white text-xl md:text-2xl font-display mb-4 tracking-wide">{value.title}</h4>
                                     <div className="w-10 h-[1px] bg-white/40 mx-auto mb-6 shrink-0"></div>
-                                    <p className="text-white/90 text-sm font-medium leading-relaxed tracking-wide">{value.desc}</p>
+                                    <p className="text-white/90 text-[13px] font-medium leading-relaxed px-2">
+                                        {value.desc}
+                                    </p>
                                 </div>
                             </motion.div>
                         ))}
                     </div>
                 </div>
             </section>
-        </div>
+        </div >
     );
 };
 

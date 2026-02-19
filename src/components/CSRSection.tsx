@@ -12,10 +12,10 @@ const CSRSection = () => {
             <div className="container mx-auto px-6">
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     <motion.div
-                        initial={{ opacity: 0, x: -30 }}
+                        initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] as any }}
                         className="w-full lg:w-1/2"
                     >
                         <div className="aspect-video shadow-lg overflow-hidden rounded-[2rem] bg-slate-100 relative">
@@ -40,11 +40,17 @@ const CSRSection = () => {
                         </div>
                     </motion.div>
 
-                    <div className="w-full lg:w-1/2 space-y-8">
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 1.8, ease: [0.22, 1, 0.36, 1] as any }}
+                        className="w-full lg:w-1/2 space-y-8"
+                    >
                         <div>
                             <div className="flex items-center gap-3 mb-4">
                                 <span className="w-8 h-[1px] bg-[#BC9C33]"></span>
-                                <span className="text-[10px] font-bold uppercase tracking-[.3em] text-[#BC9C33]">Social Responsibility</span>
+                                <span className="text-[12px] font-bold uppercase tracking-[.3em] text-[#BC9C33]">Social Responsibility</span>
                             </div>
                             <h2 className="text-4xl lg:text-5xl font-display leading-[1.15] text-navy-deep">
                                 {latestCSR ? latestCSR.title : "We want to create a positive effect on lives and communities in Indonesia"}
@@ -69,7 +75,7 @@ const CSRSection = () => {
                             <h3 className="text-lg font-display font-bold text-navy-deep uppercase tracking-wide mb-2">
                                 {latestCSR ? latestCSR.category : "GESIT FOUNDATION COVID-19 VACCINATION PROGRAM"}
                             </h3>
-                            <p className="text-slate-500 text-xs leading-relaxed">
+                            <p className="text-slate-500 text-sm leading-relaxed">
                                 {latestCSR ? `Publication date: ${latestCSR.date}` : "Participating in COVID control and distributing vaccines."}
                             </p>
                         </div>
@@ -77,13 +83,13 @@ const CSRSection = () => {
                         <div className="pt-2">
                             <Link
                                 to={latestCSR ? `/news/${latestCSR.id}` : "/csr"}
-                                className="group inline-flex items-center gap-4 text-xs font-bold uppercase tracking-[0.3em] text-[#BC9C33] hover:text-navy-deep transition-colors"
+                                className="group inline-flex items-center gap-4 text-sm font-bold uppercase tracking-[0.3em] text-[#BC9C33] hover:text-navy-deep transition-colors"
                             >
                                 {latestCSR ? "Read Full Story" : "Read Our CSR Report"}
                                 <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                             </Link>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
