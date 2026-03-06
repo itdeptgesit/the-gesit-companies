@@ -22,7 +22,7 @@ const Footer = () => {
                     <div>
                         <h3 style={{
                             color: 'white',
-                            fontSize: '22px',
+                            fontSize: '24px',
                             fontWeight: '400',
                             marginBottom: '20px',
                             fontFamily: 'Georgia, serif',
@@ -43,7 +43,7 @@ const Footer = () => {
                                         style={{
                                             color: '#e2e8f0',
                                             textDecoration: 'none',
-                                            fontSize: '15px',
+                                            fontSize: '16px',
                                             fontFamily: "'Source Sans Pro', sans-serif",
                                             fontWeight: '400',
                                             transition: 'color 0.3s ease'
@@ -62,7 +62,7 @@ const Footer = () => {
                     <div>
                         <h3 style={{
                             color: 'white',
-                            fontSize: '22px',
+                            fontSize: '24px',
                             fontWeight: '400',
                             marginBottom: '20px',
                             fontFamily: 'Georgia, serif',
@@ -82,7 +82,7 @@ const Footer = () => {
                                         style={{
                                             color: '#e2e8f0',
                                             textDecoration: 'none',
-                                            fontSize: '15px',
+                                            fontSize: '16px',
                                             fontFamily: "'Source Sans Pro', sans-serif",
                                             fontWeight: '400',
                                             transition: 'color 0.3s ease'
@@ -101,14 +101,14 @@ const Footer = () => {
                     <div>
                         <h3 style={{
                             color: 'white',
-                            fontSize: '22px',
+                            fontSize: '24px',
                             fontWeight: '400',
                             marginBottom: '20px',
                             fontFamily: 'Georgia, serif',
                         }}>
                             Find Us
                         </h3>
-                        <div style={{ color: '#e2e8f0', fontSize: '15px', lineHeight: '1.7', fontFamily: "'Source Sans Pro', sans-serif" }}>
+                        <div style={{ color: '#e2e8f0', fontSize: '16px', lineHeight: '1.7', fontFamily: "'Source Sans Pro', sans-serif" }}>
                             <a
                                 href={settings.googleMapsUrl}
                                 target="_blank"

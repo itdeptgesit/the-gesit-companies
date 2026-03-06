@@ -148,68 +148,39 @@ const Navbar = () => {
             {/* Mobile Menu */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
-                    <>
-                        {/* Overlay */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            className="fixed inset-0 bg-black/50 z-50 lg:hidden"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        />
-
-                        {/* Drawer */}
-                        <motion.div
-                            initial={{ x: "-100%" }}
-                            animate={{ x: 0 }}
-                            exit={{ x: "-100%" }}
-                            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed top-0 left-0 w-72 h-full z-[60] bg-[#103065] flex flex-col pt-0 shadow-2xl lg:hidden overflow-y-auto"
-                        >
-                            {/* Header */}
-                            <div className="flex justify-between items-center px-6 py-4 border-b border-white/10">
-                                <div className="flex items-center gap-2">
-                                    <img
-                                        alt="Gesit Logo"
-                                        className="w-7 h-7 object-contain"
-                                        src="/logo-gesit.png"
-                                        loading="eager"
-                                    />
-                                    <span className="font-sans font-bold text-[12px] tracking-[0.1em] uppercase text-[#BC9C33]">
-                                        THE GESIT COMPANIES
-                                    </span>
-                                </div>
-                                <button
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-white p-1"
-                                    aria-label="Close menu"
-                                >
-                                    <X size={22} />
-                                </button>
-                            </div>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-[100] lg:hidden bg-[#103065]"
+                    >
+                        <div className="relative h-full flex flex-col justify-center px-12 md:px-24">
+                            {/* Close Button */}
+                            <button
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="absolute top-10 right-10 text-white p-2"
+                            >
+                                <X size={32} />
+                            </button>
 
                             {/* Nav Links */}
-                            <ul className="flex flex-col py-4">
+                            <div className="flex flex-col items-start gap-9">
                                 {navLinks.map((link, idx) => (
-                                    <motion.li
+                                    <motion.div
                                         key={link.name}
-                                        initial={{ opacity: 0, x: -20 }}
+                                        initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: idx * 0.05 }}
-                                        className="border-b border-white/10"
+                                        className="text-left"
                                     >
                                         {link.subMenu ? (
-                                            <div>
+                                            <div className="flex flex-col items-start">
                                                 <button
                                                     onClick={() => setActiveSubMenu(activeSubMenu === link.name ? null : link.name)}
-                                                    className={`flex items-center justify-between w-full px-6 py-4 text-[12px] font-bold uppercase transition-colors ${activeSubMenu === link.name || isBusinessActive() ? 'text-[#BC9C33]' : 'text-white'
-                                                        }`}
+                                                    className={`text-[19px] font-sans font-bold uppercase tracking-[0.15em] transition-colors flex items-center gap-3 ${activeSubMenu === link.name || isBusinessActive() ? 'text-[#BC9C33]' : 'text-white hover:text-[#BC9C33]'}`}
                                                 >
-                                                    <span>{link.name}</span>
-                                                    <ChevronDown
-                                                        size={16}
-                                                        className={`transition-transform duration-300 ${activeSubMenu === link.name ? 'rotate-180' : ''}`}
-                                                    />
+                                                    {link.name}
+                                                    <ChevronDown size={18} className={`transition-transform duration-300 ${activeSubMenu === link.name ? 'rotate-180' : ''}`} />
                                                 </button>
                                                 <AnimatePresence>
                                                     {activeSubMenu === link.name && (
@@ -217,14 +188,14 @@ const Navbar = () => {
                                                             initial={{ height: 0, opacity: 0 }}
                                                             animate={{ height: "auto", opacity: 1 }}
                                                             exit={{ height: 0, opacity: 0 }}
-                                                            className="bg-[#0d2855] overflow-hidden"
+                                                            className="flex flex-col items-start gap-5 mt-6 overflow-hidden pl-6 border-l border-white/10 ml-1"
                                                         >
                                                             {link.subMenu.map((sub) => (
                                                                 <Link
                                                                     key={sub.name}
                                                                     to={sub.href}
                                                                     onClick={() => setIsMobileMenuOpen(false)}
-                                                                    className={`block px-10 py-3 text-[11px] font-bold uppercase transition-colors hover:text-[#BC9C33] ${isLinkActive(sub.href) ? 'text-[#BC9C33]' : 'text-white/70'}`}
+                                                                    className={`text-[15px] font-sans font-bold uppercase tracking-widest transition-colors ${isLinkActive(sub.href) ? 'text-[#BC9C33]' : 'text-white/60 hover:text-white'}`}
                                                                 >
                                                                     {sub.name}
                                                                 </Link>
@@ -237,16 +208,16 @@ const Navbar = () => {
                                             <Link
                                                 to={link.href}
                                                 onClick={() => setIsMobileMenuOpen(false)}
-                                                className={`flex items-center px-6 py-4 text-[12px] font-bold uppercase transition-colors hover:text-[#BC9C33] ${isLinkActive(link.href) ? 'text-[#BC9C33]' : 'text-white'}`}
+                                                className={`text-[19px] font-sans font-bold uppercase tracking-[0.15em] transition-colors ${isLinkActive(link.href) ? 'text-[#BC9C33]' : 'text-white hover:text-[#BC9C33]'}`}
                                             >
                                                 {link.name}
                                             </Link>
                                         )}
-                                    </motion.li>
+                                    </motion.div>
                                 ))}
-                            </ul>
-                        </motion.div>
-                    </>
+                            </div>
+                        </div>
+                    </motion.div>
                 )}
             </AnimatePresence>
         </nav>
