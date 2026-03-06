@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Font families - matching old website */
+    --font-heading: 'Georgia', 'Lora', serif;
+    --font-body: 'Source Sans Pro', sans-serif;
+
+    /* Color palette - matching old website */
+    --color-gold: #bc9c33;
+    --color-navy: #103065;
+    --color-light: #fff;
+    --color-soft-gold: #FCF4DC;
+    --color-soft-gray: #F5F5F5;
+    --color-pale-blue: #E3EAF4;
+  }
+}
+
+:root {
+  font-family: var(--font-body), system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+.bg-gold {
+  background-color: var(--color-gold);
+}
+
+.text-gold {
+  color: var(--color-gold);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-body), sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+.font-display {
+  font-family: var(--font-heading);
+}
+
+/* Custom Swiper Pagination Styles */
+.swiper-pagination-bullet {
+  background: white !important;
+  opacity: 0.5 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: var(--color-gold) !important;
+  opacity: 1 !important;
+  width: 30px !important;
+  border-radius: 4px !important;
+  transition: all 0.3s !important;
+}
+
+@layer utilities {
+  .animate-slow-zoom {
+    animation: slow-zoom 20s ease-in-out infinite alternate;
+  }
+
+  .animate-property-zoom {
+    animation: property-zoom 20s ease-out forwards;
+  }
+}
+
+@keyframes property-zoom {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+/* Image Protection */
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+@keyframes slow-zoom {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+/* Back to Top */
+.back-to-top {
+  color: var(--color-gold) !important;
+}
+
+.back-to-top span {
+  font-family: var(--font-body) !important;
+}
+
+/* Button Styles from old website */
+.btn-navy {
+  color: var(--color-navy);
+  border-color: var(--color-navy) !important;
+}
+
+.btn-navy:hover {
+  color: #fff !important;
+  border-color: var(--color-navy) !important;
+  background-color: var(--color-navy);
+}
+
+.btn-lora {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 400;
+}
