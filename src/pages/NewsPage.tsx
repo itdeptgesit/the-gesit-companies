@@ -126,8 +126,8 @@ const NewsPage = () => {
                                         src={img}
                                         alt={`News Hero ${index + 1}`}
                                         initial={{ scale: 1 }}
-                                        animate={{ scale: activeIndex === index ? 1.15 : 1 }}
-                                        transition={{ duration: 6, ease: "easeOut" }}
+                                        animate={{ scale: activeIndex === index ? 1.08 : 1 }}
+                                        transition={{ duration: 12, ease: "linear" }}
                                         className="w-full h-full object-cover"
                                         width="1920"
                                         height="1080"

@@ -18,12 +18,19 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
     const [index, setIndex] = useState(0);
 
     useEffect(() => {
+        if (images.length === 0) return;
+        // Preload all images in the slideshow
+        images.forEach(src => {
+            const img = (window as any).Image ? new Image() : null;
+            if (img) img.src = src;
+        });
+
         if (images.length <= 1) return;
         const timer = setInterval(() => {
             setIndex((prev) => (prev + 1) % images.length);
         }, 5000);
         return () => clearInterval(timer);
-    }, [images.length]);
+    }, [images]);
 
     return (
         <div className="w-full h-full relative overflow-hidden bg-slate-900">
@@ -89,6 +96,7 @@ const TradingServicePage = () => {
                                         className="w-full h-full object-cover animate-property-zoom"
                                         style={{ transformOrigin: 'center' }}
                                         loading={index === 0 ? "eager" : "lazy"}
+                                        {...(index === 0 ? { fetchPriority: "high" } : {})}
                                         decoding="async"
                                     />
                                     {/* Blue gradient overlay */}

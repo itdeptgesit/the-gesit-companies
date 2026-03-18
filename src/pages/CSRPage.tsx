@@ -157,6 +157,7 @@ const CSRPage = () => {
                                         className="w-full h-full object-cover animate-property-zoom"
                                         style={{ transformOrigin: 'center' }}
                                         loading={index === 0 ? "eager" : "lazy"}
+                                        {...(index === 0 ? { fetchPriority: "high" } : {})}
                                         decoding="async"
                                     />
                                     {/* Gradient Overlay */}
