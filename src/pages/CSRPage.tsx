@@ -115,9 +115,13 @@ const CSRPage = () => {
             title: "Education",
             content: [
                 {
-                    subtitle: "School Facilities & Scholarships",
+                    subtitle: "",
                     items: [
-                        "Building, renovating, and providing school facilities for: North Sumatera (Sekolah Mitra Inalum), Jakarta (Down Syndrome & Deaf School of Cempaka Putih), Jakarta (School of YPAC), and Fujian (Primary, Secondary School, Sport and Library in Normal University)",
+                        "Building, renovating, and providing school facilities for:",
+                        "- North Sumatera: Sekolah Mitra Inalum",
+                        "- Jakarta: Down Syndrome & Deaf School of Cempaka Putih",
+                        "- Jakarta: School of Yayasan Penyandang Anak Cacat",
+                        "- Fujian: Primary, Secondary School, Sport and Library in Normal University",
                         "Providing over 300 university scholarships per year"
                     ]
                 }
@@ -176,15 +180,14 @@ const CSRPage = () => {
                     </div>
                 </div>
 
-                {/* Content Area */}
-                <div className="absolute inset-0 z-20 flex items-end pb-16 md:pb-24">
+                <div className="absolute inset-0 z-20 flex items-center md:items-end justify-center md:justify-start pb-0 md:pb-24">
                     <div className="w-full px-8 md:px-16 lg:px-24">
-                        <div className="flex flex-col md:flex-row justify-between items-end gap-8">
+                        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-8 text-center md:text-left">
                             <motion.h1
                                 initial={{ opacity: 0, y: 40 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 1.2, ease: "easeOut" }}
-                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md"
+                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md text-center md:text-left"
                                 style={{
                                     fontFamily: 'Georgia, serif',
                                     fontWeight: 400,
@@ -195,7 +198,7 @@ const CSRPage = () => {
                             </motion.h1>
 
                             {/* Navigation Buttons */}
-                            <div className="flex gap-4 z-30">
+                            <div className="hidden md:flex gap-4 z-30">
                                 <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                 </button>
@@ -209,43 +212,52 @@ const CSRPage = () => {
             </section>
 
             {/* ================= OVERVIEW ================= */}
-            <section className="py-32" style={{ backgroundColor: '#e3eaf4' }}>
-                <div className="container mx-auto px-8 md:px-16 lg:px-24 flex flex-col items-center border-b border-slate-200/50 pb-20">
-                    <div className="max-w-4xl text-left w-full">
-                        <motion.h2
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1 }}
-                            className="text-2xl md:text-[32px] text-navy-deep mb-10 leading-[1.5]"
-                            style={{ fontFamily: 'Georgia, serif' }}
-                        >
-                            Creating a positive effect on lives and communities <br className="hidden md:block" />
-                            by adding the most value and making a significant <br className="hidden md:block" />
-                            and lasting impact through Gesit Foundation.
-                        </motion.h2>
+            <section className="flex justify-center" style={{ backgroundColor: '#e3eaf4', padding: '150px 0' }}>
+                <div style={{ maxWidth: '824px', width: '100%', margin: '0 auto', padding: '0 20px' }}>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        {/* Heading */}
+                        <div style={{ margin: '0 0 40px', padding: 0 }}>
+                            <h2 className="text-[32px] md:text-[46px] leading-[1.2] font-normal" style={{
+                                color: '#103065',
+                                fontFamily: 'Georgia, serif',
+                                textAlign: 'left',
+                                margin: 0
+                            }}>
+                                Creating a positive effect on lives and communities
+                                by adding the most value and making a significant
+                                and lasting impact through Gesit Foundation.
+                            </h2>
+                        </div>
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1, delay: 0.3 }}
-                            className="flex gap-6 items-start text-left"
-                        >
-                            <div className="w-[3px] h-[80px] bg-[#BC9C33] shrink-0 mt-1"></div>
-                            <p className="text-navy-deep text-xl md:text-[24px] font-medium leading-[1.6]">
-                                Our social investment programs focus on three areas: <span className="font-bold">Healthcare,</span> <br className="hidden md:block" />
-                                <span className="font-bold">Environment & Cultural Outreach, and Education.</span>
+                        {/* Description with Left Border */}
+                        <div style={{
+                            padding: '0 0 0 40px',
+                            borderLeft: '2px solid #BC9C33',
+                            textAlign: 'left'
+                        }}>
+                            <p className="text-[18px] md:text-[22px] leading-relaxed" style={{
+                                color: '#103065',
+                                fontFamily: "'Source Sans Pro', sans-serif",
+                                fontWeight: 400,
+                                margin: 0
+                            }}>
+                                Our social investment programs focus on three areas: <strong className="font-extrabold">Healthcare,</strong> <br className="hidden md:block" />
+                                <strong className="font-extrabold">Environment & Cultural Outreach,</strong> and <strong className="font-extrabold">Education.</strong>
                             </p>
-                        </motion.div>
-                    </div>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* ================= FOCUS AREAS ================= */}
             <section className="py-32 bg-navy-deep">
                 <div className="container mx-auto px-8 md:px-16 lg:px-24">
-                    <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-8 max-w-6xl mx-auto">
                         {focusAreas.map((area, index) => (
                             <motion.div
                                 key={area.title}
@@ -254,10 +266,10 @@ const CSRPage = () => {
                                 whileHover="hover"
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                                className="relative group flex flex-col items-center"
+                                className="relative group flex flex-col items-center h-full"
                             >
                                 {/* Top Image Section */}
-                                <div className="relative w-full aspect-[4/3] overflow-hidden rounded-card shadow-2xl shrink-0">
+                                <div className="relative w-full aspect-[4/3] overflow-hidden rounded-[4px] shadow-2xl shrink-0">
                                     <img
                                         src={area.image}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2s] ease-out"
@@ -283,7 +295,7 @@ const CSRPage = () => {
                                 </div>
 
                                 {/* Bottom Info Box */}
-                                <div className="w-full bg-[#BC9C33] p-8 text-left shadow-2xl relative z-10 min-h-[260px] flex flex-col items-start rounded-card">
+                                <div className="w-full bg-[#BC9C33] p-8 text-left shadow-2xl relative z-10 min-h-[260px] flex flex-col items-start rounded-[4px] flex-1">
                                     <h3 className="text-white text-2xl font-display mb-6 leading-tight h-16 flex items-center">{area.title}</h3>
                                     <p className="text-white/95 text-sm font-light leading-relaxed tracking-wide flex-1">
                                         {area.desc}
@@ -303,27 +315,27 @@ const CSRPage = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 1 }}
-                        className="text-center text-5xl font-display mb-20 text-navy-deep"
-                        style={{ fontFamily: 'Georgia, serif' }}
+                        className="text-center mb-20 text-[#000]"
+                        style={{ fontFamily: 'Georgia, serif', fontSize: '3rem', fontWeight: 400 }}
                     >
                         Our CSR Initiatives & Programs
                     </motion.h2>
 
-                    <div className="divide-y divide-slate-200">
-                        {initiatives.map(initiative => (
-                            <div key={initiative.title} className="py-4">
+                    <div className="flex flex-col">
+                        {initiatives.map((initiative) => (
+                            <div key={initiative.title} className="py-0 border-t border-slate-200 last:border-b">
                                 <button
                                     onClick={() =>
                                         setOpenInitiative(
                                             openInitiative === initiative.title ? null : initiative.title
                                         )
                                     }
-                                    className="w-full py-8 flex items-center gap-8 text-left transition-colors group"
+                                    className="w-full py-6 flex items-center gap-8 text-left transition-colors group"
                                 >
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 shrink-0 ${openInitiative === initiative.title ? "bg-[#BC9C33] text-white" : "bg-[#BC9C33] text-white"}`}>
-                                        {openInitiative === initiative.title ? <Minus size={18} /> : <Plus size={18} />}
+                                    <div className={`w-12 h-12 rounded-full border border-[#BC9C33] flex items-center justify-center shrink-0 transition-colors ${openInitiative === initiative.title ? 'bg-transparent text-[#BC9C33]' : 'bg-[#BC9C33] text-white'}`}>
+                                        {openInitiative === initiative.title ? <Minus size={20} strokeWidth={1} /> : <Plus size={20} strokeWidth={1} />}
                                     </div>
-                                    <span className="text-3xl font-display text-navy-deep group-hover:text-[#BC9C33] transition-colors">{initiative.title}</span>
+                                    <span className="text-[28px] text-[#000]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400 }}>{initiative.title}</span>
                                 </button>
 
                                 <AnimatePresence>
@@ -335,19 +347,26 @@ const CSRPage = () => {
                                             transition={{ duration: 0.4, ease: "easeInOut" }}
                                             className="overflow-hidden"
                                         >
-                                            <div className="pl-20 pr-8 pb-12 pt-2">
+                                            <div className="pl-[6rem] pr-8 pb-8 pt-0">
                                                 {initiative.content.map(block => (
-                                                    <div key={block.subtitle} className="mb-10 last:mb-0">
-                                                        <h4 className="text-xl font-bold text-navy-deep/80 mb-6">
-                                                            {block.subtitle}
-                                                        </h4>
-                                                        <ul className="space-y-5">
-                                                            {block.items.map((item, i) => (
-                                                                <li key={i} className="flex items-start gap-5 text-lg text-slate-600 font-light leading-relaxed">
-                                                                    <div className="w-2 h-2 rounded-full bg-slate-400 mt-3 shrink-0" />
-                                                                    {item}
-                                                                </li>
-                                                            ))}
+                                                    <div key={block.subtitle} className="mb-6 last:mb-0">
+                                                        {block.subtitle && (
+                                                            <h4 className="text-[20px] mb-2" style={{ fontFamily: 'Georgia, serif', fontWeight: 800, color: '#444' }}>
+                                                                {block.subtitle}
+                                                            </h4>
+                                                        )}
+                                                        <ul className="space-y-1">
+                                                            {block.items.map((item, i) => {
+                                                                const isSubItem = item.startsWith("- ");
+                                                                return (
+                                                                    <li key={i} className={`flex items-start gap-3 text-[18px] text-[#444] font-normal leading-snug ${isSubItem ? 'pl-8' : ''}`} style={{ fontFamily: "'Source Sans Pro', sans-serif" }}>
+                                                                        {!isSubItem ? (
+                                                                            <div className="w-1.5 h-1.5 rounded-full bg-slate-400 mt-[10px] shrink-0" />
+                                                                        ) : null}
+                                                                        <span className="flex-1">{item}</span>
+                                                                    </li>
+                                                                );
+                                                            })}
                                                         </ul>
                                                     </div>
                                                 ))}
@@ -357,8 +376,6 @@ const CSRPage = () => {
                                 </AnimatePresence>
                             </div>
                         ))}
-                        {/* Closing line for the last item */}
-                        <div className="border-b border-slate-200"></div>
                     </div>
                 </div>
             </section>

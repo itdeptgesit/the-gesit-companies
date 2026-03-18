@@ -84,11 +84,11 @@ const CSRSection = () => {
                         <motion.h2
                             variants={fadeUp}
                             style={{
-                                fontSize: '30px',
+                                fontSize: '32px',
                                 fontFamily: 'Georgia, serif',
                                 color: '#1a1a1a',
                                 fontWeight: '400',
-                                lineHeight: '1.2',
+                                lineHeight: '1.3',
                                 marginBottom: '16px',
                                 marginTop: '-8px'
                             }}
@@ -102,17 +102,17 @@ const CSRSection = () => {
                         <motion.p
                             variants={fadeUp}
                             style={{
-                                color: '#666',
-                                fontSize: '16px',
+                                color: '#555',
+                                fontSize: '17px',
                                 lineHeight: '1.6',
-                                marginBottom: '20px',
+                                marginBottom: '24px',
                                 fontFamily: 'Source Sans Pro, sans-serif',
-                                maxWidth: '480px'
+                                maxWidth: '100%'
                             }}
                         >
                             {latestCSR
                                 ? latestCSR.excerpt
-                                : <>Our social investment programs focus on three areas where we believe Gesit will add the most value and make a significant and lasting impact:<br /><strong>Healthcare, Environment & Cultural Outreach, and Education.</strong></>
+                                : <>Our social investment programs focus on three areas where we believe Gesit will add the most value and make a significant and lasting impact:<strong> Healthcare, Environment & Cultural Outreach, and Education.</strong></>
                             }
                         </motion.p>
 
@@ -124,7 +124,7 @@ const CSRSection = () => {
                                     alignItems: 'center',
                                     gap: '10px',
                                     color: '#BC9C33',
-                                    fontSize: '15px',
+                                    fontSize: '16px',
                                     fontWeight: 'bold',
                                     textDecoration: 'none',
                                     fontFamily: 'Georgia, serif',
@@ -151,23 +151,23 @@ const CSRSection = () => {
                         <motion.div
                             variants={fadeUp}
                             style={{
-                                borderLeft: '2px solid #BC9C33',
-                                paddingLeft: '20px',
+                                borderLeft: '1.5px solid #BC9C33',
+                                paddingLeft: '16px',
                                 marginLeft: '2px',
                             }}
                         >
                             <p style={{
-                                color: '#103065',
-                                fontSize: '18px',
-                                fontWeight: 'bold',
+                                color: '#1a1a1a',
+                                fontSize: '19px',
+                                fontWeight: '400',
                                 fontFamily: 'Georgia, serif',
                                 marginBottom: '6px',
                             }}>
                                 {latestCSR ? latestCSR.category : "Gesit Foundation COVID-19 Vaccination Program"}
                             </p>
                             <p style={{
-                                color: '#777',
-                                fontSize: '15px',
+                                color: '#666',
+                                fontSize: '16px',
                                 fontFamily: 'Source Sans Pro, sans-serif',
                             }}>
                                 {latestCSR

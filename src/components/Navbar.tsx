@@ -95,7 +95,7 @@ const Navbar = () => {
                 </Link>
 
                 {/* Desktop Menu */}
-                <ul className="hidden lg:flex items-center gap-11 uppercase text-[14px] tracking-[0.12em] font-semibold text-white font-sans">
+                <ul className="hidden lg:flex items-center gap-8 uppercase text-[13px] tracking-[0.08em] font-semibold text-white font-sans">
                     {navLinks.map((link) => (
                         <li
                             key={link.name}
@@ -105,7 +105,7 @@ const Navbar = () => {
                                 <div className="relative">
                                     <button
                                         className={`flex items-center gap-1.5 py-1 uppercase transition-colors hover:text-white/80 ${isBusinessActive() ? 'text-white' : 'text-white'}`}
-                                        style={{ borderBottom: isBusinessActive() ? '2.5px solid #BC9C33' : '2.5px solid transparent' }}
+                                        style={{ borderBottom: isBusinessActive() ? '1px solid #BC9C33' : '1px solid transparent' }}
                                     >
                                         {link.name}
                                     </button>
@@ -126,7 +126,7 @@ const Navbar = () => {
                                 <Link
                                     to={link.href}
                                     className={`relative block py-1 transition-colors hover:text-white/80 ${isLinkActive(link.href) ? 'text-white' : 'text-white'}`}
-                                    style={{ borderBottom: isLinkActive(link.href) ? '2.5px solid #BC9C33' : '2.5px solid transparent' }}
+                                    style={{ borderBottom: isLinkActive(link.href) ? '1px solid #BC9C33' : '1px solid transparent' }}
                                 >
                                     {link.name}
                                 </Link>

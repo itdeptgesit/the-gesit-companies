@@ -57,9 +57,9 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
 const TradingServicePage = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const heroImages = [
-        "/trading/cover.jpg",
-        "/trading/trading1.png",
-        "/trading/agency1.jpeg"
+        "/trading/hero1.png",
+        "/trading/hero2.png",
+        "/trading/hero3.png"
     ];
 
     return (
@@ -112,15 +112,14 @@ const TradingServicePage = () => {
                     </div>
                 </div>
 
-                {/* Text & Navigation at bottom */}
-                <div className="absolute inset-0 z-20 flex items-end pb-16 md:pb-24">
+                <div className="absolute inset-0 z-20 flex items-center md:items-end justify-center md:justify-start pb-0 md:pb-24">
                     <div className="w-full px-8 md:px-16 lg:px-24">
-                        <div className="flex flex-col md:flex-row justify-between items-end gap-8">
+                        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-8 text-center md:text-left">
                             <motion.h1
                                 initial={{ opacity: 0, y: 40 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 1.2, ease: "easeOut" }}
-                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md"
+                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md text-center md:text-left"
                                 style={{
                                     fontFamily: 'Georgia, serif',
                                     fontWeight: 400,
@@ -131,7 +130,7 @@ const TradingServicePage = () => {
                             </motion.h1>
 
                             {/* Navigation Buttons */}
-                            <div className="flex gap-4 z-30">
+                            <div className="hidden md:flex gap-4 z-30">
                                 <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                 </button>
@@ -145,38 +144,39 @@ const TradingServicePage = () => {
             </section>
 
             {/* 2. Intro Section - Gold Background */}
-            <section style={{ backgroundColor: '#BC9C33', padding: '120px 0' }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 40px' }}>
+            <section className="flex justify-center" style={{ backgroundColor: '#BC9C33', padding: '150px 0' }}>
+                <div style={{ maxWidth: '824px', width: '100%', margin: '0 auto', padding: '0 20px' }}>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        {/* Heading - Georgia font */}
-                        <h2 style={{
-                            color: 'white',
-                            fontSize: 'clamp(24px, 4vw, 36px)',
-                            fontFamily: 'Georgia, serif',
-                            fontWeight: 300,
-                            lineHeight: '1.4',
-                            marginBottom: '48px',
-                            maxWidth: '900px',
+                        {/* Heading */}
+                        <div style={{ margin: '0 0 15px', padding: 0 }}>
+                            <h2 className="text-[30px] md:text-[36px] leading-[40px] md:leading-[50px] font-normal" style={{
+                                color: '#fff',
+                                fontFamily: 'Georgia, serif',
+                                textAlign: 'left',
+                                margin: 0
+                            }}>
+                                Leveraging local Indonesian expertise and broad international network to source and deliver high-quality products.
+                            </h2>
+                        </div>
+
+                        {/* Description with Left Border */}
+                        <div style={{
+                            padding: '0 0 0 40px',
+                            borderStyle: 'solid',
+                            borderWidth: '0 0 0 2px',
+                            borderColor: '#fff',
+                            borderRadius: '0',
                             textAlign: 'left'
                         }}>
-                            Leveraging local Indonesian expertise and broad international network to source and deliver high-quality products.
-                        </h2>
-
-                        {/* Description with Vertical Line on the Left */}
-                        <div style={{ display: 'flex', gap: '32px', textAlign: 'left' }}>
-                            <div style={{ width: '2px', backgroundColor: 'white', opacity: 1 }}></div>
-                            <p style={{
-                                color: 'white',
-                                fontSize: '20px',
-                                lineHeight: '1.6',
+                            <p className="text-[16px] md:text-[24px] leading-[25px] md:leading-[1.5em]" style={{
+                                color: '#fff',
                                 fontFamily: "'Source Sans Pro', sans-serif",
                                 fontWeight: 400,
-                                maxWidth: '700px',
                                 margin: 0
                             }}>
                                 The Gesit Companies have been trading commodities along the aluminum value chain and providing agency services used by banks and other consumers for over 30 years.
@@ -187,77 +187,76 @@ const TradingServicePage = () => {
             </section>
 
             {/* Services Showcase */}
+            {/* Services Showcase */}
             <section className="py-24 md:py-40 bg-white overflow-hidden">
-                <div className="max-w-7xl mx-auto px-8">
-                    <div className="space-y-40">
+                <div className="container mx-auto px-6">
+                    <div className="space-y-48">
                         {/* Service 1: Trading */}
-                        <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-24">
-                            {/* Image Section - 35% - Animates from Left */}
-                            <div className="w-full lg:w-[35%]">
-                                <motion.div
-                                    initial={{ opacity: 0, x: -100 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                                    className="relative"
-                                >
-                                    <div className="aspect-[3/4] rounded-card overflow-hidden shadow-2xl relative z-10 bg-slate-50">
-                                        <ImageSlideshow images={["/trading/trading1.png", "/trading/trading2.png", "/trading/cover.jpg"]} />
-                                    </div>
-                                </motion.div>
-                            </div>
+                        <div className="flex flex-col lg:flex-row-reverse gap-12 lg:gap-24 items-center justify-center">
+                            {/* Image Section */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 100 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                                className="w-full lg:w-[45%] relative group"
+                            >
+                                <div className="relative aspect-[4/5] overflow-hidden shadow-sm bg-slate-200 rounded-[4px]">
+                                    <ImageSlideshow images={["/trading/trading1.png", "/trading/trading2.png", "/trading/cover.jpg"]} />
+                                </div>
+                            </motion.div>
 
-                            {/* Content Section - 55% - Animates from Right */}
-                            <div className="w-full lg:w-[55%]" style={{ maxWidth: '600px' }}>
-                                <motion.div
-                                    initial={{ opacity: 0, x: 100 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                                >
-                                    <h3 className="text-4xl md:text-5xl font-display text-navy-deep mb-8 leading-tight">Trading</h3>
+                            {/* Content Section */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -100 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                                className="w-full lg:w-[45%]"
+                                style={{ maxWidth: '480px' }}
+                            >
+                                <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.2' }}>
+                                    Trading
+                                </h3>
 
-                                    <div className="text-slate-600 text-lg leading-relaxed font-medium">
-                                        The Gesit Companies has been in this business for over 30 years. We source and deliver a variety of products including Bauxite, Alumina, Calcined Petroleum Coke, Aluminum Ingots, to domestic and international markets - Indonesia, China, South America and the Middle East.
-                                    </div>
-                                </motion.div>
-                            </div>
+                                <div className="text-[#000] mt-8 mb-12" style={{ fontSize: '19px', fontWeight: 400, lineHeight: '1.7', fontFamily: "'Source Sans Pro', sans-serif" }}>
+                                    The Gesit Companies has been in this business for over 30 years. We source and deliver a variety of products including Bauxite, Alumina, Calcined Petroleum Coke, Aluminum Ingots, to domestic and international markets - Indonesia, China, South America and the Middle East.
+                                </div>
+                            </motion.div>
                         </div>
 
                         {/* Service 2: Agency Services */}
-                        <div className="flex flex-col lg:flex-row-reverse items-center justify-center gap-12 lg:gap-24">
-                            {/* Image Section - 35% - Animates from Left */}
-                            <div className="w-full lg:w-[35%]">
-                                <motion.div
-                                    initial={{ opacity: 0, x: -100 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                                    className="relative"
-                                >
-                                    <div className="aspect-[3/4] rounded-card overflow-hidden shadow-2xl relative z-10 bg-slate-50">
-                                        <ImageSlideshow images={["/trading/agency1.jpeg", "/trading/agency2.jpeg", "/trading/agency3.jpeg"]} />
-                                    </div>
-                                </motion.div>
-                            </div>
+                        <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-center justify-center">
+                            {/* Image Section */}
+                            <motion.div
+                                initial={{ opacity: 0, x: -100 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                                className="w-full lg:w-[45%] relative group"
+                            >
+                                <div className="relative aspect-[4/5] overflow-hidden shadow-sm bg-slate-200 rounded-[4px]">
+                                    <ImageSlideshow images={["/trading/agency1.jpeg", "/trading/agency2.jpeg", "/trading/agency3.jpeg"]} />
+                                </div>
+                            </motion.div>
 
-                            {/* Content Section - 55% - Animates from Right */}
-                            <div className="w-full lg:w-[55%]" style={{ maxWidth: '600px' }}>
-                                <motion.div
-                                    initial={{ opacity: 0, x: 100 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                                >
-                                    <h3 className="text-4xl md:text-5xl font-display text-navy-deep mb-8 leading-tight">
-                                        Agency Services
-                                    </h3>
+                            {/* Content Section */}
+                            <motion.div
+                                initial={{ opacity: 0, x: 100 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true, margin: "-100px" }}
+                                transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+                                className="w-full lg:w-[45%]"
+                                style={{ maxWidth: '480px' }}
+                            >
+                                <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.2' }}>
+                                    Agency Services
+                                </h3>
 
-                                    <div className="text-slate-600 text-lg leading-relaxed font-medium">
-                                        The Gesit Companies provides agency services locally and internationally for various industries such as mining, power plants and other industrial projects. We have been the agent for major global organizations and for over 30 years.
-                                    </div>
-                                </motion.div>
-                            </div>
+                                <div className="text-[#000] mt-8 mb-12" style={{ fontSize: '19px', fontWeight: 400, lineHeight: '1.7', fontFamily: "'Source Sans Pro', sans-serif" }}>
+                                    For over two decades, this division has provided its agency services to support the supply and distribution of products and technology used by banks and other consumers. Representative products include special currency paper and coins, high security technology to identify brand and documents, and disposal machines.
+                                </div>
+                            </motion.div>
                         </div>
                     </div>
                 </div>

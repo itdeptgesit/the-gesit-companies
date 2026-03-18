@@ -97,16 +97,20 @@ const AboutPage = () => {
                     {/* Navy blue gradient from top for navbar area */}
                     <div className="absolute inset-x-0 top-0 h-[200px] bg-gradient-to-b from-[#103065]/90 to-transparent z-[1]"></div>
                 </div>
-                <div className="relative z-10 w-full px-8 md:px-16 lg:px-24 pb-16 md:pb-24">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1.5, delay: 0.5 }}
-                        className="text-white text-5xl md:text-7xl"
-                        style={{ fontFamily: 'Georgia, serif', fontWeight: 400 }}
-                    >
-                        About
-                    </motion.h2>
+                <div className="absolute inset-0 z-20 flex items-center md:items-end justify-center md:justify-start pb-0 md:pb-24">
+                    <div className="w-full px-8 md:px-16 lg:px-24">
+                        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-8 text-center md:text-left">
+                            <motion.h2
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 1.5, delay: 0.5 }}
+                                className="text-white text-5xl md:text-7xl text-center md:text-left"
+                                style={{ fontFamily: 'Georgia, serif', fontWeight: 400 }}
+                            >
+                                About
+                            </motion.h2>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -120,7 +124,7 @@ const AboutPage = () => {
                         transition={{ duration: 1.2 }}
                     >
                         <h3
-                            className="text-white text-2xl md:text-[2.2rem] leading-[1.6] font-normal text-center"
+                            className="text-white text-2xl md:text-[2.2rem] leading-[1.6] font-normal"
                             style={{ fontFamily: 'Georgia, serif' }}
                         >
                             {content['intro_description_text'] || "Founded in the 1950s as a small private trading company, Gesit has grown to become a business leader in the fields of Property, Trading & Service, Manufacturing, and Natural Resources."}
@@ -144,7 +148,7 @@ const AboutPage = () => {
                             {/* 艺成 SVG */}
                             <motion.div
                                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 1 } } }}
-                                className="mb-8 w-[160px] md:w-[200px]"
+                                className="mb-8 w-[160px] md:w-[200px] mx-auto lg:mx-0"
                             >
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" className="w-full h-auto fill-[#BC9C33]">
                                     <g>
@@ -164,8 +168,8 @@ const AboutPage = () => {
 
                             <motion.h4
                                 variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 1, delay: 0.25 } } }}
-                                className="text-[#BC9C33] text-[1.65rem] md:text-[1.85rem] mb-10"
-                                style={{ fontFamily: "Georgia, serif", fontWeight: 600, lineHeight: '36px' }}
+                                className="text-[#BC9C33] text-[1.4rem] md:text-[1.6rem] mb-10"
+                                style={{ fontFamily: "Georgia, serif", fontWeight: 600, lineHeight: '1.4' }}
                             >
                                 Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors.
                             </motion.h4>
@@ -219,7 +223,7 @@ const AboutPage = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 1 }}
-                            className="w-full"
+                            className="w-full text-center lg:text-left"
                         >
                             <h6 className="text-[#BC9C33] font-bold text-lg md:text-xl mb-4" style={{ fontFamily: "Georgia, serif" }}>Our Vision</h6>
                             <p className="text-[#333] text-xl md:text-2xl leading-snug mb-10" style={{ fontFamily: "'Source Sans Pro', sans-serif", fontWeight: 400 }}>

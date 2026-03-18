@@ -57,9 +57,10 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
 const NaturalResourcesPage = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const heroImages = [
-        "/natural/mining.jpg",
-        "/natural/bauxite_mining.jpg",
-        "/natural/nickel.jpeg"
+        "/natural/hero1.jpg",
+        "/natural/hero2.png",
+        "/natural/hero3.png",
+        "/natural/hero4.png"
     ];
 
     const fadeIn = {
@@ -134,15 +135,14 @@ const NaturalResourcesPage = () => {
                     </div>
                 </div>
 
-                {/* Text & Navigation at bottom */}
-                <div className="absolute inset-0 z-20 flex items-end pb-16 md:pb-24">
+                <div className="absolute inset-0 z-20 flex items-center md:items-end justify-center md:justify-start pb-0 md:pb-24">
                     <div className="w-full px-8 md:px-16 lg:px-24">
-                        <div className="flex flex-col md:flex-row justify-between items-end gap-8">
+                        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-8 text-center md:text-left">
                             <motion.h1
                                 initial={{ opacity: 0, y: 40 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 1.2, ease: "easeOut" }}
-                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md"
+                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md text-center md:text-left"
                                 style={{
                                     fontFamily: 'Georgia, serif',
                                     fontWeight: 400,
@@ -153,7 +153,7 @@ const NaturalResourcesPage = () => {
                             </motion.h1>
 
                             {/* Navigation Buttons */}
-                            <div className="flex gap-4 z-30">
+                            <div className="hidden md:flex gap-4 z-30">
                                 <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                 </button>
@@ -166,28 +166,27 @@ const NaturalResourcesPage = () => {
                 </div>
             </section>
 
-            {/* 2. Intro Section - Gold Background Matching Manufacturing */}
-            <section style={{ backgroundColor: '#BC9C33', padding: '120px 0' }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 40px' }}>
+            {/* 2. Intro Section - Gold Background Matching User Photo */}
+            <section className="flex justify-center" style={{ backgroundColor: '#BC9C33', padding: '150px 0' }}>
+                <div style={{ maxWidth: '1000px', width: '100%', margin: '0 auto', padding: '0 20px' }}>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        {/* Heading - Georgia font */}
-                        <h2 style={{
-                            color: 'white',
-                            fontSize: 'clamp(24px, 4vw, 36px)',
-                            fontFamily: 'Georgia, serif',
-                            fontWeight: 300,
-                            lineHeight: '1.4',
-                            marginBottom: '48px',
-                            maxWidth: '900px',
-                            textAlign: 'left'
-                        }}>
-                            Developing Indonesia's vast natural resources and continually expanding to other types of minerals and resources.
-                        </h2>
+                        {/* Heading */}
+                        <div style={{ padding: 0 }}>
+                            <h2 className="text-[30px] md:text-[36px] leading-[40px] md:leading-[50px] font-normal" style={{
+                                color: '#fff',
+                                fontFamily: 'Georgia, serif',
+                                textAlign: 'left',
+                                maxWidth: '900px',
+                                margin: '0 auto'
+                            }}>
+                                Developing Indonesia's vast natural resources and continually expanding to other types of minerals and resources.
+                            </h2>
+                        </div>
                     </motion.div>
                 </div>
             </section>
@@ -203,7 +202,7 @@ const NaturalResourcesPage = () => {
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                                className="relative rounded-card overflow-hidden shadow-2xl aspect-[3/4] bg-slate-200"
+                                className="relative rounded-[4px] overflow-hidden shadow-2xl aspect-[3/4] bg-slate-200"
                             >
                                 <ImageSlideshow images={[
                                     "/natural/bauxite_mining.jpg",
@@ -221,15 +220,17 @@ const NaturalResourcesPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                             >
-                                <h3 className="text-4xl md:text-5xl font-display text-navy-deep mb-8 leading-tight">Bauxite Mining</h3>
-                                <div className="text-slate-600 font-medium text-lg leading-relaxed mb-10 space-y-4">
-                                    <p>
-                                        The Gesit Companies have 2 bauxite concessions of about 7,000 Ha along the Kapuas River in West Kalimantan.
+                                <h3 className="text-[#000] mb-4 text-4xl md:text-[3rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.2' }}>
+                                    Bauxite Mining
+                                </h3>
+                                <div className="text-[#000] mt-8 mb-12 space-y-4" style={{ fontSize: '19px', fontWeight: 400, lineHeight: '1.7', fontFamily: "'Source Sans Pro', sans-serif" }}>
+                                    <p className="m-0">
+                                        The Gesit Companies have 6 bauxite concessions of about 75,000 Ha along the Kapuas River in West Kalimantan.
                                     </p>
                                 </div>
                                 <div className="mt-12 flex items-center gap-6">
                                     <div className="w-[3px] h-10 bg-[#BC9C33]"></div>
-                                    <p className="text-navy-deep text-2xl font-medium" style={{ fontFamily: 'Georgia, serif' }}>
+                                    <p className="text-[#000] text-2xl" style={{ fontFamily: 'Georgia, serif', fontWeight: 400 }}>
                                         Location : West Kalimantan, Indonesia
                                     </p>
                                 </div>
@@ -243,17 +244,17 @@ const NaturalResourcesPage = () => {
             <section className="py-24 md:py-40 bg-white relative overflow-hidden">
                 <div className="container mx-auto px-6 relative z-10">
                     <motion.div {...fadeIn} className="text-center mb-16">
-                        <h2 className="text-navy-deep text-4xl md:text-5xl" style={{ fontFamily: 'Georgia, serif' }}>New Business Development</h2>
+                        <h2 className="text-[#000] text-4xl md:text-5xl" style={{ fontFamily: 'Georgia, serif' }}>New Business Development</h2>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {newBusinesses.map((biz, idx) => (
                             <motion.div
                                 key={idx}
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: idx * 0.1 }}
-                                className="group flex flex-col rounded-card overflow-hidden"
+                                className="group flex flex-col rounded-[4px] h-full overflow-hidden shadow-lg"
                             >
                                 {/* Image Container */}
                                 <div className="relative aspect-[4/3] w-full overflow-hidden">
@@ -265,7 +266,7 @@ const NaturalResourcesPage = () => {
                                 </div>
 
                                 {/* Content Box - Attached directly below image */}
-                                <div className="bg-[#103065] p-6 text-center shadow-lg w-full flex items-center justify-center min-h-[100px]">
+                                <div className="bg-[#103065] p-6 text-center w-full flex items-center justify-center flex-1 min-h-[100px]">
                                     <h4 className="text-white text-lg font-medium leading-snug" style={{ fontFamily: 'Georgia, serif' }}>{biz.title}</h4>
                                 </div>
                             </motion.div>

@@ -53,45 +53,49 @@ const ProjectItem = ({ project }: { project: any, index: number }) => {
         <div
             className={`flex flex-col ${project.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-24 items-center justify-center`}
         >
-            {/* Image Section (35%) - Animates from Left */}
+            {/* Image Section */}
             <motion.div
                 initial={{ opacity: 0, x: -100 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full lg:w-[35%] relative group"
+                className="w-full lg:w-[45%] relative group"
             >
-                <div className="relative aspect-[3/4] overflow-hidden rounded-card shadow-2xl bg-slate-200">
+                <div className="relative aspect-[4/5] overflow-hidden shadow-sm bg-slate-200 rounded-[4px]">
                     <ImageSlideshow images={project.images} />
                 </div>
             </motion.div>
 
-            {/* Content Section (55%) - Animates from Right */}
+            {/* Content Section */}
             <motion.div
                 initial={{ opacity: 0, x: 100 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                className="w-full lg:w-[55%]"
-                style={{ maxWidth: '600px' }}
+                className="w-full lg:w-[45%]"
+                style={{ maxWidth: '480px' }}
             >
-                <h3 className="text-4xl md:text-5xl font-display text-navy-deep mb-6 leading-tight">{project.title}</h3>
-
-                <div className="text-slate-600 text-lg leading-relaxed mb-6 font-medium">
+                <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.2' }}>{project.title}</h3>
+                {project.subtitle && (
+                    <p className="text-[#1a1a1a] mb-8" style={{ fontFamily: 'Georgia, serif', fontSize: '1.25rem', fontStyle: 'italic' }}>
+                        {project.subtitle}
+                    </p>
+                )}
+                <div className={`text-[#000] ${!project.subtitle ? 'mt-8' : ''} mb-12`} style={{ fontSize: '19px', fontWeight: 400, lineHeight: '1.7', fontFamily: "'Source Sans Pro', sans-serif" }}>
                     {project.desc}
                 </div>
 
-                {/* Location & Property Type - Aligned with Image Reference */}
-                <div className="mb-12 flex gap-8 items-start">
-                    <div className="w-[3px] h-20 bg-[#BC9C33] opacity-80 mt-1"></div>
-                    <div className="space-y-4">
+                {/* Location & Property Type */}
+                <div className="mb-12 flex gap-6 items-center">
+                    <div className="w-[3px] h-[65px] bg-[#BC9C33]"></div>
+                    <div className="space-y-2 mt-0.5">
                         {project.location && (
-                            <h4 className="text-navy-deep text-2xl" style={{ fontFamily: 'Georgia, serif' }}>
+                            <h4 className="text-[#1a1a1a]" style={{ fontFamily: 'Georgia, serif', fontSize: '22px', fontWeight: 400 }}>
                                 Location : {project.location}
                             </h4>
                         )}
                         {project.propertyType && (
-                            <p className="text-slate-500 text-xl font-body">
+                            <p className="text-[#777]" style={{ fontSize: '18px', fontFamily: "'Source Sans Pro', sans-serif" }}>
                                 Property Type : {project.propertyType}
                             </p>
                         )}
@@ -103,7 +107,8 @@ const ProjectItem = ({ project }: { project: any, index: number }) => {
                         href={project.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center px-10 py-4 border border-navy-deep rounded-full text-navy-deep text-lg hover:bg-navy-deep hover:text-white transition-all duration-300 no-underline shadow-sm hover:shadow-md"
+                        className="inline-flex items-center justify-center px-10 py-4 border border-[#103065] rounded-full text-[#103065] text-[16px] hover:bg-[#103065] hover:text-white transition-all duration-300 no-underline"
+                        style={{ fontFamily: "'Source Sans Pro', sans-serif", fontWeight: 600 }}
                     >
                         Learn More
                     </a>
@@ -132,7 +137,7 @@ const PropertyPage = () => {
                 "/property/trinity_05.jpeg",
                 "/property/trinity_06.jpeg"
             ],
-            reverse: false,
+            reverse: true,
             website: "https://trinitytower.co.id/"
         },
         {
@@ -140,10 +145,10 @@ const PropertyPage = () => {
             subtitle: "",
             location: "Jakarta, Indonesia",
             propertyType: "Hotel",
-            desc: "JS Luwansa Hotel and Convention Center is located in Jakarta’s Golden Triangle, Jakarta’s fastest growing and exclusive business district. Conveniently located in close proximity to major embassies, shopping malls and the toll way.",
+            desc: "JS Luwansa Hotel and Convention Center is located in Jakarta’s Golden Triangle, Jakarta’s fastest growing and exclusive business district. Conveniently located in close proximity to major embassies, shopping malls and the toll way. JS Luwansa Hotel and Convention Center is the perfect place for discerning business travelers who need a strategic base to support their business activities from a location within close proximity to the rest of Jakarta.",
             points: [],
             images: ["/property/property_jsl_2.png", "/property/property_jsl_3.png"],
-            reverse: true,
+            reverse: false,
             website: "https://www.jsluwansa.com/"
         },
         {
@@ -151,38 +156,38 @@ const PropertyPage = () => {
             subtitle: "",
             location: "Jakarta, Indonesia",
             propertyType: "Office Space & Concert Hall",
-            desc: "Usmar Ismail Hall is an important part of the PPHUI building, which includes a 6,400 m2 office space and state of the art cinema and concert hall located in CBD Jakarta. This is the first Integrated Cinema and Concert Hall in Indonesia.",
+            desc: "Usmar Ismail Hall is an important part of the PPHUI building, which includes a 6,400 m2 office space and state of the art cinema and concert hall located in CBD Jakarta. The Usmar Ismail Concert Hall has been designed with an exclusive interior, comfortable seating arrangement and modern lighting. The design concept ensures the ultimate enjoyment experience for the audience of each presented program. This is the first Integrated Cinema and Concert Hall in Indonesia.",
             points: [],
             images: ["/property/property_PPHUI_Exterior_1.png", "/property/property_PPHUI_Theater_2.png"],
-            reverse: false,
+            reverse: true,
             website: "https://usmarismailhall.com/"
         },
         {
             title: "Senayan Development",
-            subtitle: "",
+            subtitle: "Under Development",
             location: "Jakarta, Indonesia",
             propertyType: "Tower Building",
             desc: "This development boasts a world-class international standard and comprises over 180 rooms with 1,500 m2 of multifunction & ballroom space.",
             points: [],
             images: ["/property/senayan-development-.jpeg"],
-            reverse: true
+            reverse: false
         },
         {
-            title: "TOD Rasuna",
-            subtitle: "",
+            title: "TOD Rasuna Development",
+            subtitle: "Under Development",
             location: "Jakarta, Indonesia",
             propertyType: "Tower Building",
             desc: "This TOD development within inner Jakarta’s Golden Triangle will combine retail, residential, and a world-class theater space together into one – enabling ease of mobility for tenants and reducing on-street traffic.",
             points: [],
             images: ["/property/property_TOD_Rasuna_1.png", "/property/tod-property-lrtcitycibubur.jpg"],
-            reverse: false
+            reverse: true
         }
     ];
 
     const heroImages = [
-        "/property/cover.png",
-        "/property/cover 2.jpeg",
-        "/property/cover 3.png"
+        "/property/cover1.png",
+        "/property/cover2.png",
+        "/property/cover3.webp"
     ];
 
     return (
@@ -235,16 +240,15 @@ const PropertyPage = () => {
                     </div>
                 </div>
 
-                {/* Text & Navigation at bottom */}
-                <div className="absolute inset-0 z-20 flex items-end pb-16 md:pb-24">
+                <div className="absolute inset-0 z-20 flex items-center md:items-end justify-center md:justify-start pb-0 md:pb-24">
                     <div className="w-full px-8 md:px-16 lg:px-24">
-                        <div className="flex flex-col md:flex-row justify-between items-end gap-8">
+                        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-8 text-center md:text-left">
                             {/* Only "Property" title */}
                             <motion.h1
                                 initial={{ opacity: 0, y: 40 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 1.2, ease: "easeOut" }}
-                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md"
+                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md text-center md:text-left"
                                 style={{
                                     fontFamily: 'Georgia, serif',
                                     fontWeight: 400,
@@ -255,7 +259,7 @@ const PropertyPage = () => {
                             </motion.h1>
 
                             {/* Navigation Buttons */}
-                            <div className="flex gap-4 z-30">
+                            <div className="hidden md:flex gap-4 z-30">
                                 <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                 </button>
@@ -269,38 +273,40 @@ const PropertyPage = () => {
             </section>
 
             {/* 2. Intro Section - Gold Background */}
-            <section style={{ backgroundColor: '#BC9C33', padding: '120px 0' }}>
-                <div style={{ maxWidth: '1000px', margin: '0 auto', padding: '0 40px' }}>
+            {/* 2. Intro Section - Gold Background */}
+            <section className="flex justify-center" style={{ backgroundColor: '#BC9C33', padding: '150px 0' }}>
+                <div style={{ maxWidth: '824px', width: '100%', margin: '0 auto', padding: '0 20px' }}>
                     <motion.div
                         initial={{ opacity: 0, y: 30 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        {/* Heading - Georgia font */}
-                        <h2 style={{
-                            color: 'white',
-                            fontSize: 'clamp(24px, 4vw, 36px)',
-                            fontFamily: 'Georgia, serif',
-                            fontWeight: 300,
-                            lineHeight: '1.4',
-                            marginBottom: '48px',
-                            maxWidth: '900px',
+                        {/* Heading */}
+                        <div style={{ margin: '0 0 15px', padding: 0 }}>
+                            <h2 className="text-[30px] md:text-[36px] leading-[40px] md:leading-[50px] font-normal" style={{
+                                color: '#fff',
+                                fontFamily: 'Georgia, serif',
+                                textAlign: 'left',
+                                margin: 0
+                            }}>
+                                Creating value-adding and sustainable assets to our communities and partnering with leading multinational corporations.
+                            </h2>
+                        </div>
+
+                        {/* Description with Left Border */}
+                        <div style={{
+                            padding: '0 0 0 40px',
+                            borderStyle: 'solid',
+                            borderWidth: '0 0 0 2px',
+                            borderColor: '#fff',
+                            borderRadius: '0',
                             textAlign: 'left'
                         }}>
-                            Creating value-adding and sustainable assets to our communities and partnering with leading multinational corporations.
-                        </h2>
-
-                        {/* Description with Vertical Line on the Left */}
-                        <div style={{ display: 'flex', gap: '32px', textAlign: 'left' }}>
-                            <div style={{ width: '2px', backgroundColor: 'white', opacity: 1 }}></div>
-                            <p style={{
-                                color: 'white',
-                                fontSize: '20px',
-                                lineHeight: '1.6',
+                            <p className="text-[16px] md:text-[24px] leading-[25px] md:leading-[1.5em]" style={{
+                                color: '#fff',
                                 fontFamily: "'Source Sans Pro', sans-serif",
                                 fontWeight: 400,
-                                maxWidth: '700px',
                                 margin: 0
                             }}>
                                 The Gesit Companies’ property portfolio is historically centered within Jakarta’s Golden Triangle and is focused on commercial real estate development.

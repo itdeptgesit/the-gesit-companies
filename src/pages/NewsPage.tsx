@@ -90,7 +90,10 @@ const NewsPage = () => {
         );
     }
 
-    const heroImages = allArticles.slice(0, 5).map(item => getOptimizedNewsImage(item.image, 1920, 85));
+    const heroImages = [
+        "/news/hero1.jpeg",
+        ...allArticles.slice(0, 4).map(item => getOptimizedNewsImage(item.image, 1920, 85))
+    ];
 
     const featuredArticle =
         allArticles.find(item => item.featured) || allArticles[0];
@@ -153,15 +156,14 @@ const NewsPage = () => {
                     </div>
                 </div>
 
-                {/* Content Area */}
-                <div className="absolute inset-0 z-20 flex items-end pb-16 md:pb-24">
+                <div className="absolute inset-0 z-20 flex items-center md:items-end justify-center md:justify-start pb-0 md:pb-24">
                     <div className="w-full px-8 md:px-16 lg:px-24">
-                        <div className="flex flex-col md:flex-row justify-between items-end gap-8">
+                        <div className="flex flex-col md:flex-row justify-between items-center md:items-end gap-6 md:gap-8 text-center md:text-left">
                             <motion.h1
                                 initial={{ opacity: 0, y: 40 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 1.2, ease: "easeOut" }}
-                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md"
+                                className="text-white text-5xl md:text-7xl leading-tight drop-shadow-md text-center md:text-left"
                                 style={{
                                     fontFamily: 'Georgia, serif',
                                     fontWeight: 400,
@@ -172,7 +174,7 @@ const NewsPage = () => {
                             </motion.h1>
 
                             {/* Navigation Buttons */}
-                            <div className="flex gap-4 z-30">
+                            <div className="hidden md:flex gap-4 z-30">
                                 <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
                                 </button>
@@ -205,7 +207,7 @@ const NewsPage = () => {
                         {/* Content Side (Navy Box) */}
                         <div className="bg-navy-deep p-12 md:p-16 flex flex-col justify-between text-white border-l border-white/10">
                             <div>
-                                <span className="text-[11px] font-bold uppercase tracking-[.4em] text-white/50 mb-12 block">
+                                <span className="text-[14px] font-bold uppercase tracking-[.3em] text-white/70 mb-12 block">
                                     {featuredArticle.date}
                                 </span>
                                 <h2
@@ -223,8 +225,8 @@ const NewsPage = () => {
                             </div>
 
                             <div className="mt-12 pt-12 border-t border-white/10">
-                                <p className="text-[16px] font-bold text-[#BC9C33] mb-2">News</p>
-                                <p className="text-[14px] font-medium text-white/40">by {featuredArticle.author}</p>
+                                <p className="text-[18px] font-bold text-[#BC9C33] mb-2">News</p>
+                                <p className="text-[16px] font-medium text-white">by {featuredArticle.author}</p>
                             </div>
                         </div>
                     </motion.div>
@@ -235,21 +237,21 @@ const NewsPage = () => {
             <section className="pt-0 pb-20 bg-white">
                 <div className="container mx-auto px-6 max-w-7xl relative z-30">
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {otherArticles.slice(0, 3).map((item, idx) => (
+                        {otherArticles.slice(0, 4).map((item, idx) => (
                             <motion.div
                                 key={item.id}
                                 initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: idx * 0.1 }}
-                                className="flex"
+                                className={`flex ${idx === 3 ? 'lg:hidden' : ''}`}
                             >
                                 <Link
                                     to={`/news/${item.id}`}
                                     className="flex-1 bg-[#e3eaf4] p-10 md:p-12 flex flex-col justify-between group hover:bg-[#d1dae8] transition-colors duration-500 min-h-[420px]"
                                 >
                                     <div>
-                                        <span className="text-[10px] font-bold uppercase tracking-[.3em] text-navy-deep/40 mb-10 block">
+                                        <span className="text-[14px] font-bold uppercase tracking-[.3em] text-navy-deep/60 mb-10 block">
                                             {item.date}
                                         </span>
                                         <h4
@@ -264,8 +266,8 @@ const NewsPage = () => {
                                     </div>
 
                                     <div className="mt-8 pt-8 border-t border-navy-deep/5">
-                                        <p className="text-[14px] font-bold text-[#BC9C33] mb-2">News</p>
-                                        <p className="text-[12px] font-medium text-navy-deep/40">by {item.author}</p>
+                                        <p className="text-[18px] font-bold text-[#000] mb-2">News</p>
+                                        <p className="text-[16px] font-medium text-[#000]">by {item.author}</p>
                                     </div>
                                 </Link>
                             </motion.div>

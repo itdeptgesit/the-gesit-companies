@@ -80,10 +80,10 @@ const HeroSlider = () => {
                                 style={{ transformOrigin: "center" }}
                             />
 
-                            {/* Very light top-down blue gradient matching the older website */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-[#103065]/70 via-[#103065]/30 to-transparent" />
-                            {/* Even slighter overall darken just to maintain text contrast */}
-                            <div className="absolute inset-0 bg-black/10" />
+                            {/* Adjusted blue gradient for better visual balance */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-[#103065]/60 via-[#103065]/20 to-transparent" />
+                            {/* Slight darken for text contrast */}
+                            <div className="absolute inset-0 bg-black/20" />
                         </div>
                     </SwiperSlide>
                 ))}
@@ -95,14 +95,14 @@ const HeroSlider = () => {
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.2, delay: 0.5 }}
-                    className="max-w-4xl"
+                    className="max-w-[800px]"
                 >
                     <h1
                         className="text-white font-serif leading-tight drop-shadow-md mb-4"
                         style={{
                             fontFamily: 'Georgia, serif',
                             fontSize: 'clamp(42px, 6.5vw, 82px)',
-                            textShadow: '0 2px 20px rgba(0,0,0,0.5)',
+                            textShadow: '0 4px 24px rgba(0,0,0,0.7), 0 2px 10px rgba(0,0,0,0.4)',
                             whiteSpace: 'pre-line'
                         }}
                     >
@@ -117,13 +117,14 @@ const HeroSlider = () => {
             </div>
 
             <style>{`
-        .animate-slow-zoom {
-          animation: slowZoom 30s linear infinite alternate;
+        .swiper-slide .animate-slow-zoom {
+          transform: scale(1);
+          transition: transform 14s ease-in-out;
           will-change: transform;
         }
-        @keyframes slowZoom {
-          0% { transform: scale(1.0); }
-          100% { transform: scale(1.1); }
+        .swiper-slide-active .animate-slow-zoom {
+          transform: scale(1.12);
+          transition: transform 20s linear;
         }
         :root {
           --swiper-theme-color: #BC9C33;
