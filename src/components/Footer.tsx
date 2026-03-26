@@ -119,10 +119,10 @@ const Footer = () => {
                                 {settings.officeAddress || "The City Tower, 27th Floor\nJl. M.H. Thamrin No 81\nMenteng, Jakarta Pusat\nDKI Jakarta 10310 – Indonesia"}
                             </a>
                             <p style={{ marginBottom: '8px' }}>
-                                <span style={{ color: '#94a3b8', fontWeight: '600' }}>Phone :</span> {settings.phoneNumber || "+62 21 3101601"}
+                                <span style={{ color: '#cbd5e1', fontWeight: '600' }}>Phone :</span> {settings.phoneNumber || "+62 21 3101601"}
                             </p>
                             <p>
-                                <span style={{ color: '#94a3b8', fontWeight: '600' }}>Mail :</span>{" "}
+                                <span style={{ color: '#cbd5e1', fontWeight: '600' }}>Mail :</span>{" "}
                                 <a
                                     href={`mailto:${settings.email || "contact@gesit.co.id"}`}
                                     style={{ color: '#e2e8f0', textDecoration: 'none', transition: 'color 0.3s ease' }}
@@ -165,7 +165,7 @@ const Footer = () => {
 
                     {/* Copyright */}
                     <p style={{
-                        color: 'rgba(255,255,255,0.4)',
+                        color: 'rgba(255,255,255,0.75)',
                         fontSize: '11px',
                         fontWeight: '600',
                         fontFamily: "'Source Sans Pro', sans-serif",
