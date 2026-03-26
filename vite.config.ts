@@ -5,22 +5,33 @@ import react from '@vitejs/plugin-react-swc'
 export default defineConfig({
   plugins: [react()],
   build: {
-    // Enable source maps for production debugging (optional, can be disabled for smaller builds)
     sourcemap: false,
-    // Optimize chunk size
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        // Simplified manual chunking
         manualChunks(id) {
-          // Keep admin pages separate to avoid loading them on the home page
+          // Keep admin pages separate
           if (id.includes('/src/pages/admin/') || id.includes('/src/pages/AdminDashboard')) {
             return 'admin-pages';
+          }
+          // Separate heavy vendor libs to enable parallel loading & caching
+          if (id.includes('node_modules/framer-motion')) {
+            return 'framer-motion';
+          }
+          if (id.includes('node_modules/swiper')) {
+            return 'swiper';
+          }
+          if (id.includes('node_modules/@supabase')) {
+            return 'supabase';
+          }
+          if (id.includes('node_modules/react-dom')) {
+            return 'react-dom';
           }
         },
       },
     },
-    // Use esbuild for minification (faster and default for Vite)
     minify: 'esbuild',
+    // Enable CSS code splitting for faster initial load
+    cssCodeSplit: true,
   },
 })

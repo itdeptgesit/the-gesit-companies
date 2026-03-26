@@ -3,14 +3,34 @@
 
 <head>
   <meta charset="UTF-8" />
-  <link rel="icon" type="image/png" href="/logo gesit.png" />
+  <link rel="icon" type="image/png" href="/logo-gesit.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Performance Optimizations -->
+  <meta name="theme-color" content="#103065" />
+
+  <!-- DNS Prefetch & Preconnect for external domains -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://pkigeocdlizkbpypkwaf.supabase.co" crossorigin>
+
+  <!-- Preload hero image for faster LCP -->
+  <link rel="preload" as="image" href="/hero/property.png" fetchpriority="high">
+
+  <!-- Google Fonts: Only load fonts actually used -->
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap"
+    media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Sans+3:wght@300;400;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap">
+  </noscript>
+
   <title>The Gesit Companies</title>
   <meta name="description"
     content="At Gesit, we put stakeholders first. We are committed to contributing to and growing with Indonesia through strategic investments and sustainable practices." />
-  <meta name="keywords"
-    content="The Gesit Companies, Indonesia investment, sustainable business, Property, Manufacturing, Natural Resources, Trading Service" />
-  <link rel="canonical" href="https://gesit.co.id/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
@@ -18,7 +38,7 @@
   <meta property="og:title" content="The Gesit Companies" />
   <meta property="og:description"
     content="At Gesit, we put stakeholders first. We are committed to contributing to and growing with Indonesia through strategic investments and sustainable practices." />
-  <meta property="og:image" content="/logo gesit.png" />
+  <meta property="og:image" content="/logo-gesit.png" />
 
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image" />
@@ -26,13 +46,17 @@
   <meta property="twitter:title" content="The Gesit Companies" />
   <meta property="twitter:description"
     content="At Gesit, we put stakeholders first. We are committed to contributing to and growing with Indonesia through strategic investments and sustainable practices." />
-  <meta property="twitter:image" content="/logo gesit.png" />
-  <script type="module" crossorigin src="/assets/index-DXS8-FhE.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-CfyQaraF.css">
+  <meta property="twitter:image" content="/logo-gesit.png" />
+  <script type="module" crossorigin src="/assets/index-WkIXR8Qv.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/framer-motion-CddPoIr1.js">
+  <link rel="modulepreload" crossorigin href="/assets/supabase-CywEAasM.js">
+  <link rel="modulepreload" crossorigin href="/assets/admin-pages-DTsXfVGu.js">
+  <link rel="modulepreload" crossorigin href="/assets/react-dom-Blz1n2wp.js">
+  <link rel="stylesheet" crossorigin href="/assets/index-O4QH1F5S.css">
 </head>
 
 <body>
-  <div id="root"></div>
+  <div id="root"></div>
 </body>
 
 </html>

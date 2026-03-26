@@ -145,6 +145,10 @@ const Footer = () => {
                                 alt="Gesit Gold Logo"
                                 style={{ height: '40px', width: 'auto' }}
                                 src="/logo-gesit.png"
+                                width="40"
+                                height="40"
+                                loading="lazy"
+                                decoding="async"
                             />
                             <span style={{
                                 fontFamily: "'Source Sans Pro', sans-serif",

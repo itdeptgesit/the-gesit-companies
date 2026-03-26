@@ -107,6 +107,8 @@ const BusinessSection = () => {
                                     className="w-full h-full object-cover"
                                     loading="lazy"
                                     decoding="async"
+                                    width={400}
+                                    height={300}
                                 />
                                 <div className="absolute inset-0 bg-black/5"></div>
                             </div>

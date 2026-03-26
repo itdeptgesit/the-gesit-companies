@@ -117,10 +117,9 @@ const AppContent = () => {
       {!isAdmin && !isStandalone && <Navbar />}
       <main>
         <Suspense fallback={
-          <div className="min-h-screen flex items-center justify-center bg-white">
+          <div className="h-screen flex items-center justify-center bg-[#103065]">
             <div className="text-center">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#BC9C33]"></div>
-              <p className="mt-4 text-navy-deep font-semibold">Loading...</p>
+              <div className="inline-block animate-spin rounded-full h-10 w-10 border-4 border-[#BC9C33] border-t-transparent"></div>
             </div>
           </div>
         }>

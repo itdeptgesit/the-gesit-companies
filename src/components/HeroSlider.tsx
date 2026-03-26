@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectFade } from 'swiper/modules';
 import { motion } from 'framer-motion';
@@ -10,45 +10,53 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
+// Fallback slides used while Supabase loads (and as default if no DB data)
+const FALLBACK_SLIDES = [
+    { image: "/hero/property.png" },
+    { image: "/hero/trading.png" },
+    { image: "/hero/manufacturing.jpg" },
+    { image: "/hero/mining.jpg" }
+];
+
 const HeroSlider = () => {
     const [activeIndex, setActiveIndex] = useState(0);
-    const [slides, setSlides] = useState<any[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [slides, setSlides] = useState<any[]>(FALLBACK_SLIDES);
+    const firstImageLoaded = useRef(false);
+    const [showContent, setShowContent] = useState(false);
 
+    // Fetch slides from Supabase in background — render fallback immediately (no loading state)
     useEffect(() => {
         const fetchSlides = async () => {
-            const { data } = await supabase
-                .from('hero_slides')
-                .select('*')
-                .order('order_index', { ascending: true });
+            try {
+                const { data } = await supabase
+                    .from('hero_slides')
+                    .select('*')
+                    .order('order_index', { ascending: true });
 
-            if (data && data.length > 0) {
-                setSlides(data.map((s: any) => ({
-                    image: getOptimizedNewsImage(s.image_url, 1920, 85),
-                    title: s.title,
-                    subtitle: s.subtitle
-                })));
-            } else {
-                setSlides([
-                    { image: "/hero/property.png" },
-                    { image: "/hero/trading.jpg" },
-                    { image: "/hero/manufacturing.jpg" },
-                    { image: "/hero/resources.jpeg" }
-                ]);
+                if (data && data.length > 0) {
+                    setSlides(data.map((s: any) => ({
+                        image: getOptimizedNewsImage(s.image_url, 1920, 85),
+                        title: s.title,
+                        subtitle: s.subtitle
+                    })));
+                }
+            } catch {
+                // Keep fallback slides on error
             }
-            setIsLoading(false);
         };
         fetchSlides();
     }, []);
 
-    if (isLoading) return (
-        <div className="h-screen w-full flex items-center justify-center bg-[#103065]">
-            <div className="w-10 h-10 border-4 border-[#BC9C33] border-t-transparent rounded-full animate-spin" />
-        </div>
-    );
+    // Show content once first image is decoded
+    const handleFirstImageLoad = () => {
+        if (!firstImageLoaded.current) {
+            firstImageLoaded.current = true;
+            setShowContent(true);
+        }
+    };
 
     return (
-        <section className="relative w-full h-screen overflow-hidden bg-black">
+        <section className="relative w-full h-screen overflow-hidden bg-[#103065]">
             {/* Top yellow progress bar (Timer moving) */}
             <div className="absolute top-0 left-0 w-full h-[4px] bg-black/20 z-40">
                 <motion.div
@@ -78,6 +86,12 @@ const HeroSlider = () => {
                                 alt="Gesit Companies"
                                 className="absolute inset-0 h-full w-full object-cover animate-slow-zoom"
                                 style={{ transformOrigin: "center" }}
+                                loading={index === 0 ? "eager" : "lazy"}
+                                {...(index === 0 ? { fetchPriority: "high" as const } : {})}
+                                decoding={index === 0 ? "sync" : "async"}
+                                onLoad={index === 0 ? handleFirstImageLoad : undefined}
+                                width={1920}
+                                height={1080}
                             />
 
                             {/* Adjusted blue gradient for better visual balance */}
@@ -92,9 +106,9 @@ const HeroSlider = () => {
             {/* Center-placed text (Fixed/Persistent) */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-30 pointer-events-none">
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, delay: 0.5 }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: showContent ? 1 : 0 }}
+                    transition={{ duration: 0.8 }}
                     className="max-w-[800px]"
                 >
                     <h1
