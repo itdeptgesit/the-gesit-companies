@@ -34,13 +34,13 @@ const PageSEO = () => {
                     if (seo.title) title = `${seo.title} | ${settings.siteTitle}`;
                     if (seo.description) description = seo.description;
                     if (seo.keywords) keywords = seo.keywords;
+                } else if (currentPath !== '/') {
+                    // Secondary fallback: Format path for title (e.g. /about -> About)
+                    const pathName = currentPath.substring(1).charAt(0).toUpperCase() + currentPath.slice(2);
+                    title = `${pathName} | ${settings.siteTitle}`;
                 }
             } catch (e) {
                 console.warn("SEO fetch/parse error:", e);
-            }
-                // Secondary fallback: Format path for title (e.g. /about -> About)
-                const pathName = currentPath.substring(1).charAt(0).toUpperCase() + currentPath.slice(2);
-                title = `${pathName} | ${settings.siteTitle}`;
             }
 
             // 2. Apply to Document
