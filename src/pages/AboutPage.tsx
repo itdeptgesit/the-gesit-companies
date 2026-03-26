@@ -166,8 +166,8 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.2 }}
-                                className="text-[#BC9C33] text-[1.4rem] md:text-[1.7rem] mb-8"
-                                style={{ fontFamily: "Georgia, serif", fontWeight: 600, lineHeight: '1.4', maxWidth: '560px' }}
+                                className="text-[#BC9C33] text-[1.4rem] md:text-[1.8rem] mb-6"
+                                style={{ fontFamily: "Georgia, serif", fontWeight: 700, lineHeight: '1.25', maxWidth: '560px' }}
                             >
                                 Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors.
                             </motion.h4>
@@ -177,13 +177,13 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.3 }}
-                                className="space-y-5 text-[#103065]"
+                                className="space-y-4 text-[#103065]"
                                 style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '17px', fontWeight: 400, lineHeight: '1.5em', maxWidth: '600px' }}
                             >
                                 <p>Over the years, the Gesit Companies continue to capture opportunities to grow its business portfolio amidst changes in economy and increased competition – part of this by being resourceful, agile and competitive.</p>
                                 <p>Our businesses are managed and operated by a team of professionals, headquartered in Jakarta.</p>
                                 <p>As the Gesit Companies continue to grow, we also believe in investing in our human capital and other areas to build competitive advantages. Likewise, we believe in creating positive contributions towards the environment and communities in which we operate in and will continue to invest in these areas.</p>
-                                <p><b>We are committed to Indonesia.</b></p>
+                                <p style={{ fontWeight: 700 }}>We are committed to Indonesia.</p>
                             </motion.div>
                         </motion.div>
                     </div>
