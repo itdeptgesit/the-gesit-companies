@@ -93,9 +93,9 @@ const ProjectItem = ({ project }: { project: any, index: number }) => {
                 </div>
 
                 {/* Location & Property Type */}
-                <div className="mb-12 relative">
-                    {/* Gold bar offset to the left of the main text margin */}
-                    <div className="absolute top-1 bottom-1 w-[2.5px] bg-[#BC9C33]" style={{ left: '-30px' }}></div>
+                <div className="mb-12 relative pl-10 text-left">
+                    {/* Gold bar aligned with the main text margin */}
+                    <div className="absolute left-0 top-1 bottom-1 w-[2.5px] bg-[#BC9C33]"></div>
                     <div className="space-y-2">
                         {project.location && (
                             <h4 className="text-[#1a1a1a]" style={{ fontFamily: 'Georgia, serif', fontSize: '22px', fontWeight: 400 }}>
