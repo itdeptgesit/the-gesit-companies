@@ -82,7 +82,7 @@ const ProjectItem = ({ project }: { project: any, index: number }) => {
                 className="w-full lg:w-[45%]"
                 style={{ maxWidth: '520px' }}
             >
-                <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3.2rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.1', maxWidth: '300px' }}>{project.title}</h3>
+                <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3.2rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.2', maxWidth: '500px' }}>{project.title}</h3>
                 {project.subtitle && (
                     <p className="text-[#1a1a1a] mb-8" style={{ fontFamily: 'Georgia, serif', fontSize: '1.25rem', fontStyle: 'italic' }}>
                         {project.subtitle}
@@ -93,9 +93,10 @@ const ProjectItem = ({ project }: { project: any, index: number }) => {
                 </div>
 
                 {/* Location & Property Type */}
-                <div className="mb-12 flex gap-6 items-center">
-                    <div className="w-[3px] h-[65px] bg-[#BC9C33]"></div>
-                    <div className="space-y-2 mt-0.5">
+                <div className="mb-12 relative">
+                    {/* Gold bar offset to the left of the main text margin */}
+                    <div className="absolute top-1 bottom-1 w-[2.5px] bg-[#BC9C33]" style={{ left: '-30px' }}></div>
+                    <div className="space-y-2">
                         {project.location && (
                             <h4 className="text-[#1a1a1a]" style={{ fontFamily: 'Georgia, serif', fontSize: '22px', fontWeight: 400 }}>
                                 Location : {project.location}
