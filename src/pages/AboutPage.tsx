@@ -156,7 +156,7 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.1 }}
                                 className="text-[#103065] mb-4 font-normal"
-                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '18px', lineHeight: '1.47em' }}
+                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '20px', lineHeight: '1.47em' }}
                             >
                                 Based on the Mandarin <i><b>"yi cheng"</b></i> and Hokkien <i><b>"geseng"</b></i>, which means <i><b>"perfection for art"</b></i>
                             </motion.p>
@@ -166,8 +166,8 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.2 }}
-                                className="text-[#BC9C33] text-[1.4rem] md:text-[1.8rem] mb-6"
-                                style={{ fontFamily: "Georgia, serif", fontWeight: 700, lineHeight: '1.2', maxWidth: '560px', marginLeft: '-1px' }}
+                                className="text-[#BC9C33] text-[1.6rem] md:text-[2.4rem] mb-6"
+                                style={{ fontFamily: "Georgia, serif", fontWeight: 700, lineHeight: '1.2', maxWidth: '500px', marginLeft: '-1px' }}
                             >
                                 Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors.
                             </motion.h4>
@@ -178,7 +178,7 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.3 }}
                                 className="space-y-4 text-[#103065]"
-                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '17px', fontWeight: 400, lineHeight: '1.5em', maxWidth: '600px' }}
+                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '20px', fontWeight: 400, lineHeight: '1.5em', maxWidth: '600px' }}
                             >
                                 <p>Over the years, the Gesit Companies continue to capture opportunities to grow its business portfolio amidst changes in economy and increased competition – part of this by being resourceful, agile and competitive.</p>
                                 <p>Our businesses are managed and operated by a team of professionals, headquartered in Jakarta.</p>
