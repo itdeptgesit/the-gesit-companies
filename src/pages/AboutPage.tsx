@@ -122,17 +122,17 @@ const AboutPage = () => {
                 </div>
             </section>
 
-            {/* 3. Philosophy Section - 50/50 split with wide content */}
+            {/* 3. Philosophy Section - 50/50 split matching dev reference density */}
             <section className="relative overflow-hidden">
                 <div className="flex flex-col-reverse lg:flex-row w-full">
-                    {/* Left: Content - centered but wide */}
-                    <div className="w-full lg:w-1/2 bg-[#e3eaf4] py-16 md:py-24 px-8 md:px-16 lg:px-20 flex flex-col items-center justify-center">
+                    {/* Left: Content */}
+                    <div className="w-full lg:w-1/2 bg-[#e3eaf4] py-20 md:py-28 px-10 md:px-20 lg:px-24 flex flex-col items-center justify-center">
                         <motion.div
                             initial={{ opacity: 0, y: 30 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 1 }}
-                            className="max-w-[850px] w-full"
+                            className="max-w-[700px] w-full text-center lg:text-left"
                         >
                             {/* 艺成 SVG */}
                             <motion.div
@@ -140,7 +140,7 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1 }}
-                                className="mb-10 w-[180px] md:w-[240px] mx-auto lg:mx-0"
+                                className="mb-10 w-[200px] md:w-[280px] mx-auto lg:mx-0"
                             >
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" className="w-full h-auto fill-[#BC9C33]">
                                     <g>
@@ -155,8 +155,8 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.1 }}
-                                className="text-[#103065] mb-10"
-                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '21px', fontWeight: 400, lineHeight: '1.47em' }}
+                                className="text-[#103065] mb-8 font-normal"
+                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '18px', lineHeight: '1.47em' }}
                             >
                                 Based on the Mandarin <i><b>"yi cheng"</b></i> and Hokkien <i><b>"geseng"</b></i>, which means <i><b>"perfection for art"</b></i>
                             </motion.p>
@@ -166,8 +166,8 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.2 }}
-                                className="text-[#BC9C33] text-[1.4rem] md:text-[2rem] mb-10"
-                                style={{ fontFamily: "Georgia, serif", fontWeight: 600, lineHeight: '1.4' }}
+                                className="text-[#BC9C33] text-[1.4rem] md:text-[1.8rem] mb-10"
+                                style={{ fontFamily: "Georgia, serif", fontWeight: 600, lineHeight: '1.4', maxWidth: '580px' }}
                             >
                                 Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors.
                             </motion.h4>
@@ -178,7 +178,7 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.3 }}
                                 className="space-y-6 text-[#103065]"
-                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '20px', fontWeight: 400, lineHeight: '1.5em' }}
+                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '17px', fontWeight: 400, lineHeight: '1.5em', maxWidth: '620px' }}
                             >
                                 <p>Over the years, the Gesit Companies continue to capture opportunities to grow its business portfolio amidst changes in economy and increased competition – part of this by being resourceful, agile and competitive.</p>
                                 <p>Our businesses are managed and operated by a team of professionals, headquartered in Jakarta.</p>
