@@ -131,7 +131,7 @@ const CSRSection = () => {
                                     fontFamily: 'Georgia, serif',
                                 }}
                             >
-                                Read More
+                                Read More about CSR
                                 <span style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',

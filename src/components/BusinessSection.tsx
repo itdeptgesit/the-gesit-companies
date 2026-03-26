@@ -186,7 +186,7 @@ const BusinessSection = () => {
                                             transition: 'all 0.3s ease',
                                         }}
                                     >
-                                        Learn More
+                                        Learn More about {biz.title}
                                         <span className="learn-more-arrow" style={{
                                             display: 'inline-flex',
                                             alignItems: 'center',
