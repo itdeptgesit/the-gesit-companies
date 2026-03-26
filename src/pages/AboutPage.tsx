@@ -155,7 +155,7 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.1 }}
-                                className="text-[#103065] mb-5 font-normal"
+                                className="text-[#103065] mb-4 font-normal"
                                 style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '18px', lineHeight: '1.47em' }}
                             >
                                 Based on the Mandarin <i><b>"yi cheng"</b></i> and Hokkien <i><b>"geseng"</b></i>, which means <i><b>"perfection for art"</b></i>
@@ -167,7 +167,7 @@ const AboutPage = () => {
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.2 }}
                                 className="text-[#BC9C33] text-[1.4rem] md:text-[1.8rem] mb-6"
-                                style={{ fontFamily: "Georgia, serif", fontWeight: 700, lineHeight: '1.25', maxWidth: '560px' }}
+                                style={{ fontFamily: "Georgia, serif", fontWeight: 700, lineHeight: '1.2', maxWidth: '560px', marginLeft: '-1px' }}
                             >
                                 Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors.
                             </motion.h4>
