@@ -79,7 +79,7 @@ const ProjectItem = ({ project }: { project: any, index: number }) => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                className="w-full lg:w-[45%] px-0 lg:px-6"
+                className="w-full lg:w-[45%]"
                 style={{ maxWidth: '520px' }}
             >
                 <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3.2rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.1', maxWidth: '300px' }}>{project.title}</h3>
@@ -144,7 +144,7 @@ const PropertyPage = () => {
                 "/property/trinity_05.jpeg",
                 "/property/trinity_06.jpeg"
             ],
-            reverse: false,
+            reverse: true,
             website: "https://trinitytower.co.id/"
         },
         {
@@ -166,7 +166,7 @@ const PropertyPage = () => {
             desc: "Usmar Ismail Hall is an important part of the PPHUI building, which includes a 6,400 m² office space and state of the art cinema and concert hall located in CBD Jakarta. The Usmar Ismail Concert Hall has been designed with an exclusive interior, comfortable seating arrangement and modern lighting. The design concept ensures the ultimate enjoyment experience for the audience of each presented program. This is the first Integrated Cinema and Concert Hall in Indonesia.",
             points: [],
             images: ["/property/property_PPHUI_Exterior_1.png", "/property/property_PPHUI_Theater_2.png"],
-            reverse: false,
+            reverse: true,
             website: "https://usmarismailhall.com/"
         },
         {
@@ -187,7 +187,7 @@ const PropertyPage = () => {
             desc: "This TOD development within inner Jakarta’s Golden Triangle will combine retail, residential, and a world-class theater space together into one – enabling ease of mobility for tenants and reducing on-street traffic.",
             points: [],
             images: ["/property/property_TOD_Rasuna_1.png", "/property/tod-property-lrtcitycibubur.jpg"],
-            reverse: false
+            reverse: true
         }
     ];
 
