@@ -132,16 +132,18 @@ const CSRSection = () => {
                                 }}
                             >
                                 Read More
+                                <span className="sr-only"> about CSR</span>
                                 <span style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    width: '22px',
-                                    height: '22px',
+                                    width: '32px',
+                                    height: '32px',
                                     borderRadius: '50%',
                                     backgroundColor: '#BC9C33',
+                                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                                 }}>
-                                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M5 12h14M12 5l7 7-7 7" />
                                     </svg>
                                 </span>

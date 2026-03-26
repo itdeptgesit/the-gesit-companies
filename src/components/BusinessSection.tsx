@@ -187,6 +187,7 @@ const BusinessSection = () => {
                                         }}
                                     >
                                         Learn More
+                                        <span className="sr-only"> about {biz.title}</span>
                                         <span className="learn-more-arrow" style={{
                                             display: 'inline-flex',
                                             alignItems: 'center',
