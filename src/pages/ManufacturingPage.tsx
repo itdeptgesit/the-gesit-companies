@@ -36,7 +36,7 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
                     exit={{ x: "-100%" }}
                     transition={{
                         duration: 1.2,
-                        ease: [0.645, 0.045, 0.355, 1] // Power3 ease in/out
+                        ease: [0.645, 0.045, 0.355, 1]
                     }}
                     className="absolute inset-0 w-full h-full"
                 >
@@ -48,7 +48,6 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
                         className="w-full h-full object-cover"
                         alt="Slideshow"
                     />
-                    {/* Subtle Internal Overlay */}
                     <div className="absolute inset-0 bg-black/5"></div>
                 </motion.div>
             </AnimatePresence>
@@ -59,70 +58,72 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
 const ProjectItem = ({ project }: { project: any, index: number }) => {
     return (
         <div
-            className={`flex flex-col ${project.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-24 items-center justify-center`}
+            className={`flex flex-col ${project.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-24 items-start justify-between max-w-[1240px] mx-auto`}
         >
-            {/* Image Section - Portrait (35%) - Animates from Left */}
+            {/* Image Section */}
             <motion.div
                 initial={{ opacity: 0, x: -100 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="w-full lg:w-[35%] relative group"
+                className="w-full lg:w-[45%] relative group"
             >
-                <div className="relative aspect-[3/4] overflow-hidden rounded-[4px] shadow-2xl bg-slate-200">
+                <div className="relative aspect-[4/5] overflow-hidden shadow-sm bg-slate-200 rounded-[4px]">
                     <ImageSlideshow images={project.images} />
                 </div>
             </motion.div>
 
-            {/* Content Section (55%) - Animates from Right */}
+            {/* Content Section */}
             <motion.div
                 initial={{ opacity: 0, x: 100 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                className="w-full lg:w-[55%]"
-                style={{ maxWidth: '600px' }}
+                className="w-full lg:w-[45%]"
+                style={{ maxWidth: '520px' }}
             >
-                <h3 className="text-[#000] mb-4 text-4xl md:text-[3rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.2' }}>
-                    {project.title}
-                </h3>
+                <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3.2rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.2', maxWidth: '500px' }}>{project.title}</h3>
                 {project.subtitle && (
-                    <p className="text-[#000] mb-8" style={{ fontFamily: 'Georgia, serif', fontSize: '1.25rem', fontStyle: 'italic' }}>
+                    <p className="text-[#1a1a1a] mb-8" style={{ fontFamily: 'Georgia, serif', fontSize: '1.25rem', fontStyle: 'italic' }}>
                         {project.subtitle}
                     </p>
                 )}
-
-                <div className={`text-[#000] ${!project.subtitle ? 'mt-8' : ''} mb-12 space-y-4`} style={{ fontSize: '19px', fontWeight: 400, lineHeight: '1.7', fontFamily: "'Source Sans Pro', sans-serif" }}>
+                <div className={`text-[#000] ${!project.subtitle ? 'mt-8' : ''} mb-12`} style={{ fontSize: '18px', fontWeight: 400, lineHeight: '1.6', fontFamily: "'Source Sans Pro', sans-serif", maxWidth: '440px' }}>
                     {project.desc.split('\n\n').map((p: string, i: number) => (
-                        <p key={i} className="m-0">{p}</p>
+                        <p key={i} className="m-0 mb-4">{p}</p>
                     ))}
                 </div>
 
-                {/* Location & Links */}
-                {(project.location || project.website || project.brochure) && (
-                    <div className="mt-12 flex flex-wrap gap-4">
+                {/* Location & Links with Gold Bar aligned with paragraph */}
+                <div className="mb-12 relative pl-10 text-left">
+                    <div className="absolute left-0 top-1 bottom-1 w-[2.5px] bg-[#BC9C33]"></div>
+                    <div className="space-y-4">
                         {project.website && (
                             <a
                                 href={project.website}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-block border border-navy-deep/20 px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-navy-deep hover:text-white transition-all shadow-sm no-underline"
+                                className="inline-flex items-center justify-center px-10 py-4 border border-[#103065] rounded-full text-[#103065] text-[16px] hover:bg-[#103065] hover:text-white transition-all duration-300 no-underline"
+                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontWeight: 600 }}
                             >
                                 Visit Website
                             </a>
                         )}
                         {project.brochure && (
-                            <a
-                                href={project.brochure}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-block border border-navy-deep/20 px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-navy-deep hover:text-white transition-all shadow-sm no-underline"
-                            >
-                                Download Brochure
-                            </a>
+                            <div className="pt-2">
+                                <a
+                                    href={project.brochure}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center justify-center px-10 py-4 border border-[#103065] rounded-full text-[#103065] text-[16px] hover:bg-[#103065] hover:text-white transition-all duration-300 no-underline"
+                                    style={{ fontFamily: "'Source Sans Pro', sans-serif", fontWeight: 600 }}
+                                >
+                                    Download Brochure
+                                </a>
+                            </div>
                         )}
                     </div>
-                )}
+                </div>
             </motion.div>
         </div>
     );
@@ -146,7 +147,7 @@ const ManufacturingPage = () => {
         },
         {
             title: "Steel & Plastic Packaging",
-            desc: "The Gesit Companies invests and manages a packaging company — Rheem Indonesia, which was established by Rheem Australia in 1968. The focus is to build packaging company that specializes in industrial packaging products such as steel and plastic drums with various capacities.\n\nThe specialized sectors such as oil, paint, lubricant, chemical, and food processing to ensure that customers obtain the highest standard of quality products and services, using premium materials and operating internationally standards for have made them at the top of market.",
+            desc: "The Gesit Companies invests and manages its packaging company—Rheem Indonesia—since it was established by Rheem Australia in 1969. The focus is to build a packaging company that specialises in industrial packaging products, such as steel and plastic drums as well as Jerry cans, for use in industries such as oil, paint, fragrance, chemical, and food processing.\n\nWe ensure that customers obtain the highest standard of quality products and services, using premium materials and operating to international standards (on time and at competitive prices).",
             images: ["/manufacturing/steel1.jpeg", "/manufacturing/steel2.png", "/manufacturing/steel3.png", "/manufacturing/steel4.jpeg"],
             website: "https://rheem.co.id/",
             reverse: false
@@ -190,7 +191,6 @@ const ManufacturingPage = () => {
                                         {...(index === 0 ? { fetchPriority: "high" } : {})}
                                         decoding="async"
                                     />
-                                    {/* Gradient Overlay */}
                                     <div className="absolute inset-0 bg-gradient-to-b from-[#103065]/70 via-[#103065]/30 to-transparent" />
                                     <div className="absolute inset-0 bg-black/10" />
                                 </div>
@@ -198,7 +198,6 @@ const ManufacturingPage = () => {
                         ))}
                     </Swiper>
 
-                    {/* Gold Progress Bar - TOP */}
                     <div className="absolute top-0 left-0 w-full h-[4px] bg-black/20 z-40">
                         <motion.div
                             key={activeIndex}
@@ -228,7 +227,6 @@ const ManufacturingPage = () => {
                                 Manufacturing
                             </motion.h1>
 
-                            {/* Navigation Buttons */}
                             <div className="hidden md:flex gap-4 z-30">
                                 <button className="hero-prev w-10 h-10 md:w-14 md:h-14 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-[#BC9C33] hover:border-[#BC9C33] transition-all duration-300 group">
                                     <ChevronLeft size={20} className="md:w-6 md:h-6 group-hover:-translate-x-1 transition-transform" />
@@ -242,7 +240,6 @@ const ManufacturingPage = () => {
                 </div>
             </section>
 
-            {/* 2. Intro Section - Gold Background Matching User Photo */}
             <section className="flex justify-center" style={{ backgroundColor: '#BC9C33', padding: '150px 0' }}>
                 <div style={{ maxWidth: '824px', width: '100%', margin: '0 auto', padding: '0 20px' }}>
                     <motion.div
@@ -251,7 +248,6 @@ const ManufacturingPage = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        {/* Heading */}
                         <div style={{ margin: '0 0 15px', padding: 0 }}>
                             <h2 className="text-[30px] md:text-[36px] leading-[40px] md:leading-[50px] font-normal" style={{
                                 color: '#fff',
@@ -263,7 +259,6 @@ const ManufacturingPage = () => {
                             </h2>
                         </div>
 
-                        {/* Description with Left Border */}
                         <div style={{
                             padding: '0 0 0 40px',
                             borderStyle: 'solid',
@@ -285,7 +280,6 @@ const ManufacturingPage = () => {
                 </div>
             </section>
 
-            {/* 3. Project Showcase */}
             <section className="py-24 md:py-40 bg-white overflow-hidden">
                 <div className="container mx-auto px-6">
                     <div className="space-y-48">
@@ -296,7 +290,6 @@ const ManufacturingPage = () => {
                 </div>
             </section>
 
-            {/* Custom Animations */}
             <style>{`
                 .animate-property-zoom {
                     animation: propertyZoom 30s linear infinite alternate;
