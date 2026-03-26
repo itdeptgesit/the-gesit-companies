@@ -166,7 +166,7 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.2 }}
-                                className="text-[#BC9C33] text-[1.5rem] md:text-[2.1rem] mb-6"
+                                className="text-[#BC9C33] text-[1.45rem] md:text-[2.0rem] mb-6"
                                 style={{ fontFamily: "Georgia, serif", fontWeight: 700, lineHeight: '1.2', maxWidth: '700px', marginLeft: '-1px' }}
                             >
                                 Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors.
