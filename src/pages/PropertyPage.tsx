@@ -134,7 +134,7 @@ const PropertyPage = () => {
             subtitle: "",
             location: "Jakarta, Indonesia",
             propertyType: "Office and Multifunction Area",
-            desc: "Completed in 2021, the Trinity Tower is a Premium Grade A office tower constructed by Shimizu Construction located in the heart of Jakarta’s Golden Triangle. It spans over 50 floors with a total of 140,000m2 in built up area. It has a separate 9-floor structure for food, retail, and tenant parking facility",
+            desc: "Completed in 2021, the Trinity Tower is a Premium Grade A office tower constructed by Shimizu Construction located in the heart of Jakarta’s Golden Triangle. It spans over 50 floors with a total of 140,000 m² in built up area. It has a separate 9-floor structure for food, retail, and tenant parking facility",
             points: [],
             images: [
                 "/property/trinity_01.jpeg",
@@ -163,7 +163,7 @@ const PropertyPage = () => {
             subtitle: "",
             location: "Jakarta, Indonesia",
             propertyType: "Office Space & Concert Hall",
-            desc: "Usmar Ismail Hall is an important part of the PPHUI building, which includes a 6,400 m2 office space and state of the art cinema and concert hall located in CBD Jakarta. The Usmar Ismail Concert Hall has been designed with an exclusive interior, comfortable seating arrangement and modern lighting. The design concept ensures the ultimate enjoyment experience for the audience of each presented program. This is the first Integrated Cinema and Concert Hall in Indonesia.",
+            desc: "Usmar Ismail Hall is an important part of the PPHUI building, which includes a 6,400 m² office space and state of the art cinema and concert hall located in CBD Jakarta. The Usmar Ismail Concert Hall has been designed with an exclusive interior, comfortable seating arrangement and modern lighting. The design concept ensures the ultimate enjoyment experience for the audience of each presented program. This is the first Integrated Cinema and Concert Hall in Indonesia.",
             points: [],
             images: ["/property/property_PPHUI_Exterior_1.png", "/property/property_PPHUI_Theater_2.png"],
             reverse: true,
@@ -174,7 +174,7 @@ const PropertyPage = () => {
             subtitle: "Under Development",
             location: "Jakarta, Indonesia",
             propertyType: "Tower Building",
-            desc: "This development boasts a world-class international standard and comprises over 180 rooms with 1,500 m2 of multifunction & ballroom space.",
+            desc: "This development boasts a world-class international standard and comprises over 180 rooms with 1,500 m² of multifunction & ballroom space.",
             points: [],
             images: ["/property/senayan-development-.jpeg"],
             reverse: false
