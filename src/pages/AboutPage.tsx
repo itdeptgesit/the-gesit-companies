@@ -132,7 +132,7 @@ const AboutPage = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 1 }}
-                            className="max-w-[700px] w-full text-center lg:text-left"
+                            className="max-w-[650px] w-full text-left"
                         >
                             {/* 艺成 SVG */}
                             <motion.div
@@ -140,7 +140,7 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1 }}
-                                className="mb-10 w-[200px] md:w-[280px] mx-auto lg:mx-0"
+                                className="mb-6 w-[160px] md:w-[210px]"
                             >
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" className="w-full h-auto fill-[#BC9C33]">
                                     <g>
@@ -155,7 +155,7 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.1 }}
-                                className="text-[#103065] mb-8 font-normal"
+                                className="text-[#103065] mb-5 font-normal"
                                 style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '18px', lineHeight: '1.47em' }}
                             >
                                 Based on the Mandarin <i><b>"yi cheng"</b></i> and Hokkien <i><b>"geseng"</b></i>, which means <i><b>"perfection for art"</b></i>
@@ -166,8 +166,8 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.2 }}
-                                className="text-[#BC9C33] text-[1.4rem] md:text-[1.8rem] mb-10"
-                                style={{ fontFamily: "Georgia, serif", fontWeight: 600, lineHeight: '1.4', maxWidth: '580px' }}
+                                className="text-[#BC9C33] text-[1.4rem] md:text-[1.7rem] mb-8"
+                                style={{ fontFamily: "Georgia, serif", fontWeight: 600, lineHeight: '1.4', maxWidth: '560px' }}
                             >
                                 Gesit is a name chosen to represent our vision for strategic resourcefulness and passionate energy in our business endeavors.
                             </motion.h4>
@@ -177,8 +177,8 @@ const AboutPage = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 1, delay: 0.3 }}
-                                className="space-y-6 text-[#103065]"
-                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '17px', fontWeight: 400, lineHeight: '1.5em', maxWidth: '620px' }}
+                                className="space-y-5 text-[#103065]"
+                                style={{ fontFamily: "'Source Sans Pro', sans-serif", fontSize: '17px', fontWeight: 400, lineHeight: '1.5em', maxWidth: '600px' }}
                             >
                                 <p>Over the years, the Gesit Companies continue to capture opportunities to grow its business portfolio amidst changes in economy and increased competition – part of this by being resourceful, agile and competitive.</p>
                                 <p>Our businesses are managed and operated by a team of professionals, headquartered in Jakarta.</p>
