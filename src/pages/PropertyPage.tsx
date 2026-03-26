@@ -144,7 +144,7 @@ const PropertyPage = () => {
                 "/property/trinity_05.jpeg",
                 "/property/trinity_06.jpeg"
             ],
-            reverse: true,
+            reverse: false,
             website: "https://trinitytower.co.id/"
         },
         {
@@ -166,7 +166,7 @@ const PropertyPage = () => {
             desc: "Usmar Ismail Hall is an important part of the PPHUI building, which includes a 6,400 m² office space and state of the art cinema and concert hall located in CBD Jakarta. The Usmar Ismail Concert Hall has been designed with an exclusive interior, comfortable seating arrangement and modern lighting. The design concept ensures the ultimate enjoyment experience for the audience of each presented program. This is the first Integrated Cinema and Concert Hall in Indonesia.",
             points: [],
             images: ["/property/property_PPHUI_Exterior_1.png", "/property/property_PPHUI_Theater_2.png"],
-            reverse: true,
+            reverse: false,
             website: "https://usmarismailhall.com/"
         },
         {
@@ -187,7 +187,7 @@ const PropertyPage = () => {
             desc: "This TOD development within inner Jakarta’s Golden Triangle will combine retail, residential, and a world-class theater space together into one – enabling ease of mobility for tenants and reducing on-street traffic.",
             points: [],
             images: ["/property/property_TOD_Rasuna_1.png", "/property/tod-property-lrtcitycibubur.jpg"],
-            reverse: true
+            reverse: false
         }
     ];
 
