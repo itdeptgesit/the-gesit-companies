@@ -173,6 +173,7 @@ const BusinessSection = () => {
                                     <Link
                                         to={biz.href}
                                         className="learn-more-link"
+                                        aria-label={`Learn more about ${biz.title}`}
                                         style={{
                                             display: 'inline-flex',
                                             alignItems: 'center',

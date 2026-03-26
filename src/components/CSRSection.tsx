@@ -119,6 +119,7 @@ const CSRSection = () => {
                         <motion.div variants={fadeUp} className="mb-10">
                             <Link
                                 to={latestCSR ? `/news/${latestCSR.id}` : "/csr"}
+                                aria-label="Read more about our CSR initiatives"
                                 style={{
                                     display: 'inline-flex',
                                     alignItems: 'center',

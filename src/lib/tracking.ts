@@ -24,18 +24,18 @@ export const trackVisitor = async (force: boolean = false) => {
         const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
 
         // Use a daily_stats table for high-performance trend analysis
-        const { data: existingDay } = await supabase
+        const { data: existingDay, error: fetchError } = await supabase
             .from('daily_stats')
             .select('count')
             .eq('date', today)
-            .single();
+            .maybeSingle(); // maybeSingle is safer for 404/Empty check
 
-        if (existingDay) {
+        if (!fetchError && existingDay) {
             await supabase
                 .from('daily_stats')
                 .update({ count: (existingDay.count || 0) + 1 })
                 .eq('date', today);
-        } else {
+        } else if (!fetchError) {
             await supabase
                 .from('daily_stats')
                 .insert([{ date: today, count: 1 }]);

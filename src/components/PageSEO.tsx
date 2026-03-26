@@ -16,28 +16,28 @@ const PageSEO = () => {
         const updateSEO = async () => {
             const currentPath = location.pathname;
 
-            // 1. Attempt to fetch specific SEO for this path
-            const { data } = await supabase
-                .from('page_content')
-                .select('value')
-                .eq('page', 'seo')
-                .eq('key', currentPath)
-                .single();
-
             let title = settings.siteTitle || "The Gesit Companies";
             let description = settings.siteDescription || "";
             let keywords = settings.keywords || "";
 
-            if (data && data.value) {
-                try {
+            // 1. Attempt to fetch specific SEO for this path
+            try {
+                const { data, error } = await supabase
+                    .from('page_content')
+                    .select('value')
+                    .eq('page', 'seo')
+                    .eq('key', currentPath)
+                    .maybeSingle(); // maybeSingle avoids 406/404 errors for empty results
+
+                if (!error && data && data.value) {
                     const seo = JSON.parse(data.value);
                     if (seo.title) title = `${seo.title} | ${settings.siteTitle}`;
                     if (seo.description) description = seo.description;
                     if (seo.keywords) keywords = seo.keywords;
-                } catch (e) {
-                    console.error("SEO Parse Error:", e);
                 }
-            } else if (currentPath !== '/') {
+            } catch (e) {
+                console.warn("SEO fetch/parse error:", e);
+            }
                 // Secondary fallback: Format path for title (e.g. /about -> About)
                 const pathName = currentPath.substring(1).charAt(0).toUpperCase() + currentPath.slice(2);
                 title = `${pathName} | ${settings.siteTitle}`;
