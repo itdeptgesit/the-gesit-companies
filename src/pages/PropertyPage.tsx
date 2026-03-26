@@ -58,7 +58,7 @@ const ImageSlideshow = ({ images }: { images: string[] }) => {
 const ProjectItem = ({ project }: { project: any, index: number }) => {
     return (
         <div
-            className={`flex flex-col ${project.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-24 items-center justify-center`}
+            className={`flex flex-col ${project.reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-12 lg:gap-24 items-start justify-between max-w-[1240px] mx-auto`}
         >
             {/* Image Section */}
             <motion.div
