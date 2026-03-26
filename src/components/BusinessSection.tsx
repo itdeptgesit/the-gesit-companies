@@ -144,17 +144,17 @@ const BusinessSection = () => {
                                 zIndex: 10
                             }}>
                                 <h3 style={{
-                                    color: 'white',
+                                    color: '#103065',
                                     fontSize: '24px',
-                                    fontWeight: '400',
+                                    fontWeight: '600', // Making it a bit bolder for better readability
                                     marginBottom: '16px',
                                     fontFamily: 'Georgia, serif',
                                 }}>
                                     {biz.title}
                                 </h3>
-
+ 
                                 <p style={{
-                                    color: 'rgba(255,255,255,0.95)',
+                                    color: '#103065',
                                     fontSize: '15px',
                                     lineHeight: '1.6',
                                     marginBottom: '26px',
@@ -164,7 +164,7 @@ const BusinessSection = () => {
                                 }}>
                                     {biz.description}
                                 </p>
-
+ 
                                 <motion.div
                                     whileHover={{ scale: 1.05 }}
                                     transition={{ duration: 0.2 }}
@@ -178,7 +178,7 @@ const BusinessSection = () => {
                                             display: 'inline-flex',
                                             alignItems: 'center',
                                             gap: '10px',
-                                            color: 'white',
+                                            color: '#103065',
                                             fontSize: '14px',
                                             fontWeight: 'bold',
                                             textDecoration: 'none',
@@ -194,7 +194,7 @@ const BusinessSection = () => {
                                             width: '24px',
                                             height: '24px',
                                             borderRadius: '50%',
-                                            backgroundColor: 'white',
+                                            backgroundColor: '#103065',
                                             transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                                         }}>
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#BC9C33" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">

@@ -20,15 +20,13 @@ export const trackVisitor = async (force: boolean = false) => {
             console.log("RPC increment_visitor_count failed, using legacy fallback", err);
         }
 
-        // 2. Log daily visit for trend analysis
+        /* Optional: Log daily visit for trend analysis (requires daily_stats table)
         const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-
-        // Use a daily_stats table for high-performance trend analysis
         const { data: existingDay, error: fetchError } = await supabase
             .from('daily_stats')
             .select('count')
             .eq('date', today)
-            .maybeSingle(); // maybeSingle is safer for 404/Empty check
+            .maybeSingle();
 
         if (!fetchError && existingDay) {
             await supabase
@@ -40,6 +38,7 @@ export const trackVisitor = async (force: boolean = false) => {
                 .from('daily_stats')
                 .insert([{ date: today, count: 1 }]);
         }
+        */
 
         sessionStorage.setItem(sessionKey, 'true');
         return { success: true };
