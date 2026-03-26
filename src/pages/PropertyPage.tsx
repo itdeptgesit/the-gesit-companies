@@ -79,16 +79,16 @@ const ProjectItem = ({ project }: { project: any, index: number }) => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-                className="w-full lg:w-[45%]"
-                style={{ maxWidth: '480px' }}
+                className="w-full lg:w-[45%] px-0 lg:px-6"
+                style={{ maxWidth: '520px' }}
             >
-                <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.2' }}>{project.title}</h3>
+                <h3 className="text-[#1a1a1a] mb-4 text-4xl md:text-[3.2rem]" style={{ fontFamily: 'Georgia, serif', fontWeight: 400, lineHeight: '1.1', maxWidth: '300px' }}>{project.title}</h3>
                 {project.subtitle && (
                     <p className="text-[#1a1a1a] mb-8" style={{ fontFamily: 'Georgia, serif', fontSize: '1.25rem', fontStyle: 'italic' }}>
                         {project.subtitle}
                     </p>
                 )}
-                <div className={`text-[#000] ${!project.subtitle ? 'mt-8' : ''} mb-12`} style={{ fontSize: '19px', fontWeight: 400, lineHeight: '1.7', fontFamily: "'Source Sans Pro', sans-serif" }}>
+                <div className={`text-[#000] ${!project.subtitle ? 'mt-8' : ''} mb-12`} style={{ fontSize: '18px', fontWeight: 400, lineHeight: '1.6', fontFamily: "'Source Sans Pro', sans-serif", maxWidth: '440px' }}>
                     {project.desc}
                 </div>
 
