@@ -32,34 +32,6 @@ const MaintenancePage = () => {
                     </p>
                 </div>
 
-                {/* Contact Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-lg mx-auto">
-                    <a
-                        href="mailto:contact@gesit.co.id"
-                        className="group flex items-center justify-between p-5 bg-white border border-slate-200 rounded-xl hover:border-[#BC9C33]/50 hover:shadow-lg hover:shadow-[#BC9C33]/5 transition-all duration-300"
-                    >
-                        <div className="flex flex-col text-left">
-                            <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Email Inquiry</span>
-                            <span className="text-navy-deep font-semibold text-sm group-hover:text-[#BC9C33] transition-colors">contact@gesit.co.id</span>
-                        </div>
-                        <div className="p-2 bg-slate-50 rounded-full text-slate-400 group-hover:bg-[#BC9C33]/10 group-hover:text-[#BC9C33] transition-colors">
-                            <Mail size={16} />
-                        </div>
-                    </a>
-
-                    <a
-                        href="tel:+62213101601"
-                        className="group flex items-center justify-between p-5 bg-white border border-slate-200 rounded-xl hover:border-[#BC9C33]/50 hover:shadow-lg hover:shadow-[#BC9C33]/5 transition-all duration-300"
-                    >
-                        <div className="flex flex-col text-left">
-                            <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-1">Office Line</span>
-                            <span className="text-navy-deep font-semibold text-sm group-hover:text-[#BC9C33] transition-colors">+62 21 3101 601</span>
-                        </div>
-                        <div className="p-2 bg-slate-50 rounded-full text-slate-400 group-hover:bg-[#BC9C33]/10 group-hover:text-[#BC9C33] transition-colors">
-                            <Phone size={16} />
-                        </div>
-                    </a>
-                </div>
             </motion.div>
 
             {/* Footer */}
