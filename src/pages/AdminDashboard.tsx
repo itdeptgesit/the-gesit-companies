@@ -384,7 +384,7 @@ const AdminDashboard = () => {
                             <div className="w-3 h-3 rounded-full bg-white/10"></div>
                         </div>
                         <p className="text-xs uppercase tracking-[0.3em] text-[#BC9C33] font-bold">
-                            © 2024 The Gesit Companies
+                            © 2026 The Gesit Companies
                         </p>
                     </div>
                 </div>
